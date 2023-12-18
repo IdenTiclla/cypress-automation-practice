@@ -1,20 +1,16 @@
 describe('My test suite', () => {
-
-    // 
     // https://demoqa.com/
-    beforeEach(() => {
-        cy.visit('https://www.saucedemo.com/v1/')
+    // beforeEach(() => {
+    //     cy.visit('https://www.saucedemo.com/v1/')
+    // })
+    Cypress.on('uncaught:exception', (err, runnable) => {
+        console.log(err);
+        return false;
     })
 
-    it('My test 1', () => {
-        cy.title().should('eq', 'Swag Labs')
-    })
-
-    it('My test 2', () => {
-        // cy.visit('https://www.saucedemo.com/v1/')
-        cy.get("input[data-test='username']").type('standard_user')
-        cy.get("input[data-test='password']").type('secret_sauce')
-        cy.get('input#login-button').click()
+    it('Web element click', () => {
+        cy.visit("https://webdriveruniversity.com/Click-Buttons/index.html")
+        cy.get("div#main-header > h1").should('have.text', 'Lets Get Clicking!')
     })
 })
 
