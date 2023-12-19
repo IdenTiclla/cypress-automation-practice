@@ -13,7 +13,7 @@ describe('My test suite', () => {
         console.log(err);
         return false;
     })
-    
+
     it ('Test 0 - Page Title', () => {
         cy.title().should('eq', 'WebDriver | Button Clicks')
     })
@@ -27,6 +27,20 @@ describe('My test suite', () => {
     it('Test 2 - Three components', () => {
         cy.get('div.col-sm-4.col-lg-4.col-md-4').should('have.length', 3)
         cy.get("span[type='button']").should('have.length', 3)
+    })
+
+    it('Test 3 - Testing the first button', () => {
+        cy.get('div.modal-content').should('not.be.visible')
+        cy.get('span#button1').click()
+        cy.get('div.modal-content').should('be.visible')
+
+        cy.get('div.modal-content').contains('Congratulations!')
+        cy.get('div.modal-content').contains('Well done for successfully using the click() method!')
+
+        // cy.get('div.modal-content').find('button').click() this is causing an exception
+        cy.contains('Close').click()
+
+        cy.get('div.modal-content').should('not.be.visible')        
     })
 })
 
