@@ -29,7 +29,7 @@ describe('My test suite', () => {
         cy.get("span[type='button']").should('have.length', 3)
     })
 
-    it('Test 3 - Testing the first button', () => {
+    it('Test 3 - Testing the first modal component', () => {
         cy.get('div.modal-content').should('not.be.visible')
         cy.get('span#button1').click()
         cy.get('div.modal-content').should('be.visible')
@@ -43,7 +43,7 @@ describe('My test suite', () => {
         cy.get('div.modal-content').should('not.be.visible')        
     })
 
-    it("Test 4 - Testing second button", () => {
+    it("Test 4 - Testing second modal component", () => {
         cy.get('div#myModalJSClick div.modal-content').should('not.be.visible')
         cy.get('span#button2').click()
         cy.get('div#myModalJSClick div.modal-content').should('be.visible')
@@ -56,6 +56,16 @@ describe('My test suite', () => {
         cy.get("div#myModalJSClick div.modal-content").find("button")
         cy.get('div#myModalJSClick div.modal-content').should('not.be.visible')                
 
+    })
+    it('Test 5 - Testing third modal component', () => {
+        cy.get("div#myModalMoveClick div.modal-content").should('not.be.visible')
+        cy.get("span#button3").click()
+        cy.get("div#myModalMoveClick div.modal-content").should('be.visible')
+        cy.get("div#myModalMoveClick div.modal-content").contains("Well done! the Action Move & Click can become very useful!")
+        cy.get("div#myModalMoveClick div.modal-content").contains("Advanced user interactions (API) has been developed to enable you to perform more complex interactions such as:")
+        cy.get("div#myModalMoveClick div.modal-content").find("ul li").should('have.length', 3)
+        cy.get("div#myModalMoveClick div.modal-content button[class='btn btn-default']").click()
+        cy.get("div#myModalMoveClick div.modal-content").should('not.be.visible')
     })
 })
 
