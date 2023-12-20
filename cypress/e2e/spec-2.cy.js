@@ -67,6 +67,19 @@ describe('My test suite', () => {
         cy.get("div#myModalMoveClick div.modal-content button[class='btn btn-default']").click()
         cy.get("div#myModalMoveClick div.modal-content").should('not.be.visible')
     })
+
+    it('Test 6 - closing first modal with x button', () => {
+        cy.get('div#myModalClick div.modal-content').should('not.be.visible')
+        cy.get('span#button1').click()
+        cy.get('div#myModalClick div.modal-content').should('be.visible')
+
+        cy.get('div#myModalClick div.modal-content').contains('Congratulations!')
+        cy.get('div#myModalClick div.modal-content').contains('Well done for successfully using the click() method!')
+
+        cy.get("div#myModalClick div.modal-content button.close").click()
+
+        cy.get('div#myModalClick div.modal-content').should('not.be.visible')        
+    })
 })
 
 
