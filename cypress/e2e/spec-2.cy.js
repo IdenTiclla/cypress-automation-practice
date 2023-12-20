@@ -54,7 +54,7 @@ describe('My test suite', () => {
         // cy.contains("Close").click() This is causing error
         cy.get("div#myModalJSClick  button[class='btn btn-default']").click()
         cy.get("div#myModalJSClick div.modal-content").find("button")
-        cy.get('div#myModalJSClick div.modal-content').should('not.be.visible')                
+        cy.get('div#myModalJSClick div.modal-content').should('not.be.visible')
 
     })
     it('Test 5 - Testing third modal component', () => {
@@ -79,6 +79,20 @@ describe('My test suite', () => {
         cy.get("div#myModalClick div.modal-content button.close").click()
 
         cy.get('div#myModalClick div.modal-content').should('not.be.visible')        
+    })
+
+    it('Test 7 - closing second modal with x button', () => {
+        cy.get('div#myModalJSClick div.modal-content').should('not.be.visible')
+        cy.get('span#button2').click()
+
+        cy.get('div#myModalJSClick div.modal-content').should('be.visible')
+        cy.get('div#myModalJSClick div.modal-content').contains('It’s that Easy!! Well I think it is.....')
+        cy.get('div#myModalJSClick div.modal-content').contains('We can use JavaScript code if all else fails! Remember always try to use the WebDriver Library method(s) first such as WebElement.click(). (The Selenium development team have spent allot of time developing WebDriver functions etc).')
+        
+        // cy.contains("Close").click() This is causing error
+        cy.get("div#myModalJSClick div.modal-content").find("button")
+        cy.get("div#myModalJSClick div.modal-content button[class='close']").click()
+        cy.get('div#myModalJSClick div.modal-content').should('not.be.visible')
     })
 })
 
