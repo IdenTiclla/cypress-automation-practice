@@ -18,9 +18,16 @@ describe('My test suite', () => {
         cy.get("ul li").should('have.length', 3)
     })
     
-    it.only("Test 2 - Basic input field behavior", () => {
+    it("Test 2 - Basic input field behavior", () => {
         cy.get("input").should('be.visible')
         cy.get("i.fa.fa-plus").click()
         cy.get("input").should('not.be.visible')
+    })
+    it.only("Test 3 - Adding a new todo item", () => {
+        cy.get("ul li").should('have.length', 3)
+        cy.get("input").type("my new todo item{enter}")
+        cy.get("ul li").should('have.length', 4)
+        cy.get("li:last-child").should('have.text', 'my new todo item')
+        // this is a bug there's a additional space on li elements
     })
 })
