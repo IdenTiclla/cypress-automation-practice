@@ -5,8 +5,9 @@ describe('My test suite', () => {
 
     it("Checking default", () => {
         cy.get("h1").contains("TO-DO LIST")
-        cy.get("input").should("have.attr", 'placeholder', 'Add new todo')
-        cy.get("input").should('be.visible')
+        cy.get("input").as('todo-input')
+        cy.get("@todo-input").should("have.attr", 'placeholder', 'Add new todo')
+        cy.get("@todo-input").should('be.visible')
         cy.get("i.fa.fa-plus").should('be.visible')
     })
 
@@ -19,14 +20,16 @@ describe('My test suite', () => {
     })
     
     it("Test 2 - Basic input field behavior", () => {
-        cy.get("input").should('be.visible')
+        cy.get("input").as('todo-input')
+        cy.get("@todo-input").should('be.visible')
         cy.get("i.fa.fa-plus").click()
-        cy.get("input").should('not.be.visible')
+        cy.get("@todo-input").should('not.be.visible')
     })
     it.only("Test 3 - Adding a new todo item", () => {
-        cy.get("ul li").should('have.length', 3)
+        cy.get("ul li").as('list-items')
+        cy.get("@list-items").should('have.length', 3)
         cy.get("input").type("my new todo item{enter}")
-        cy.get("ul li").should('have.length', 4)
+        cy.get("@list-items").should('have.length', 4)
         cy.get("li:last-child").should('have.text', 'my new todo item')
         // this is a bug there's a additional space on li elements
     })
