@@ -25,7 +25,7 @@ describe('My test suite', () => {
         cy.get("i.fa.fa-plus").click()
         cy.get("@todo-input").should('not.be.visible')
     })
-    it.only("Test 3 - Adding a new todo item", () => {
+    it("Test 3 - Adding a new todo item", () => {
         cy.get("ul li").as('list-items')
         cy.get("@list-items").should('have.length', 3)
         cy.get("input").type("my new todo item{enter}")
@@ -33,4 +33,17 @@ describe('My test suite', () => {
         cy.get("li:last-child").should('have.text', 'my new todo item')
         // this is a bug there's a additional space on li elements
     })
+    it.only("Test 4 - Complete last todo", () => {
+        cy.get("ul li").as('list-items')
+        cy.get("@list-items").should('have.length', 3)
+        
+        cy.get("li:last-of-type").trigger("mouseover")
+        cy.get("li:last-of-type").invoke("show").click()
+
+        cy.get("li:last-of-type").should('have.attr', 'class', 'completed')
+
+    })
+
+    // cy.get("li:last-of-type span").invoke('show').click() for delete an todo
+
 })
