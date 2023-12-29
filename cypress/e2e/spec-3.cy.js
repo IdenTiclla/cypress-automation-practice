@@ -43,7 +43,7 @@ describe('My test suite', () => {
         cy.get("li:last-of-type").should('have.attr', 'class', 'completed')
 
     })
-    it.only("Test 5 - Complete all todo", () => {
+    it("Test 5 - Complete all todo", () => {
         cy.get("ul li").as("list-items")
         cy.get("@list-items").should('have.length', 3)
 
@@ -53,7 +53,29 @@ describe('My test suite', () => {
 
         cy.get("li[class='completed']").as("completed-todos")
         cy.get("@completed-todos").should('have.length', 3)
+    })
 
+    it.only("Test 6 - Testing complete functionality", () => {
+        cy.get("ul li").as("list-items")
+        cy.get("li[class='completed']").should('not.exist')
+        
+        cy.get("li:nth-of-type(1)").click()
+        cy.get("li[class='completed']").as("completed-todos")
+        cy.get("@completed-todos").should('have.length', 1)
+        cy.get("li:nth-of-type(2)").click()
+        cy.get("@completed-todos").should('have.length', 2)
+        cy.get("li:nth-of-type(3)").click()
+        cy.get("@completed-todos").should('have.length', 3)
+
+
+        cy.get("li:nth-of-type(1)").click()
+        cy.get("@completed-todos").should('have.length', 2)
+        
+        cy.get("li:nth-of-type(2)").click()
+        cy.get("@completed-todos").should('have.length', 1)
+        
+        cy.get("li:nth-of-type(3)").click()
+        cy.get("li[class='completed']").should('not.exist')
 
     })
 
