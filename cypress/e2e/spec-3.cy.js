@@ -55,7 +55,7 @@ describe('My test suite', () => {
         cy.get("@completed-todos").should('have.length', 3)
     })
 
-    it.only("Test 6 - Testing complete functionality", () => {
+    it("Test 6 - Testing complete functionality", () => {
         cy.get("ul li").as("list-items")
         cy.get("li[class='completed']").should('not.exist')
         
@@ -79,6 +79,17 @@ describe('My test suite', () => {
 
     })
 
+    it.only("Test 7 - Delete first todo", () => {
+        cy.get("ul li").as("list-items")
+        cy.get("@list-items").should("have.length", 3)
+        cy.get("li:nth-of-type(1)").realHover()
+        cy.wait(1000)
+
+        cy.get("li:nth-of-type(1) span i").click()
+        cy.wait(1000)
+
+        cy.get("@list-items").should("have.length", 2)
+    })
     // cy.get("li:last-of-type span").invoke('show').click() for delete an todo
 
 })
