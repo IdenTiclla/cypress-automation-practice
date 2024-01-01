@@ -91,7 +91,7 @@ describe('My test suite', () => {
         cy.get("@list-items").should("have.length", 2)
     })
     // cy.get("li:last-of-type span").invoke('show').click() for delete an todo
-    it.only("Test 8 - Delete last todo", () => {
+    it("Test 8 - Delete last todo", () => {
         cy.get("ul li").as('list-items')
         cy.get("@list-items").should("have.length", 3)
 
@@ -105,5 +105,19 @@ describe('My test suite', () => {
 
         cy.get("li:nth-of-type(1)").should("have.text", " Go to potion class")
         cy.get("li:nth-of-type(2)").should("have.text", " Buy new robes")
+    })
+    it.only("Test 9 - Delete middle todo", () => {
+        cy.get("ul li").as("list-items")
+        cy.get("@list-items").should('have.length', 3)
+
+        cy.get("li:nth-of-type(2)").realHover()
+        cy.wait(1000)
+        cy.get("li:nth-of-type(2) span i").click()
+        cy.wait(1000)
+
+        cy.get("@list-items").should('have.length', 2)
+
+        cy.get("li:nth-of-type(1)").should("have.text", " Go to potion class")
+        cy.get("li:nth-of-type(2)").should("have.text", " Practice magic")
     })
 })
