@@ -106,7 +106,7 @@ describe('My test suite', () => {
         cy.get("li:nth-of-type(1)").should("have.text", " Go to potion class")
         cy.get("li:nth-of-type(2)").should("have.text", " Buy new robes")
     })
-    it.only("Test 9 - Delete middle todo", () => {
+    it("Test 9 - Delete middle todo", () => {
         cy.get("ul li").as("list-items")
         cy.get("@list-items").should('have.length', 3)
 
@@ -119,5 +119,21 @@ describe('My test suite', () => {
 
         cy.get("li:nth-of-type(1)").should("have.text", " Go to potion class")
         cy.get("li:nth-of-type(2)").should("have.text", " Practice magic")
+    })
+    it.only("Test 10 - Complete all tasks and some todos one", () => {
+        cy.get("li:nth-of-type(1)").click()
+        cy.get("li:nth-of-type(2)").click()
+        cy.get("li:nth-of-type(3)").click()
+
+        cy.get("li[class='completed']").should('have.length', 3)
+
+        cy.get("input").type("todo 1 {enter}")
+        cy.get("li:not(.completed)").should('have.length', 1)
+
+        cy.get("input").type("todo 2 {enter}")
+        cy.get("li:not(.completed)").should('have.length', 2)
+
+        cy.get("input").type("todo 3 {enter}")
+        cy.get("li:not(.completed)").should('have.length', 3)
     })
 })
