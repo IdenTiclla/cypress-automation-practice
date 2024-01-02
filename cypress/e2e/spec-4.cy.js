@@ -7,7 +7,7 @@ describe('My test suite 4', () => {
         cy.title().should('eq', 'Accordion Items')
     })
 
-    it("Test 1 - First accordion", () => {
+    it.only("Test 1 - First accordion", () => {
         // cy.get("div#manual-testing-description").should('not.be.visible')
 
         cy.get("button#manual-testing-accordion").should('have.attr', 'class').and('not.contain', 'active')
@@ -15,8 +15,10 @@ describe('My test suite 4', () => {
 
         cy.get("button#manual-testing-accordion").should('have.attr', 'class').and('contain', 'active')
         cy.get("div#manual-testing-description").should('be.visible')
+
+        cy.get("div#manual-testing-description p").should('have.text', 'Manual testing has for some time been the most popular way to test code. For this method, the tester plays an important role of end user and verifies that all the features of the application work correctly. Manual testing however is on the decline. Companies and developers have realised the efficiency, accuracy and cost savings that is possible by adopting the use of automation testing.')
     })
-    it.only("Test 2 - Second accordion", () => {
+    it("Test 2 - Second accordion", () => {
         cy.get("button#cucumber-accordion").should('have.attr', 'class').and('not.contain', 'active')
         cy.get("button#cucumber-accordion").click()
 
