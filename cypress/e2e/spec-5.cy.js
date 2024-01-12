@@ -2,7 +2,7 @@ describe('My test suite 4', () => {
     beforeEach(() => {
         cy.visit("https://webdriveruniversity.com/Page-Object-Model/index.html")
     })
-    it.only("Test 0 - Default test", () => {
+    it("Test 0 - Default test", () => {
         cy.title().should('eq', 'WebDriver | Page Object Model')
         cy.contains("WebdriverUniversity.com (Page Object Model)")
         cy.get("ul.nav.navbar-nav li").should('have.length', 3)
@@ -13,5 +13,31 @@ describe('My test suite 4', () => {
     })
 
     // div.item:nth-of-type(2)
+
+    it.only("Test 1 - Testing corousel component", () => {
+        cy.get("div.item:nth-of-type(1)").should('have.attr', 'class').and('contain', 'active')
+        cy.get("div.item:nth-of-type(2)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.get("div.item:nth-of-type(3)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.wait(5000)
+        cy.get("div.item:nth-of-type(1)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.get("div.item:nth-of-type(2)").should('have.attr', 'class').and('contain', 'active')
+        cy.get("div.item:nth-of-type(3)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.wait(5000)
+        cy.get("div.item:nth-of-type(1)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.get("div.item:nth-of-type(2)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.get("div.item:nth-of-type(3)").should('have.attr', 'class').and('contain', 'active')
+        cy.wait(5000)
+        cy.get("div.item:nth-of-type(1)").should('have.attr', 'class').and('contain', 'active')
+        cy.get("div.item:nth-of-type(2)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.get("div.item:nth-of-type(3)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.wait(5000)
+        cy.get("div.item:nth-of-type(1)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.get("div.item:nth-of-type(2)").should('have.attr', 'class').and('contain', 'active')
+        cy.get("div.item:nth-of-type(3)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.wait(5000)
+        cy.get("div.item:nth-of-type(1)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.get("div.item:nth-of-type(2)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.get("div.item:nth-of-type(3)").should('have.attr', 'class').and('contain', 'active')
+    })
     
 })
