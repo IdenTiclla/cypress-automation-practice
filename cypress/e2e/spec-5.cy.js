@@ -104,7 +104,7 @@ describe('My test suite 4', () => {
         cy.get("div.item:nth-of-type(3)").should('have.attr', 'class').and('not.contain', 'active')
         
     })
-    it.only("Test 4 - Testing left and right button for carousel component", () => {
+    it("Test 4 - Testing left and right button for carousel component", () => {
         cy.get("div.item:nth-of-type(1)").should('have.attr', 'class').and('contain', 'active')
         cy.get("div.item:nth-of-type(2)").should('have.attr', 'class').and('not.contain', 'active')
         cy.get("div.item:nth-of-type(3)").should('have.attr', 'class').and('not.contain', 'active')
@@ -118,5 +118,31 @@ describe('My test suite 4', () => {
         cy.get("div.item:nth-of-type(1)").should('have.attr', 'class').and('contain', 'active')
         cy.get("div.item:nth-of-type(2)").should('have.attr', 'class').and('not.contain', 'active')
         cy.get("div.item:nth-of-type(3)").should('have.attr', 'class').and('not.contain', 'active')
+    })
+    it.only("Test 5 - Testing left and right buttons for carousel comoponent many tiemes", () => {
+        cy.get("div.item:nth-of-type(1)").should('have.attr', 'class').and('contain', 'active')
+        cy.get("div.item:nth-of-type(2)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.get("div.item:nth-of-type(3)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.get('a.right').click()
+
+        cy.get("div.item:nth-of-type(1)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.get("div.item:nth-of-type(2)").should('have.attr', 'class').and('contain', 'active')
+        cy.get("div.item:nth-of-type(3)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.get('a.right').click()
+
+        cy.get("div.item:nth-of-type(1)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.get("div.item:nth-of-type(2)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.get("div.item:nth-of-type(3)").should('have.attr', 'class').and('contain', 'active')
+        cy.get('a.left').click()
+
+        cy.get("div.item:nth-of-type(1)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.get("div.item:nth-of-type(2)").should('have.attr', 'class').and('contain', 'active')
+        cy.get("div.item:nth-of-type(3)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.get('a.left').click()
+
+        cy.get("div.item:nth-of-type(1)").should('have.attr', 'class').and('contain', 'active')
+        cy.get("div.item:nth-of-type(2)").should('have.attr', 'class').and('not.contain', 'active')
+        cy.get("div.item:nth-of-type(3)").should('have.attr', 'class').and('not.contain', 'active')
+        
     })
 })
