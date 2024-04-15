@@ -53,4 +53,12 @@ describe("Dropdowns, checkboxes and radio buttons", () => {
         cy.get("input[value='option-3']").should('be.checked')
         cy.get("input[value='option-4']").should('not.be.checked')
     })
+    it.only("Testing checkboxes unchecking all checkboxes", () => {
+        cy.get("input[value='option-3']").uncheck()
+
+        cy.get("input[value='option-1']").should('not.be.checked')
+        cy.get("input[value='option-2']").should('not.be.checked')
+        cy.get("input[value='option-3']").should('not.be.checked')
+        cy.get("input[value='option-4']").should('not.be.checked')
+    })
 })
