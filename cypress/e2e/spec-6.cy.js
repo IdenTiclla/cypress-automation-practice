@@ -123,7 +123,7 @@ describe("Dropdowns, checkboxes and radio buttons", () => {
     })
 
 
-    it.only("Adding test for checking multiple options (first two options)", () => {
+    it("Adding test for checking multiple options (first two options)", () => {
         cy.get("input[value='option-3']").uncheck()
 
         cy.get("input[value='option-1']").should('not.be.checked')
@@ -137,5 +137,22 @@ describe("Dropdowns, checkboxes and radio buttons", () => {
         cy.get("input[value='option-2']").should('be.checked')
         cy.get("input[value='option-3']").should('not.be.checked')
         cy.get("input[value='option-4']").should('not.be.checked')
+    })
+    it.only("adding test for checking multiple options (last two options)", () => {
+        cy.get("input[value='option-3']").uncheck()
+
+        cy.get("input[value='option-1']").should('not.be.checked')
+        cy.get("input[value='option-2']").should('not.be.checked')
+        cy.get("input[value='option-3']").should('not.be.checked')
+        cy.get("input[value='option-4']").should('not.be.checked')
+
+        cy.get("input[type='checkbox']").check(['option-3', 'option-4'])
+
+        cy.get("input[value='option-1']").should('not.be.checked')
+        cy.get("input[value='option-2']").should('not.be.checked')
+        cy.get("input[value='option-3']").should('be.checked')
+        cy.get("input[value='option-4']").should('be.checked')
+
+        cy.get("input[type='checkbox']:checked").should('have.length', 2)
     })
 })
