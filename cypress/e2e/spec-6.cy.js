@@ -13,7 +13,7 @@ describe("Dropdowns, checkboxes and radio buttons", () => {
         cy.get("input[value='option-3']").should('be.checked')
         cy.get("input[value='option-4']").should('not.be.checked')
     })
-    it.only("Test 2 - Testing dropdowns one time", () => {
+    it("Test 2 - Testing dropdowns one time", () => {
         cy.get("#dropdowm-menu-1").select("c#")
         cy.get("#dropdowm-menu-2").select("maven")
         cy.get("#dropdowm-menu-3").select("javascript")
@@ -21,5 +21,36 @@ describe("Dropdowns, checkboxes and radio buttons", () => {
         cy.get("#dropdowm-menu-1").should('have.value', 'c#')
         cy.get("#dropdowm-menu-2").should('have.value', 'maven')
         cy.get("#dropdowm-menu-3").should('have.value', 'javascript')
+    })
+    it.only("Test 3 - Testing dropdowns changing values multiple times", () => {
+        cy.get("#dropdowm-menu-1").should('have.value', 'java')
+        cy.get("#dropdowm-menu-2").should('have.value', 'eclipse')
+        cy.get("#dropdowm-menu-3").should('have.value', 'html')
+
+        cy.get("#dropdowm-menu-1").select("c#")
+        cy.get("#dropdowm-menu-2").select("maven")
+        cy.get("#dropdowm-menu-3").select("css")
+
+        cy.get("#dropdowm-menu-1").should('have.value', 'c#')
+        cy.get("#dropdowm-menu-2").should('have.value', 'maven')
+        cy.get("#dropdowm-menu-3").should('have.value', 'css')
+
+
+        cy.get("#dropdowm-menu-1").select("python")
+        cy.get("#dropdowm-menu-2").select("testng")
+        cy.get("#dropdowm-menu-3").select("javascript")
+
+        cy.get("#dropdowm-menu-1").should('have.value', 'python')
+        cy.get("#dropdowm-menu-2").should('have.value', 'testng')
+        cy.get("#dropdowm-menu-3").should('have.value', 'javascript')
+
+
+        cy.get("#dropdowm-menu-1").select("sql")
+        cy.get("#dropdowm-menu-2").select("junit")
+        cy.get("#dropdowm-menu-3").select("jquery")
+
+        cy.get("#dropdowm-menu-1").should('have.value', 'sql')
+        cy.get("#dropdowm-menu-2").should('have.value', 'junit')
+        cy.get("#dropdowm-menu-3").should('have.value', 'jquery')
     })
 })
