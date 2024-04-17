@@ -194,4 +194,14 @@ describe("Dropdowns, checkboxes and radio buttons", () => {
 
         cy.get("input[type='checkbox']:checked").should('have.length', 2)
     })
+    it.only("Test 12 - Testing radio buttons default state", () => {
+        cy.get("form#radio-buttons input[type='radio']").should('have.length', 5)
+        cy.get("form#radio-buttons input[type='radio']:nth-of-type(1)").should('not.be.checked')
+        cy.get("form#radio-buttons input[type='radio']:nth-of-type(2)").should('not.be.checked')
+        cy.get("form#radio-buttons input[type='radio']:nth-of-type(3)").should('not.be.checked')
+        cy.get("form#radio-buttons input[type='radio']:nth-of-type(4)").should('not.be.checked')
+        cy.get("form#radio-buttons input[type='radio']:nth-of-type(5)").should('not.be.checked')
+        
+        
+    })
 })
