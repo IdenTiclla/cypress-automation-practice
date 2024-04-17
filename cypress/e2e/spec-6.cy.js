@@ -202,7 +202,7 @@ describe("Dropdowns, checkboxes and radio buttons", () => {
         cy.get("form#radio-buttons input[type='radio']:nth-of-type(4)").should('not.be.checked')
         cy.get("form#radio-buttons input[type='radio']:nth-of-type(5)").should('not.be.checked')    
     })
-    it.only("Test 13 - Test checking single elements", () => {
+    it("Test 13 - Test checking single elements", () => {
         cy.get("form#radio-buttons input[type='radio']:not(:checked)").should('have.length', 5)
 
         cy.get("form#radio-buttons input[type='radio']").check('green')
@@ -218,6 +218,13 @@ describe("Dropdowns, checkboxes and radio buttons", () => {
         cy.get("form#radio-buttons input[type='radio']:checked").should('have.length', 1)
 
         cy.get("form#radio-buttons input[type='radio']").check('purple')
+        cy.get("form#radio-buttons input[type='radio']:checked").should('have.length', 1)
+    })
+    it.only("Test 14 - Test checking multiple radio buttons", () => {
+        cy.get("form#radio-buttons input[type='radio']:not(:checked)").should('have.length', 5)
+
+        cy.get("form#radio-buttons input[type='radio']").check(['green', 'blue', 'yellow', 'orange', 'purple'])
+
         cy.get("form#radio-buttons input[type='radio']:checked").should('have.length', 1)
     })
 })
