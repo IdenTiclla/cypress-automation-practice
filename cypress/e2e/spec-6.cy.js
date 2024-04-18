@@ -228,7 +228,7 @@ describe("Dropdowns, checkboxes and radio buttons", () => {
         cy.get("form#radio-buttons input[type='radio']:checked").should('have.length', 1)
     })
 
-    it.only("Test 15 - Default Test for radio buttons on the selected and disabled section", () => {
+    it("Test 15 - Default Test for radio buttons on the selected and disabled section", () => {
         cy.get("form#radio-buttons-selected-disabled > input").should('have.length', 3)
         cy.get("form#radio-buttons-selected-disabled > input:not(:checked)").should('have.length', 2)
         cy.get("form#radio-buttons-selected-disabled > input:checked").should('have.length', 1)
@@ -236,6 +236,14 @@ describe("Dropdowns, checkboxes and radio buttons", () => {
 
         cy.get("form#radio-buttons-selected-disabled > input:nth-of-type(2)").should('have.attr', 'disabled')
 
+    })
+
+    it.only("Testing dropdown with disabled option", () => {
+        cy.get("select#fruit-selects option").should('have.length', 4)
+
+        cy.get("select#fruit-selects option[selected]").should('have.length', 1)
+        cy.get("select#fruit-selects option[selected]").should('have.value', 'grape')
+        cy.get("select#fruit-selects option:nth-of-type(2)").should('have.attr', 'disabled')
     })
 
 })
