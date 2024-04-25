@@ -14,7 +14,8 @@ describe("actions test suite", () => {
         cy.get("div#draggable").drag("div#droppable", {force: true})
         cy.get("div#droppable > p > b").should('have.text', 'Dropped!')     
     })
-    it.only("Test 2 - Test for double click scenario", () => {
+
+    it("Test 2 - Test for double click scenario", () => {
         cy.get("div#double-click").should('not.have.class', 'double')
         
         cy.get("div#double-click h2").should('have.text', 'Double Click Me!')
@@ -23,5 +24,25 @@ describe("actions test suite", () => {
 
         cy.get("div#double-click").should('have.class', 'double')
 
+    })
+
+    it.only("Test 4 - Test for hover state on dropdowns", () => {
+        cy.get('div.thumbnail > div.dropdown:nth-of-type(1) > div a').should('not.be.visible')
+        cy.get("div.thumbnail > div.dropdown:nth-of-type(1)").realHover()
+        cy.get('div.thumbnail > div.dropdown:nth-of-type(1) > div a').should('be.visible')
+        cy.get('div.thumbnail > div.dropdown:nth-of-type(1) > div a').should('have.length', 1)
+        cy.wait(1000)
+
+        cy.get('div.thumbnail > div.dropdown:nth-of-type(2) > div a').should('not.be.visible')
+        cy.get("div.thumbnail > div.dropdown:nth-of-type(2)").realHover()
+        cy.get('div.thumbnail > div.dropdown:nth-of-type(2) > div a').should('be.visible')
+        cy.get('div.thumbnail > div.dropdown:nth-of-type(2) > div a').should('have.length', 1)
+        cy.wait(1000)
+
+        cy.get('div.thumbnail > div.dropdown:nth-of-type(3) > div a').should('not.be.visible')
+        cy.get("div.thumbnail > div.dropdown:nth-of-type(3)").realHover()
+        cy.get('div.thumbnail > div.dropdown:nth-of-type(3) > div a').should('be.visible')
+        cy.get('div.thumbnail > div.dropdown:nth-of-type(3) > div a').should('have.length', 2)
+        cy.wait(1000)
     })
 })
