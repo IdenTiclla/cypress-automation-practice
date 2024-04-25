@@ -25,3 +25,5 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 import "cypress-real-events"
+// import "cypress-drag-drop"
+import "@4tw/cypress-drag-drop"
