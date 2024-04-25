@@ -26,7 +26,7 @@ describe("actions test suite", () => {
 
     })
 
-    it.only("Test 4 - Test for hover state on dropdowns", () => {
+    it("Test 4 - Test for hover state on dropdowns", () => {
         cy.get('div.thumbnail > div.dropdown:nth-of-type(1) > div a').should('not.be.visible')
         cy.get("div.thumbnail > div.dropdown:nth-of-type(1)").realHover()
         cy.get('div.thumbnail > div.dropdown:nth-of-type(1) > div a').should('be.visible')
@@ -44,5 +44,10 @@ describe("actions test suite", () => {
         cy.get('div.thumbnail > div.dropdown:nth-of-type(3) > div a').should('be.visible')
         cy.get('div.thumbnail > div.dropdown:nth-of-type(3) > div a').should('have.length', 2)
         cy.wait(1000)
+    })
+    it.only("test 5 - Click and hold test", () => {
+        cy.get("div#click-box > p").should('have.text', 'Click and Hold!')
+        cy.get("div#click-box").trigger("mousedown")
+        cy.get("div#click-box").should('have.text', 'Well done! keep holding that click now.....')
     })
 })
