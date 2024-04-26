@@ -2,6 +2,9 @@ describe("actions test suite", () => {
     beforeEach(() => {
         cy.visit("https://webdriveruniversity.com/Actions/index.html")
     })
+    it.only("Test for the title of the page", () => {
+        cy.title().should('eq','WebDriver | Actions')
+    })
 
     it("Test 0 - Basic structure of the page", () => {
         cy.contains("WebdriverUniversity.com (Actions)")
@@ -45,7 +48,7 @@ describe("actions test suite", () => {
         cy.get('div.thumbnail > div.dropdown:nth-of-type(3) > div a').should('have.length', 2)
         cy.wait(1000)
     })
-    it.only("test 5 - Click and hold test", () => {
+    it("test 5 - Click and hold test", () => {
         cy.get("div#click-box > p").should('have.text', 'Click and Hold!')
         cy.get("div#click-box").trigger("mousedown")
         cy.get("div#click-box").should('have.text', 'Well done! keep holding that click now.....')
