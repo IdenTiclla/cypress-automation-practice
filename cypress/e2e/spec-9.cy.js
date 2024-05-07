@@ -16,4 +16,11 @@ describe('Test suite for testing popups and alerts', () => {
         cy.get("div#main-header ~ div[class*='col-sm'] span").should('have.length', 4)
 
     })
+    it.only('Test 1 - Javascript alert test', () => {
+        cy.get('span#button1').click()
+        cy.on('window:alert',(t)=>{
+            //assertions
+            expect(t).to.contains('I am an alert box!');
+        })  
+    })
 })
