@@ -1,3 +1,7 @@
+Cypress.on('uncaught:exception', (err, runnable) => {
+    return false;
+});
+
 describe('Test suite for testing popups and alerts', () => {
     beforeEach(() => {
         cy.visit("https://webdriveruniversity.com/Popup-Alerts/index.html")
@@ -23,7 +27,7 @@ describe('Test suite for testing popups and alerts', () => {
             expect(t).to.contains('I am an alert box!');
         })  
     })
-    it.only('Test 2 - Modal Popup', () => {
+    it('Test 2 - Modal Popup', () => {
         cy.get("div#myModal > div").should('not.be.visible')
         cy.get('span#button2').click()
         cy.get("div#myModal > div").should('be.visible')
@@ -33,5 +37,22 @@ describe('Test suite for testing popups and alerts', () => {
         cy.get('#myModal > div > div > div.modal-footer > button').click()
         cy.get("div#myModal > div").should('not.be.visible')
 
+    })
+    it.only('Test 3 - Ajax loader test', () => {
+        cy.get('span#button3').click()
+        cy.title().should('eq', 'WebDriver | Ajax-Loader')
+        cy.url().should('eq', 'https://webdriveruniversity.com/Ajax-Loader/index.html')
+        cy.get('div#loader').should('be.visible')
+
+        cy.get('span#button1', { timeout: 10000 }).should('be.visible');
+        cy.get('span#button1').click()
+        cy.get('div#myModalClick > div').should('be.visible')
+
+        cy.get('div#myModalClick > div div.modal-header h4').should('have.text', 'Well Done For Waiting....!!!')
+        cy.get('div#myModalClick > div div.modal-body p').should('have.text', 'The waiting game can be a tricky one; this exercise will hopefully improve your understandings of the various types of waits.')
+        cy.get('div#myModalClick > div div.modal-footer > button').should('have.text', 'Close')
+
+        cy.get('div#myModalClick > div div.modal-header button').click()
+        cy.get('div#myModalClick > div').should('not.be.visible')
     })
 })
