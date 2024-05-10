@@ -38,7 +38,7 @@ describe('Test suite for testing popups and alerts', () => {
         cy.get("div#myModal > div").should('not.be.visible')
 
     })
-    it.only('Test 3 - Ajax loader test', () => {
+    it('Test 3 - Ajax loader test', () => {
         cy.get('span#button3').click()
         cy.title().should('eq', 'WebDriver | Ajax-Loader')
         cy.url().should('eq', 'https://webdriveruniversity.com/Ajax-Loader/index.html')
@@ -54,5 +54,14 @@ describe('Test suite for testing popups and alerts', () => {
 
         cy.get('div#myModalClick > div div.modal-header button').click()
         cy.get('div#myModalClick > div').should('not.be.visible')
+    })
+    it.only('Test 4 - Javascript confirm box - happy path', () => {
+        cy.get('span#button4').click()
+
+        cy.on("window:confirm", (t) => {
+            //verify text on pop-up
+            expect(t).to.equal("Press a button!")
+         });
+         cy.get('p#confirm-alert-text').should('have.text', 'You pressed OK!')
     })
 })
