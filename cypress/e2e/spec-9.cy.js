@@ -55,7 +55,7 @@ describe('Test suite for testing popups and alerts', () => {
         cy.get('div#myModalClick > div div.modal-header button').click()
         cy.get('div#myModalClick > div').should('not.be.visible')
     })
-    it.only('Test 4 - Javascript confirm box - happy path', () => {
+    it('Test 4 - Javascript confirm box - happy path', () => {
         cy.get('span#button4').click()
 
         cy.on("window:confirm", (t) => {
@@ -63,5 +63,15 @@ describe('Test suite for testing popups and alerts', () => {
             expect(t).to.equal("Press a button!")
          });
          cy.get('p#confirm-alert-text').should('have.text', 'You pressed OK!')
+    })
+
+    it.only('Test 5 - Javascript confirm box - negative path', () => {
+        cy.get('span#button4').click()
+        
+        cy.on("window:confirm", (s) => {
+            return false
+        });
+
+        cy.get('p#confirm-alert-text').should('have.text', 'You pressed Cancel!')
     })
 })
