@@ -1,15 +1,18 @@
 class Login{
-    visit = () => {
-        cy.visit('/')
-    }
-    getUsernameInputField = () => {
-        return cy.get("input[name='username']")
+    getEmailInputField = () => {
+        return cy.get("input[name='email']")
     }
     getPasswordInputField = () => {
-        return cy.get("input[type='password']")
+        return cy.get("input[name='password']")
     }
     getSubmitButton = () => {
-        return cy.get("button[type='submit']")
+        return cy.get("input[type='submit']")
+    }
+
+    login = (email, password) => {
+        this.getEmailInputField().type(email)
+        this.getPasswordInputField().type(password)
+        this.getSubmitButton().click()
     }
 }
 
