@@ -52,4 +52,23 @@ describe('Api testing test suite', () => {
         expect(response.body).to.have.length(100)
       })
     })
+    it('Test - Checking albums properties', () => {
+      cy.request({
+        method: 'GET',
+        url: 'https://jsonplaceholder.typicode.com/albums',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then((response) => {
+        expect(response.status).eq(200)
+        expect(response.body).to.be.an('array')
+        const albums = response.body
+        albums.map(album => {
+          expect(album).to.have.property('title')
+          expect(album).to.have.property('id')
+          expect(album).to.have.property('userId')
+        })
+        console.log(response)
+      })
+    })
 })
