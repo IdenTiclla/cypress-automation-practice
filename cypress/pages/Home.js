@@ -10,6 +10,13 @@ class Home {
     getMyAccountOption = () => cy.get("ul.horizontal li:nth-of-type(6) a[data-toggle='dropdown']")
     getWishListIconButton = () => cy.get("a[aria-label='Wishlist']")
     getCartIconButton = () => cy.get("div.cart-icon").first()
+    getCarouselPrevButton = () => cy.get("div[data-ride='carousel'] a.carousel-control-prev")
+    getCarouselNextButton = () => cy.get("div[data-ride='carousel'] a.carousel-control-next")
+
+    getFirstImageInMainCarousel = () => cy.get("div[data-ride='carousel'] div.carousel-item:nth-of-type(1)")
+    getSecondImageInMainCarousel = () => cy.get("div[data-ride='carousel'] div.carousel-item:nth-of-type(2)")
+    getThirdImageInMainCarousel = () => cy.get("div[data-ride='carousel'] div.carousel-item:nth-of-type(3)")
+
 }
 
 export default Home

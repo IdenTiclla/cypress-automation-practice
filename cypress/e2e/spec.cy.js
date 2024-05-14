@@ -14,7 +14,8 @@ describe('Test suite edited with vim', () => {
   it('Test case edited with vim', () => {
     cy.visit('https://example.cypress.io')
   })
-  it.only('Testing sausage page', () => {
+  
+  it('Testing sausage page', () => {
     HomePage.visit()
     HomePage.getHomeOption().click()
     HomePage.getCartIconButton().click()
@@ -29,6 +30,7 @@ describe('Test suite edited with vim', () => {
     HomePage.getBlogOption().click()
 
   })
+
   it('Testing wish list with not logged user', () => {
     HomePage.visit()
     HomePage.getWishListIconButton().click()
@@ -38,5 +40,19 @@ describe('Test suite edited with vim', () => {
     loginPage.getSubmitButton().should('be.visible')
     loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
     cy.wait(3000)
+  })
+
+  it.only('Testing the corousel component', () => {
+    HomePage.visit()
+    HomePage.getFirstImageInMainCarousel().should('be.visible')
+    HomePage.getCarouselNextButton().realHover()
+    HomePage.getCarouselNextButton().click()
+    cy.wait(1000)
+    HomePage.getSecondImageInMainCarousel().should('be.visible')
+    HomePage.getCarouselNextButton().realHover()
+    cy.wait(1000)
+    HomePage.getCarouselNextButton().click()
+    HomePage.getThirdImageInMainCarousel().should('be.visible')
+
   })
 })
