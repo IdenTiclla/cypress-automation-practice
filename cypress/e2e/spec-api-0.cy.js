@@ -1,5 +1,5 @@
 describe('Api testing test suite', () => {
-    it('should return a list of users', () => {
+    it.only('should return a list of users', () => {
         cy.request({
           method: 'GET',
           url: 'https://jsonplaceholder.typicode.com/users',
@@ -10,6 +10,27 @@ describe('Api testing test suite', () => {
           expect(response.status).to.eq(200)
           expect(response.body).to.be.an('array')
           expect(response.body).to.have.length(10)
+          const users = response.body
+          users.forEach(user => {
+            expect(user).to.have.property('id')
+            expect(user).to.have.property('name')
+            expect(user).to.have.property('username')
+            expect(user).to.have.property('email')
+            expect(user).to.have.property('address')
+            expect(user.address).to.have.property('street')
+            expect(user.address).to.have.property('suite')
+            expect(user.address).to.have.property('city')
+            expect(user.address).to.have.property('zipcode')
+            expect(user.address).to.have.property('geo')
+            expect(user.address.geo).to.have.property('lat')
+            expect(user.address.geo).to.have.property('lng')
+            expect(user).to.have.property('phone')
+            expect(user).to.have.property('website')
+            expect(user).to.have.property('company')
+            expect(user.company).to.have.property('name')
+            expect(user.company).to.have.property('catchPhrase')
+            expect(user.company).to.have.property('bs')
+          });
         })
     })
     it('Testig first element of the api posts', () => {
