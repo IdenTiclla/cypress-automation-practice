@@ -1,9 +1,12 @@
 import Home from "../pages/Home"
 import ShoppingCartModal from "./components/ShoppingCartModal"
 import Login from "../pages/Login"
+import RightNavigationBar from "./components/RightNavigationBar"
+
 const loginPage = new Login()
 const HomePage = new Home()
 const shoppingCartModal = new ShoppingCartModal()
+const rightNavigationBar = new RightNavigationBar()
 
 Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
@@ -42,7 +45,7 @@ describe('Test suite edited with vim', () => {
     cy.wait(3000)
   })
 
-  it.only('Testing the corousel component', () => {
+  it('Testing the corousel component', () => {
     HomePage.visit()
     HomePage.getFirstImageInMainCarousel().should('be.visible')
     HomePage.getCarouselNextButton().realHover()
@@ -54,5 +57,22 @@ describe('Test suite edited with vim', () => {
     HomePage.getCarouselNextButton().click()
     HomePage.getThirdImageInMainCarousel().should('be.visible')
 
+  })
+  it.only('Testing Right navigation component', () => {
+    HomePage.visit()
+    HomePage.getMyAccountOption().click()
+    rightNavigationBar.getLoginOption().should('be.visible')
+    rightNavigationBar.getRegisterOption().should('be.visible')
+    rightNavigationBar.getForgottenPasswordOption().should('be.visible')
+    rightNavigationBar.getMyAccountOption().should('be.visible')
+    rightNavigationBar.getAddressBookOption().should('be.visible')
+    rightNavigationBar.getWishlistBookOption().should('be.visible')
+    rightNavigationBar.getOrderHistoryOption().should('be.visible')
+    rightNavigationBar.getDownloadsOption().should('be.visible')
+    rightNavigationBar.getRecurringPaymentOption().should('be.visible')
+    rightNavigationBar.getRewardPointsOption().should('be.visible')
+    rightNavigationBar.getReturnsOption().should('be.visible')
+    rightNavigationBar.getTransactionOption().should('be.visible')
+    rightNavigationBar.getNewsletterOption().should('be.visible')
   })
 })
