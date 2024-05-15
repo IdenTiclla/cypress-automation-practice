@@ -2,11 +2,13 @@ import Home from "../pages/Home"
 import ShoppingCartModal from "./components/ShoppingCartModal"
 import Login from "../pages/Login"
 import RightNavigationBar from "./components/RightNavigationBar"
+import RegisterPage from "../pages/RegisterPage"
 
 const loginPage = new Login()
 const HomePage = new Home()
 const shoppingCartModal = new ShoppingCartModal()
 const rightNavigationBar = new RightNavigationBar()
+const registerPage = new RegisterPage()
 
 Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
@@ -58,7 +60,7 @@ describe('Test suite edited with vim', () => {
     HomePage.getThirdImageInMainCarousel().should('be.visible')
 
   })
-  it.only('Testing Right navigation component', () => {
+  it('Testing Right navigation component', () => {
     HomePage.visit()
     HomePage.getMyAccountOption().click()
     rightNavigationBar.getLoginOption().should('be.visible')
@@ -74,5 +76,22 @@ describe('Test suite edited with vim', () => {
     rightNavigationBar.getReturnsOption().should('be.visible')
     rightNavigationBar.getTransactionOption().should('be.visible')
     rightNavigationBar.getNewsletterOption().should('be.visible')
+  })
+
+  it.only("Default test for register page.", () => {
+    HomePage.visit()
+    HomePage.getMyAccountOption().click()
+    rightNavigationBar.getRegisterOption().click()
+    registerPage.getFirstnameInput().should('be.visible')
+    registerPage.getLastnameInput().should('be.visible')
+    registerPage.getEmailInput().should('be.visible')
+    registerPage.getTelephoneInput().should('be.visible')
+    registerPage.getPasswordInput().should('be.visible')
+    registerPage.getPasswordConfirmInput().should('be.visible')
+    registerPage.getYesRadioButton().should('be.visible')
+    registerPage.getNoRadioButton().should('be.visible')
+    registerPage.getPolicyPrivacyCheckbox().should('be.visible')
+    registerPage.getPolicyPrivacyLinkElement().should('be.visible')
+    registerPage.getContinueButton().should('be.visible')
   })
 })
