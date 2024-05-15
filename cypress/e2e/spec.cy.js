@@ -5,7 +5,7 @@ import RightNavigationBar from "./components/RightNavigationBar"
 import RegisterPage from "../pages/RegisterPage"
 
 const loginPage = new Login()
-const HomePage = new Home()
+const homepage = new Home()
 const shoppingCartModal = new ShoppingCartModal()
 const rightNavigationBar = new RightNavigationBar()
 const registerPage = new RegisterPage()
@@ -21,24 +21,24 @@ describe('Test suite edited with vim', () => {
   })
   
   it('Testing sausage page', () => {
-    HomePage.visit()
-    HomePage.getHomeOption().click()
-    HomePage.getCartIconButton().click()
+    homepage.visit()
+    homepage.getHomeOption().click()
+    homepage.getCartIconButton().click()
 
     shoppingCartModal.closeButton()
     shoppingCartModal.validateMessageForEmptyCart('Your shopping cart is empty!')
     
-    HomePage.getHomeOption().click()
+    homepage.getHomeOption().click()
     
-    HomePage.getSpecialHotOption().click()
+    homepage.getSpecialHotOption().click()
 
-    HomePage.getBlogOption().click()
+    homepage.getBlogOption().click()
 
   })
 
   it('Testing wish list with not logged user', () => {
-    HomePage.visit()
-    HomePage.getWishListIconButton().click()
+    homepage.visit()
+    homepage.getWishListIconButton().click()
     cy.wait(3000)
     loginPage.getEmailInputField().should('be.visible')
     loginPage.getPasswordInputField().should('be.visible')
@@ -48,21 +48,21 @@ describe('Test suite edited with vim', () => {
   })
 
   it('Testing the corousel component', () => {
-    HomePage.visit()
-    HomePage.getFirstImageInMainCarousel().should('be.visible')
-    HomePage.getCarouselNextButton().realHover()
-    HomePage.getCarouselNextButton().click()
+    homepage.visit()
+    homepage.getFirstImageInMainCarousel().should('be.visible')
+    homepage.getCarouselNextButton().realHover()
+    homepage.getCarouselNextButton().click()
     cy.wait(1000)
-    HomePage.getSecondImageInMainCarousel().should('be.visible')
-    HomePage.getCarouselNextButton().realHover()
+    homepage.getSecondImageInMainCarousel().should('be.visible')
+    homepage.getCarouselNextButton().realHover()
     cy.wait(1000)
-    HomePage.getCarouselNextButton().click()
-    HomePage.getThirdImageInMainCarousel().should('be.visible')
+    homepage.getCarouselNextButton().click()
+    homepage.getThirdImageInMainCarousel().should('be.visible')
 
   })
   it('Testing Right navigation component', () => {
-    HomePage.visit()
-    HomePage.getMyAccountOption().click()
+    homepage.visit()
+    homepage.getMyAccountOption().click()
     rightNavigationBar.getLoginOption().should('be.visible')
     rightNavigationBar.getRegisterOption().should('be.visible')
     rightNavigationBar.getForgottenPasswordOption().should('be.visible')
@@ -79,8 +79,8 @@ describe('Test suite edited with vim', () => {
   })
 
   it("Default test for register page.", () => {
-    HomePage.visit()
-    HomePage.getMyAccountOption().click()
+    homepage.visit()
+    homepage.getMyAccountOption().click()
     rightNavigationBar.getRegisterOption().click()
     registerPage.getFirstnameInput().should('be.visible')
     registerPage.getLastnameInput().should('be.visible')
@@ -95,8 +95,8 @@ describe('Test suite edited with vim', () => {
     registerPage.getContinueButton().should('be.visible')
   })
   it('Testing register errors.', () => {
-    HomePage.visit()
-    HomePage.getMyAccountOption().click()
+    homepage.visit()
+    homepage.getMyAccountOption().click()
     rightNavigationBar.getRegisterOption().click()
     registerPage.getWarningComponent().should('not.exist')
     registerPage.getContinueButton().click()
@@ -108,10 +108,12 @@ describe('Test suite edited with vim', () => {
     registerPage.getWarningComponent().should('be.visible')
     registerPage.getWarningComponent().should('have.text', ' Warning: You must agree to the Privacy Policy!')
   })
-  it.only('Test for already registered email', () => {
-    HomePage.visit()
-    HomePage.getMyAccountOption().click()
+
+  it('Test for already registered email', () => {
+    homepage.visit()
+    homepage.getMyAccountOption().click()
     rightNavigationBar.getRegisterOption().click()
+    cy.url().should('contain', 'account/register')
     registerPage.getWarningComponent().should('not.exist')
     registerPage.getFirstnameInput().type('Jose')
     registerPage.getLastnameInput().type('Lopez')
@@ -125,4 +127,6 @@ describe('Test suite edited with vim', () => {
     registerPage.getWarningComponent().should('be.visible')
     registerPage.getWarningComponent().should('have.text', ' Warning: E-Mail Address is already registered!')
   })
+  
+  
 })
