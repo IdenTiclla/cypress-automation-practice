@@ -78,7 +78,7 @@ describe('Test suite edited with vim', () => {
     rightNavigationBar.getNewsletterOption().should('be.visible')
   })
 
-  it.only("Default test for register page.", () => {
+  it("Default test for register page.", () => {
     HomePage.visit()
     HomePage.getMyAccountOption().click()
     rightNavigationBar.getRegisterOption().click()
@@ -93,5 +93,20 @@ describe('Test suite edited with vim', () => {
     registerPage.getPolicyPrivacyCheckbox().should('be.visible')
     registerPage.getPolicyPrivacyLinkElement().should('be.visible')
     registerPage.getContinueButton().should('be.visible')
+  })
+  it.only('Testing register errors.', () => {
+    HomePage.visit()
+    HomePage.getMyAccountOption().click()
+    rightNavigationBar.getRegisterOption().click()
+    registerPage.getWarningComponent().should('not.exist')
+    registerPage.getContinueButton().click()
+    registerPage.getFirstnameErrorText().should('have.text', 'First Name must be between 1 and 32 characters!')
+    registerPage.getLastnameIErrorText().should('have.text', 'Last Name must be between 1 and 32 characters!')
+    registerPage.getEmailErrorText().should('have.text', 'E-Mail Address does not appear to be valid!')
+    registerPage.getTelephoneErrorText().should('have.text', 'Telephone must be between 3 and 32 characters!')
+    registerPage.getPasswordErrorText().should('have.text', 'Password must be between 4 and 20 characters!')
+    registerPage.getWarningComponent().should('be.visible')
+    registerPage.getWarningComponent().should('have.text', ' Warning: You must agree to the Privacy Policy!')
+
   })
 })
