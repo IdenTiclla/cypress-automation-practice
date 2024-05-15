@@ -94,7 +94,7 @@ describe('Test suite edited with vim', () => {
     registerPage.getPolicyPrivacyLinkElement().should('be.visible')
     registerPage.getContinueButton().should('be.visible')
   })
-  it.only('Testing register errors.', () => {
+  it('Testing register errors.', () => {
     HomePage.visit()
     HomePage.getMyAccountOption().click()
     rightNavigationBar.getRegisterOption().click()
@@ -107,6 +107,22 @@ describe('Test suite edited with vim', () => {
     registerPage.getPasswordErrorText().should('have.text', 'Password must be between 4 and 20 characters!')
     registerPage.getWarningComponent().should('be.visible')
     registerPage.getWarningComponent().should('have.text', ' Warning: You must agree to the Privacy Policy!')
-
+  })
+  it.only('Test for already registered email', () => {
+    HomePage.visit()
+    HomePage.getMyAccountOption().click()
+    rightNavigationBar.getRegisterOption().click()
+    registerPage.getWarningComponent().should('not.exist')
+    registerPage.getFirstnameInput().type('Jose')
+    registerPage.getLastnameInput().type('Lopez')
+    registerPage.getEmailInput().type('jose.lopez@gmail.com')
+    registerPage.getTelephoneInput().type('77045789')
+    registerPage.getPasswordInput().type('P@ssw0rd')
+    registerPage.getPasswordConfirmInput().type('P@ssw0rd')
+    registerPage.getYesRadioButton().click()
+    registerPage.getPolicyPrivacyCheckbox().click()
+    registerPage.getContinueButton().click()
+    registerPage.getWarningComponent().should('be.visible')
+    registerPage.getWarningComponent().should('have.text', ' Warning: E-Mail Address is already registered!')
   })
 })
