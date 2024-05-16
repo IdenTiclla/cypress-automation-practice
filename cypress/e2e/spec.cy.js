@@ -3,12 +3,14 @@ import ShoppingCartModal from "./components/ShoppingCartModal"
 import Login from "../pages/Login"
 import RightNavigationBar from "./components/RightNavigationBar"
 import RegisterPage from "../pages/RegisterPage"
+import Notification from "./components/Notification"
 
 const loginPage = new Login()
 const homepage = new Home()
 const shoppingCartModal = new ShoppingCartModal()
 const rightNavigationBar = new RightNavigationBar()
 const registerPage = new RegisterPage()
+const notificationComponent = new Notification()
 
 Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
@@ -126,6 +128,26 @@ describe('Test suite edited with vim', () => {
     registerPage.getContinueButton().click()
     registerPage.getWarningComponent().should('be.visible')
     registerPage.getWarningComponent().should('have.text', ' Warning: E-Mail Address is already registered!')
+  })
+
+  it.only('test for adding an item to the cart', () => {
+    homepage.visit()
+    homepage.getTopProducts().should('have.length', 10)
+    cy.wait(3000)
+    homepage.getTopProducts().eq(0).realHover()
+    homepage.getTopProducts().eq(0).find('div.product-action').should('be.visible')
+    homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('have.length', 4)
+    homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('be.be.visible')
+    homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(0).click()
+    notificationComponent.getHeaderTitle().should('be.visible')
+    notificationComponent.getHeaderTitle().should('contain', '1 item(s) - $170.00')
+    notificationComponent.getBodyMessage().should('be.visible')
+    notificationComponent.getBodyMessage().should('contain', 'Success: You have added ')
+    notificationComponent.getBodyMessage().should('contain', ' to your ')
+    notificationComponent.getBodyMessage().should('have.text', 'Success: You have added iMac to your shopping cart!')
+    notificationComponent.getCloseButton().should('be.visible')
+    notificationComponent.getViewCartButton().should('be.visible')
+    notificationComponent.getCheckoutButton().should('be.visible')
   })
   
   
