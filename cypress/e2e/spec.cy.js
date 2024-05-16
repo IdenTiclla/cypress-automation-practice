@@ -130,7 +130,7 @@ describe('Test suite edited with vim', () => {
     registerPage.getWarningComponent().should('have.text', ' Warning: E-Mail Address is already registered!')
   })
 
-  it.only('test for adding an item to the cart', () => {
+  it('test for adding an item to the cart', () => {
     homepage.visit()
     homepage.getTopProducts().should('have.length', 10)
     cy.wait(3000)
@@ -148,6 +148,16 @@ describe('Test suite edited with vim', () => {
     notificationComponent.getCloseButton().should('be.visible')
     notificationComponent.getViewCartButton().should('be.visible')
     notificationComponent.getCheckoutButton().should('be.visible')
+  })
+
+  it.only('adding item to the wishlist without a login user', () => {
+    homepage.visit()
+    cy.wait(3000)
+    homepage.getTopProducts().eq(0).realHover()
+    homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).click()
+    notificationComponent.getHeaderTitle().should('contain', 'Login')
+    notificationComponent.getLoginButton().should('be.visible')
+    notificationComponent.getRegisterButton().should('be.visible')
   })
   
   
