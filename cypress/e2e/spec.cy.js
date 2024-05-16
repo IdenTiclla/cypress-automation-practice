@@ -1,9 +1,11 @@
 import Home from "../pages/Home"
-import ShoppingCartModal from "./components/ShoppingCartModal"
 import Login from "../pages/Login"
-import RightNavigationBar from "./components/RightNavigationBar"
 import RegisterPage from "../pages/RegisterPage"
+import ShoppingCartModal from "./components/ShoppingCartModal"
 import Notification from "./components/Notification"
+import RightNavigationBar from "./components/RightNavigationBar"
+import ShoppingCartPage from "../pages/ShoppingCartPage"
+
 
 const loginPage = new Login()
 const homepage = new Home()
@@ -11,6 +13,7 @@ const shoppingCartModal = new ShoppingCartModal()
 const rightNavigationBar = new RightNavigationBar()
 const registerPage = new RegisterPage()
 const notificationComponent = new Notification()
+const shoppingCartPage = new ShoppingCartPage()
 
 Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
@@ -150,7 +153,7 @@ describe('Test suite edited with vim', () => {
     notificationComponent.getCheckoutButton().should('be.visible')
   })
 
-  it.only('adding item to the wishlist without a login user', () => {
+  it('adding item to the wishlist without a login user', () => {
     homepage.visit()
     cy.wait(3000)
     homepage.getTopProducts().eq(0).realHover()
@@ -160,5 +163,17 @@ describe('Test suite edited with vim', () => {
     notificationComponent.getRegisterButton().should('be.visible')
   })
   
+  it.only("Test for the shopping cart page with no items", () => {
+    homepage.visit()
+    homepage.getCartIconButton().click()
+    shoppingCartModal.getEditCartButton().click()
+    cy.url().should('contain', 'checkout/cart')
+    shoppingCartPage.getIcon().should('be.visible')
+    shoppingCartPage.getTitle().should('be.visible')
+    shoppingCartPage.getMessage().should('be.visible')
+    shoppingCartPage.getMessage().should('have.text', 'Your shopping cart is empty!')
+    shoppingCartPage.getContinueButton().should('be.visible')
+
+  })
   
 })
