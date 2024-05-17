@@ -5,15 +5,16 @@ import ShoppingCartModal from "./components/ShoppingCartModal"
 import Notification from "./components/Notification"
 import RightNavigationBar from "./components/RightNavigationBar"
 import ShoppingCartPage from "../pages/ShoppingCartPage"
-
+import Search from "./components/Search"
 
 const loginPage = new Login()
 const homepage = new Home()
+const registerPage = new RegisterPage()
+const shoppingCartPage = new ShoppingCartPage()
 const shoppingCartModal = new ShoppingCartModal()
 const rightNavigationBar = new RightNavigationBar()
-const registerPage = new RegisterPage()
 const notificationComponent = new Notification()
-const shoppingCartPage = new ShoppingCartPage()
+const searchComponent = new Search()
 
 Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
@@ -163,7 +164,7 @@ describe('Test suite edited with vim', () => {
     notificationComponent.getRegisterButton().should('be.visible')
   })
   
-  it.only("Test for the shopping cart page with no items", () => {
+  it("Test for the shopping cart page with no items", () => {
     homepage.visit()
     homepage.getCartIconButton().click()
     shoppingCartModal.getEditCartButton().click()
@@ -174,7 +175,20 @@ describe('Test suite edited with vim', () => {
     shoppingCartPage.getMessage().should('be.visible')
     shoppingCartPage.getMessage().should('have.text', 'Your shopping cart is empty!')
     shoppingCartPage.getContinueButton().should('be.visible')
+  })
 
+  it.only("Test for testing the search functionality with no results", () => {
+    homepage.visit()
+    searchComponent.getAllCategoriesDropdown().should('be.visible')
+    searchComponent.getSearchInputField().should('have.value', '')
+    searchComponent.getSearchInputField().should('be.visible')
+    searchComponent.getSearchInputField().should('have.attr', 'placeholder', 'Search For Products')
+    searchComponent.getSearchButton().should('be.visible')
+
+    searchComponent.getSearchInputField().type("hello world")
+    searchComponent.getSearchButton().click()
+    cy.url().should('contain', 'search=hello+world')
+    cy.contains('There is no product that matches the search criteria.')
   })
   
 })
