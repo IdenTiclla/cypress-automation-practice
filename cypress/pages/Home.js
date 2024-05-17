@@ -1,4 +1,5 @@
 import Search from "../e2e/components/Search"
+import MainNavigation from "../e2e/components/MainNavigation"
 
 class Home {
     visit() {
@@ -6,15 +7,13 @@ class Home {
     }
     constructor() {
         this.searchComponent = new Search()
+        this.mainNavigationComponent = new MainNavigation()
     }
-    getHomeOption = () => cy.get("ul.horizontal a[href*='common/home']")
-    getSpecialHotOption = () => cy.get("ul.horizontal a[href*='product/special']")
-    getBlogOption = () => cy.get("ul.horizontal a[href*='blog/home']")
-    getMegaMenuOption = () => cy.get("ul.horizontal li:nth-of-type(4) a[data-toggle='dropdown']")
-    getAddOnsOption = () => cy.get("ul.horizontal li:nth-of-type(5) a[data-toggle='dropdown']")
-    getMyAccountOption = () => cy.get("ul.horizontal li:nth-of-type(6) a[data-toggle='dropdown']")
+    
+    getCompareIconButton = () => cy.get("div#main-header  a[href*='/compare']")
     getWishListIconButton = () => cy.get("a[aria-label='Wishlist']")
     getCartIconButton = () => cy.get("div.cart-icon").first()
+    
     getCarouselPrevButton = () => cy.get("div[data-ride='carousel'] a.carousel-control-prev")
     getCarouselNextButton = () => cy.get("div[data-ride='carousel'] a.carousel-control-next")
 

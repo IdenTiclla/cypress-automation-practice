@@ -5,7 +5,6 @@ import ShoppingCartModal from "./components/ShoppingCartModal"
 import Notification from "./components/Notification"
 import RightNavigationBar from "./components/RightNavigationBar"
 import ShoppingCartPage from "../pages/ShoppingCartPage"
-import Search from "./components/Search"
 
 const loginPage = new Login()
 const homepage = new Home()
@@ -25,19 +24,19 @@ describe('Test suite edited with vim', () => {
     cy.visit('https://example.cypress.io')
   })
   
-  it('Testing sausage page', () => {
+  it('Test for the empty shopping cart modal', () => {
     homepage.visit()
-    homepage.getHomeOption().click()
+    homepage.mainNavigationComponent.getHomeOption().click()
     homepage.getCartIconButton().click()
 
     shoppingCartModal.closeButton()
     shoppingCartModal.validateMessageForEmptyCart('Your shopping cart is empty!')
     
-    homepage.getHomeOption().click()
+    homepage.mainNavigationComponent.getHomeOption().click()
     
-    homepage.getSpecialHotOption().click()
+    homepage.mainNavigationComponent.getSpecialHotOption().click()
 
-    homepage.getBlogOption().click()
+    homepage.mainNavigationComponent.getBlogOption().click()
 
   })
 
@@ -67,7 +66,7 @@ describe('Test suite edited with vim', () => {
   })
   it('Testing Right navigation component', () => {
     homepage.visit()
-    homepage.getMyAccountOption().click()
+    homepage.mainNavigationComponent.getMyAccountOption().click()
     rightNavigationBar.getLoginOption().should('be.visible')
     rightNavigationBar.getRegisterOption().should('be.visible')
     rightNavigationBar.getForgottenPasswordOption().should('be.visible')
@@ -85,7 +84,7 @@ describe('Test suite edited with vim', () => {
 
   it("Default test for register page.", () => {
     homepage.visit()
-    homepage.getMyAccountOption().click()
+    homepage.mainNavigationComponent.getMyAccountOption().click()
     rightNavigationBar.getRegisterOption().click()
     registerPage.getFirstnameInput().should('be.visible')
     registerPage.getLastnameInput().should('be.visible')
@@ -101,7 +100,7 @@ describe('Test suite edited with vim', () => {
   })
   it('Testing register errors.', () => {
     homepage.visit()
-    homepage.getMyAccountOption().click()
+    homepage.mainNavigationComponent.getMyAccountOption().click()
     rightNavigationBar.getRegisterOption().click()
     registerPage.getWarningComponent().should('not.exist')
     registerPage.getContinueButton().click()
@@ -116,7 +115,7 @@ describe('Test suite edited with vim', () => {
 
   it('Test for already registered email', () => {
     homepage.visit()
-    homepage.getMyAccountOption().click()
+    homepage.mainNavigationComponent.getMyAccountOption().click()
     rightNavigationBar.getRegisterOption().click()
     cy.url().should('contain', 'account/register')
     registerPage.getWarningComponent().should('not.exist')
@@ -176,7 +175,7 @@ describe('Test suite edited with vim', () => {
     shoppingCartPage.getContinueButton().should('be.visible')
   })
 
-  it.only("Test for testing the search functionality with no results", () => {
+  it("Test for testing the search functionality with no results", () => {
     homepage.visit()
     homepage.searchComponent.getAllCategoriesDropdown().should('be.visible')
     homepage.searchComponent.getSearchInputField().should('have.value', '')
