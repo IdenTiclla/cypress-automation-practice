@@ -14,7 +14,6 @@ const shoppingCartPage = new ShoppingCartPage()
 const shoppingCartModal = new ShoppingCartModal()
 const rightNavigationBar = new RightNavigationBar()
 const notificationComponent = new Notification()
-const searchComponent = new Search()
 
 Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
@@ -179,14 +178,14 @@ describe('Test suite edited with vim', () => {
 
   it.only("Test for testing the search functionality with no results", () => {
     homepage.visit()
-    searchComponent.getAllCategoriesDropdown().should('be.visible')
-    searchComponent.getSearchInputField().should('have.value', '')
-    searchComponent.getSearchInputField().should('be.visible')
-    searchComponent.getSearchInputField().should('have.attr', 'placeholder', 'Search For Products')
-    searchComponent.getSearchButton().should('be.visible')
+    homepage.searchComponent.getAllCategoriesDropdown().should('be.visible')
+    homepage.searchComponent.getSearchInputField().should('have.value', '')
+    homepage.searchComponent.getSearchInputField().should('be.visible')
+    homepage.searchComponent.getSearchInputField().should('have.attr', 'placeholder', 'Search For Products')
+    homepage.searchComponent.getSearchButton().should('be.visible')
 
-    searchComponent.getSearchInputField().type("hello world")
-    searchComponent.getSearchButton().click()
+    homepage.searchComponent.getSearchInputField().type("hello world")
+    homepage.searchComponent.getSearchButton().click()
     cy.url().should('contain', 'search=hello+world')
     cy.contains('There is no product that matches the search criteria.')
   })

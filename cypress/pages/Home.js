@@ -1,6 +1,11 @@
+import Search from "../e2e/components/Search"
+
 class Home {
     visit() {
         cy.visit('/')
+    }
+    constructor() {
+        this.searchComponent = new Search()
     }
     getHomeOption = () => cy.get("ul.horizontal a[href*='common/home']")
     getSpecialHotOption = () => cy.get("ul.horizontal a[href*='product/special']")
