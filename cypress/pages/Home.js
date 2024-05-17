@@ -1,18 +1,15 @@
-import Search from "../e2e/components/Search"
 import MainNavigation from "../e2e/components/MainNavigation"
-
+import MainHeader from "../e2e/components/MainHeader"
 class Home {
     visit() {
         cy.visit('/')
     }
     constructor() {
-        this.searchComponent = new Search()
         this.mainNavigationComponent = new MainNavigation()
+        this.mainHeaderComponent = new MainHeader()
     }
     
-    getCompareIconButton = () => cy.get("div#main-header  a[href*='/compare']")
-    getWishListIconButton = () => cy.get("a[aria-label='Wishlist']")
-    getCartIconButton = () => cy.get("div.cart-icon").first()
+    
     
     getCarouselPrevButton = () => cy.get("div[data-ride='carousel'] a.carousel-control-prev")
     getCarouselNextButton = () => cy.get("div[data-ride='carousel'] a.carousel-control-next")

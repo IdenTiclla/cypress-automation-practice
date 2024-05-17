@@ -27,7 +27,7 @@ describe('Test suite edited with vim', () => {
   it('Test for the empty shopping cart modal', () => {
     homepage.visit()
     homepage.mainNavigationComponent.getHomeOption().click()
-    homepage.getCartIconButton().click()
+    homepage.mainHeaderComponent.getCartIconButton().click()
 
     shoppingCartModal.closeButton()
     shoppingCartModal.validateMessageForEmptyCart('Your shopping cart is empty!')
@@ -42,7 +42,7 @@ describe('Test suite edited with vim', () => {
 
   it('Testing wish list with not logged user', () => {
     homepage.visit()
-    homepage.getWishListIconButton().click()
+    homepage.mainHeaderComponent.getWishListIconButton().click()
     cy.wait(3000)
     loginPage.getEmailInputField().should('be.visible')
     loginPage.getPasswordInputField().should('be.visible')
@@ -164,7 +164,7 @@ describe('Test suite edited with vim', () => {
   
   it("Test for the shopping cart page with no items", () => {
     homepage.visit()
-    homepage.getCartIconButton().click()
+    homepage.mainHeaderComponent.getCartIconButton().click()
     shoppingCartModal.getEditCartButton().click()
     cy.url().should('contain', 'checkout/cart')
     shoppingCartPage.getWarningIcon().should('be.visible')
@@ -177,14 +177,13 @@ describe('Test suite edited with vim', () => {
 
   it("Test for testing the search functionality with no results", () => {
     homepage.visit()
-    homepage.searchComponent.getAllCategoriesDropdown().should('be.visible')
-    homepage.searchComponent.getSearchInputField().should('have.value', '')
-    homepage.searchComponent.getSearchInputField().should('be.visible')
-    homepage.searchComponent.getSearchInputField().should('have.attr', 'placeholder', 'Search For Products')
-    homepage.searchComponent.getSearchButton().should('be.visible')
-
-    homepage.searchComponent.getSearchInputField().type("hello world")
-    homepage.searchComponent.getSearchButton().click()
+    homepage.mainHeaderComponent.getAllCategoriesDropdown().should('be.visible')
+    homepage.mainHeaderComponent.getSearchInputField().should('have.value', '')
+    homepage.mainHeaderComponent.getSearchInputField().should('be.visible')
+    homepage.mainHeaderComponent.getSearchInputField().should('have.attr', 'placeholder', 'Search For Products')
+    homepage.mainHeaderComponent.getSearchButton().should('be.visible')
+    homepage.mainHeaderComponent.getSearchInputField().type("hello world")
+    homepage.mainHeaderComponent.getSearchButton().click()
     cy.url().should('contain', 'search=hello+world')
     cy.contains('There is no product that matches the search criteria.')
   })
