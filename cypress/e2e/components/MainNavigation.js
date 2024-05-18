@@ -3,8 +3,13 @@ class MainNavigation {
     getSpecialHotOption = () => cy.get("ul.horizontal a[href*='product/special']")
     getBlogOption = () => cy.get("ul.horizontal a[href*='blog/home']")
     getMegaMenuOption = () => cy.get("ul.horizontal li:nth-of-type(4) a[data-toggle='dropdown']")
-    getAddOnsOption = () => cy.get("ul.horizontal li:nth-of-type(5) a[data-toggle='dropdown']")
+    getAddOnsOption = () => cy.get("ul.navbar-nav.horizontal > li:nth-of-type(5)")
+    getAddOnsDropdownOptions = () => cy.get("ul.horizontal li:nth-of-type(5) a[data-toggle='dropdown'] + ul > li")
     getMyAccountOption = () => cy.get("ul.horizontal li:nth-of-type(6) a[data-toggle='dropdown']")
+
+    clickOnAddOnsDropdownOptions = (option) => {
+        this.getAddOnsDropdownOptions().contains(option).click()
+    }
 }
 
 export default MainNavigation

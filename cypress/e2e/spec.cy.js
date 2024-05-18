@@ -1,10 +1,16 @@
 import Home from "../pages/Home"
 import Login from "../pages/Login"
 import RegisterPage from "../pages/RegisterPage"
+import ShoppingCartPage from "../pages/ShoppingCartPage"
+
+import ModulesPage from "../pages/ModulesPage"
+import WidgetsPage from "../pages/WidgetsPage"
+import DesignsPage from "../pages/DesignsPages"
+
 import ShoppingCartModal from "./components/ShoppingCartModal"
 import Notification from "./components/Notification"
 import RightNavigationBar from "./components/RightNavigationBar"
-import ShoppingCartPage from "../pages/ShoppingCartPage"
+
 
 const loginPage = new Login()
 const homepage = new Home()
@@ -13,6 +19,9 @@ const shoppingCartPage = new ShoppingCartPage()
 const shoppingCartModal = new ShoppingCartModal()
 const rightNavigationBar = new RightNavigationBar()
 const notificationComponent = new Notification()
+const modulesPage = new ModulesPage()
+const widgetsPage = new WidgetsPage()
+const designsPage = new DesignsPage()
 
 Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
@@ -188,4 +197,29 @@ describe('Test suite edited with vim', () => {
     cy.contains('There is no product that matches the search criteria.')
   })
   
+  it.only('Test for the design page', () => {
+    homepage.visit()
+    homepage.mainNavigationComponent.getAddOnsDropdownOptions().should('not.be.visible')
+    homepage.mainNavigationComponent.getAddOnsOption().click()
+    homepage.mainNavigationComponent.getAddOnsOption().click()
+    homepage.mainNavigationComponent.getAddOnsDropdownOptions().should('be.visible')
+    homepage.mainNavigationComponent.getAddOnsDropdownOptions().should('have.length', 3)
+    homepage.mainNavigationComponent.clickOnAddOnsDropdownOptions('Designs')
+    cy.url().should('contain', 'page_id=11')
+
+    designsPage.mainNavigationComponent.getAddOnsDropdownOptions().should('not.be.visible')
+    designsPage.mainNavigationComponent.getAddOnsOption().click()
+    designsPage.mainNavigationComponent.getAddOnsOption().click()
+    designsPage.mainNavigationComponent.clickOnAddOnsDropdownOptions('Modules')
+    cy.url().should('contain', 'page_id=10')
+
+    modulesPage.mainNavigationComponent.getAddOnsDropdownOptions().should('not.be.visible')
+    modulesPage.mainNavigationComponent.getAddOnsOption().click()
+    modulesPage.mainNavigationComponent.getAddOnsOption().click()
+    modulesPage.mainNavigationComponent.clickOnAddOnsDropdownOptions('Widgets')
+    cy.url().should('contain', 'page_id=9')
+
+    widgetsPage.mainNavigationComponent.getHomeOption().click()
+    cy.url().should('contain', 'common/home')
+  })
 })

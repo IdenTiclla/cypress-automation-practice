@@ -8,9 +8,7 @@ class Home {
         this.mainNavigationComponent = new MainNavigation()
         this.mainHeaderComponent = new MainHeader()
     }
-    
-    
-    
+
     getCarouselPrevButton = () => cy.get("div[data-ride='carousel'] a.carousel-control-prev")
     getCarouselNextButton = () => cy.get("div[data-ride='carousel'] a.carousel-control-next")
 
@@ -18,7 +16,6 @@ class Home {
     getSecondImageInMainCarousel = () => cy.get("div[data-ride='carousel'] div.carousel-item:nth-of-type(2)")
     getThirdImageInMainCarousel = () => cy.get("div[data-ride='carousel'] div.carousel-item:nth-of-type(3)")
 
-    // getTopProducts = () => cy.get("div#common-home > div:nth-of-type(5) div.swiper-slide")
     getTopProducts = () => cy.get("div#common-home > div:nth-of-type(5) div.swiper-slide > div.product-thumb.image-top")
     
     getProductActions = () => cy.get("div#common-home > div:nth-of-type(5) div.product-action")
