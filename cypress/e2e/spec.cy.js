@@ -197,7 +197,7 @@ describe('Test suite edited with vim', () => {
     cy.contains('There is no product that matches the search criteria.')
   })
   
-  it.only('Test for the design page', () => {
+  it('Test for the design page', () => {
     homepage.visit()
     homepage.mainNavigationComponent.getAddOnsDropdownOptions().should('not.be.visible')
     homepage.mainNavigationComponent.getAddOnsOption().click()
@@ -221,5 +221,21 @@ describe('Test suite edited with vim', () => {
 
     widgetsPage.mainNavigationComponent.getHomeOption().click()
     cy.url().should('contain', 'common/home')
+  })
+
+  it("Test for going to the login page from the main nav bar", () => {
+    homepage.visit()
+    homepage.mainNavigationComponent.getMyAccountOption().scrollIntoView().should('be.visible')
+    homepage.mainNavigationComponent.getMyAccountOption().realHover()
+    homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
+    cy.url().should('contain', 'account/login')
+  })
+
+  it.only("Test for going to the register page from the main nav bar", () => {
+    homepage.visit()
+    homepage.mainNavigationComponent.getMyAccountOption().scrollIntoView().should('be.visible')
+    homepage.mainNavigationComponent.getMyAccountOption().realHover()
+    homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
+    cy.url().should('contain', 'account/register')
   })
 })
