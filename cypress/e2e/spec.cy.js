@@ -191,24 +191,21 @@ describe('Test suite edited with vim', () => {
     cy.contains('There is no product that matches the search criteria.')
   })
   
-  it('Test for the design page', () => {
+  it('Test for navigating through the design, modules and widgets pages', () => {
     homepage.mainNavigationComponent.getAddOnsDropdownOptions().should('not.be.visible')
-    homepage.mainNavigationComponent.getAddOnsOption().click()
-    homepage.mainNavigationComponent.getAddOnsOption().click()
+    homepage.mainNavigationComponent.getAddOnsOption().trigger('mouseover')
     homepage.mainNavigationComponent.getAddOnsDropdownOptions().should('be.visible')
     homepage.mainNavigationComponent.getAddOnsDropdownOptions().should('have.length', 3)
     homepage.mainNavigationComponent.clickOnAddOnsDropdownOptions('Designs')
     cy.url().should('contain', 'page_id=11')
 
     designsPage.mainNavigationComponent.getAddOnsDropdownOptions().should('not.be.visible')
-    designsPage.mainNavigationComponent.getAddOnsOption().click()
-    designsPage.mainNavigationComponent.getAddOnsOption().click()
+    designsPage.mainNavigationComponent.getAddOnsOption().trigger('mouseover')
     designsPage.mainNavigationComponent.clickOnAddOnsDropdownOptions('Modules')
     cy.url().should('contain', 'page_id=10')
 
     modulesPage.mainNavigationComponent.getAddOnsDropdownOptions().should('not.be.visible')
-    modulesPage.mainNavigationComponent.getAddOnsOption().click()
-    modulesPage.mainNavigationComponent.getAddOnsOption().click()
+    modulesPage.mainNavigationComponent.getAddOnsOption().trigger('mouseover')
     modulesPage.mainNavigationComponent.clickOnAddOnsDropdownOptions('Widgets')
     cy.url().should('contain', 'page_id=9')
 
