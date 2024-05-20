@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@4tw/cypress-drag-drop": "^2.2.5",
-    "cypress-drag-drop": "^1.1.1",
     "cypress-real-events": "^1.11.0",
     "save-dev": "^0.0.1-security"
   }
