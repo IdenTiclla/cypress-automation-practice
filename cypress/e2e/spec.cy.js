@@ -7,6 +7,8 @@ import ModulesPage from "../pages/ModulesPage"
 import WidgetsPage from "../pages/WidgetsPage"
 import DesignsPage from "../pages/DesignsPages"
 
+import SearchResultPage from "../pages/SearchResultPage"
+
 import ShoppingCartModal from "./components/ShoppingCartModal"
 import Notification from "./components/Notification"
 import RightNavigationBar from "./components/RightNavigationBar"
@@ -22,6 +24,7 @@ const notificationComponent = new Notification()
 const modulesPage = new ModulesPage()
 const widgetsPage = new WidgetsPage()
 const designsPage = new DesignsPage()
+const searchResultPage = new SearchResultPage()
 
 Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
@@ -239,5 +242,17 @@ describe('Test suite edited with vim', () => {
     homepage.mainNavigationComponent.getMegaMenuOptionsDropdown().should('exist').and('be.visible')
     homepage.mainNavigationComponent.clickOnMegaMenuDropdownOptions('Apple')
     cy.url().should('contain', 'manufacturer_id=8')
+  })
+  
+  it.only('Test for default search with any criteria', () => {
+    homepage.mainHeaderComponent.getSearchButton().click()
+    searchResultPage.getProducts().should('have.length', 15)
+    searchResultPage.getKeywordsInputField().should('have.text', '')
+    searchResultPage.getCategoriesDropdown().should('have.value', '0')
+    searchResultPage.getSearchButton().should('have.value', 'Search')
+
+    searchResultPage.getSearchInSubcategoriesCheckbox().should('not.be.checked')
+    searchResultPage.getSearchInProductDescriptionsCheckbox().should('not.be.checked')
+    searchResultPage.getPagination().should('have.length', 7)
   })
 })
