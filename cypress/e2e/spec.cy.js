@@ -28,13 +28,17 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 });
 
 describe('Test suite edited with vim', () => {
+  beforeEach(() => {
+    homepage.visit()
+    cy.get('body').should('be.visible')
+  })
   
-  it('Test case edited with vim', () => {
-    cy.visit('https://example.cypress.io')
+  afterEach(() => {
+    cy.clearLocalStorage()
+    cy.clearCookies()
   })
   
   it('Test for the empty shopping cart modal', () => {
-    homepage.visit()
     homepage.mainNavigationComponent.getHomeOption().click()
     homepage.mainHeaderComponent.getCartIconButton().click()
 
@@ -50,7 +54,6 @@ describe('Test suite edited with vim', () => {
   })
 
   it('Testing wish list with not logged user', () => {
-    homepage.visit()
     homepage.mainHeaderComponent.getWishListIconButton().click()
     cy.wait(3000)
     loginPage.getEmailInputField().should('be.visible')
@@ -61,7 +64,6 @@ describe('Test suite edited with vim', () => {
   })
 
   it('Testing the corousel component', () => {
-    homepage.visit()
     homepage.getFirstImageInMainCarousel().should('be.visible')
     homepage.getCarouselNextButton().realHover()
     homepage.getCarouselNextButton().click()
@@ -74,7 +76,6 @@ describe('Test suite edited with vim', () => {
 
   })
   it('Testing Right navigation component', () => {
-    homepage.visit()
     homepage.mainNavigationComponent.getMyAccountOption().click()
     rightNavigationBar.getLoginOption().should('be.visible')
     rightNavigationBar.getRegisterOption().should('be.visible')
@@ -92,7 +93,6 @@ describe('Test suite edited with vim', () => {
   })
 
   it("Default test for register page.", () => {
-    homepage.visit()
     homepage.mainNavigationComponent.getMyAccountOption().click()
     rightNavigationBar.getRegisterOption().click()
     registerPage.getFirstnameInput().should('be.visible')
@@ -108,7 +108,6 @@ describe('Test suite edited with vim', () => {
     registerPage.getContinueButton().should('be.visible')
   })
   it('Testing register errors.', () => {
-    homepage.visit()
     homepage.mainNavigationComponent.getMyAccountOption().click()
     rightNavigationBar.getRegisterOption().click()
     registerPage.getWarningComponent().should('not.exist')
@@ -123,7 +122,6 @@ describe('Test suite edited with vim', () => {
   })
 
   it('Test for already registered email', () => {
-    homepage.visit()
     homepage.mainNavigationComponent.getMyAccountOption().click()
     rightNavigationBar.getRegisterOption().click()
     cy.url().should('contain', 'account/register')
@@ -142,7 +140,6 @@ describe('Test suite edited with vim', () => {
   })
 
   it('test for adding an item to the cart', () => {
-    homepage.visit()
     homepage.getTopProducts().should('have.length', 10)
     cy.wait(3000)
     homepage.getTopProducts().eq(0).realHover()
@@ -162,7 +159,6 @@ describe('Test suite edited with vim', () => {
   })
 
   it('adding item to the wishlist without a login user', () => {
-    homepage.visit()
     cy.wait(3000)
     homepage.getTopProducts().eq(0).realHover()
     homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).click()
@@ -172,7 +168,6 @@ describe('Test suite edited with vim', () => {
   })
   
   it("Test for the shopping cart page with no items", () => {
-    homepage.visit()
     homepage.mainHeaderComponent.getCartIconButton().click()
     shoppingCartModal.getEditCartButton().click()
     cy.url().should('contain', 'checkout/cart')
@@ -185,7 +180,6 @@ describe('Test suite edited with vim', () => {
   })
 
   it("Test for testing the search functionality with no results", () => {
-    homepage.visit()
     homepage.mainHeaderComponent.getAllCategoriesDropdown().should('be.visible')
     homepage.mainHeaderComponent.getSearchInputField().should('have.value', '')
     homepage.mainHeaderComponent.getSearchInputField().should('be.visible')
@@ -198,7 +192,6 @@ describe('Test suite edited with vim', () => {
   })
   
   it('Test for the design page', () => {
-    homepage.visit()
     homepage.mainNavigationComponent.getAddOnsDropdownOptions().should('not.be.visible')
     homepage.mainNavigationComponent.getAddOnsOption().click()
     homepage.mainNavigationComponent.getAddOnsOption().click()
@@ -224,18 +217,30 @@ describe('Test suite edited with vim', () => {
   })
 
   it("Test for going to the login page from the main nav bar", () => {
-    homepage.visit()
-    homepage.mainNavigationComponent.getMyAccountOption().scrollIntoView().should('be.visible')
-    homepage.mainNavigationComponent.getMyAccountOption().realHover()
+    homepage.mainNavigationComponent.getMyAccountOption().scrollIntoView().should('be.visible').and('exist')
+    // homepage.mainNavigationComponent.getMyAccountOption().realHover()
+    homepage.mainNavigationComponent.getMyAccountOption().trigger('mouseover')
+    homepage.mainNavigationComponent.getMyAccountDropdownOptions().should('exist').and('be.visible')
     homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
     cy.url().should('contain', 'account/login')
   })
 
-  it.only("Test for going to the register page from the main nav bar", () => {
-    homepage.visit()
-    homepage.mainNavigationComponent.getMyAccountOption().scrollIntoView().should('be.visible')
-    homepage.mainNavigationComponent.getMyAccountOption().realHover()
-    homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
+  it("Test for going to the register page from the main nav bar", () => {
+    homepage.mainNavigationComponent.getMyAccountOption().scrollIntoView().should('be.visible').and('exist')
+    // homepage.mainNavigationComponent.getMyAccountOption().realHover()
+    homepage.mainNavigationComponent.getMyAccountOption().trigger('mouseover')
+
+    homepage.mainNavigationComponent.getMyAccountDropdownOptions().should('exist').and('be.visible')
+    homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')    
     cy.url().should('contain', 'account/register')
+  })
+
+  it("Test for clicking a mega menu option", () => {
+    homepage.mainNavigationComponent.getMegaMenuOption().scrollIntoView().should('be.visible').and('exist')
+    // homepage.mainNavigationComponent.getMegaMenuOption().realHover()
+    homepage.mainNavigationComponent.getMegaMenuOption().trigger('mouseover')
+    homepage.mainNavigationComponent.getMegaMenuOptionsDropdown().should('exist').and('be.visible')
+    homepage.mainNavigationComponent.clickOnMegaMenuDropdownOptions('Apple')
+    cy.url().should('contain', 'manufacturer_id=8')
   })
 })
