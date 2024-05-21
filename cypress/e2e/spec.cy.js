@@ -81,6 +81,14 @@ describe('Test suite edited with vim', () => {
       myAccountPage.getMyAffiliateAccountOptions().should('have.length', 1)
       myAccountPage.rightNavigationComponent.getOptions().should('have.length', 14)
     })
+
+    it("Test for logout a user", () => {
+      homepage.mainNavigationComponent.getMyAccountOption().click()
+      loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
+      myAccountPage.rightNavigationComponent.clickOnRightNavigationOption('Logout')
+      cy.contains('Account Logout')
+      cy.url().should('contain', 'account/logout')
+    })
   
     it('Testing the corousel component', () => {
       homepage.getFirstImageInMainCarousel().should('be.visible')
