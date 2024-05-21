@@ -82,12 +82,22 @@ describe('Test suite edited with vim', () => {
       myAccountPage.rightNavigationComponent.getOptions().should('have.length', 14)
     })
 
-    it("Test for logout a user", () => {
+    it.only("Test for logout a user", () => {
+      homepage.mainNavigationComponent.getMyAccountOption().trigger("mouseover")
+      homepage.mainNavigationComponent.getMyAccountDropdownOptions().should('have.length', 2)
       homepage.mainNavigationComponent.getMyAccountOption().click()
       loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
+      myAccountPage.mainNavigationComponent.getMyAccountOption().trigger("mouseover")
+      myAccountPage.mainNavigationComponent.getMyAccountDropdownOptions().should('have.length', 6)
       myAccountPage.rightNavigationComponent.clickOnRightNavigationOption('Logout')
       cy.contains('Account Logout')
+      cy.contains("You have been logged off your account. It is now safe to leave the computer.")
+      cy.contains("Your shopping cart has been saved, the items inside it will be restored whenever you log back into your account.")
+      cy.contains("Continue")
       cy.url().should('contain', 'account/logout')
+      homepage.rightNavigationComponent.getOptions().should('not.have.class', 'active')
+      homepage.mainNavigationComponent.getMyAccountOption().trigger("mouseover")
+      homepage.mainNavigationComponent.getMyAccountDropdownOptions().should('have.length', 2)
     })
   
     it('Testing the corousel component', () => {
