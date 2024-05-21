@@ -8,6 +8,7 @@ import WidgetsPage from "../pages/WidgetsPage"
 import DesignsPage from "../pages/DesignsPages"
 
 import ForgottenPasswordPage from "../pages/ForgottenPasswordPage"
+import MyAccountPage from "../pages/MyAccountPage"
 
 import SearchResultPage from "../pages/SearchResultPage"
 
@@ -28,6 +29,7 @@ const widgetsPage = new WidgetsPage()
 const designsPage = new DesignsPage()
 const searchResultPage = new SearchResultPage()
 const forgottenPasswordPage = new ForgottenPasswordPage()
+const myAccountPage = new MyAccountPage()
 
 Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
@@ -69,6 +71,15 @@ describe('Test suite edited with vim', () => {
       loginPage.getSubmitButton().should('be.visible')
       loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
       cy.wait(3000)
+    })
+    it("Test for testing login functionality", () => {
+      homepage.mainNavigationComponent.getMyAccountOption().click()
+      loginPage.rightNavigationComponent.getOptions().should('have.length', 13)
+      loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
+      myAccountPage.getMyAccountOptions().should('have.length', 5)
+      myAccountPage.getMyOrdersOptions().should('have.length', 6)
+      myAccountPage.getMyAffiliateAccountOptions().should('have.length', 1)
+      myAccountPage.rightNavigationComponent.getOptions().should('have.length', 14)
     })
   
     it('Testing the corousel component', () => {
@@ -307,7 +318,7 @@ describe('Test suite edited with vim', () => {
       loginPage.rightNavigationComponent.getForgottenPasswordOption().should('not.have.class', 'active')
     })
 
-    it.only("Test for going to my account option without a logged user", () => {
+    it("Test for going to my account option without a logged user", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       cy.url().should('contain', 'account/login')
       loginPage.rightNavigationComponent.clickOnRightNavigationOption('My Account')
