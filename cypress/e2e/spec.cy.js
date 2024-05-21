@@ -291,7 +291,7 @@ describe('Test suite edited with vim', () => {
       forgottenPasswordPage.alertComponent.getAlert().should('have.class', 'alert-danger')
     })
     
-    it.only("Test for testing forgotten password, success", () => {
+    it("Test for testing forgotten password, success", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       homepage.rightNavigationComponent.getLoginOption().should('have.class', 'active')
       homepage.rightNavigationComponent.getForgottenPasswordOption().should('not.have.class', 'active')
@@ -305,6 +305,13 @@ describe('Test suite edited with vim', () => {
       cy.url().should('contain', 'account/login')
       loginPage.rightNavigationComponent.getLoginOption().should('have.class', 'active')
       loginPage.rightNavigationComponent.getForgottenPasswordOption().should('not.have.class', 'active')
+    })
+
+    it.only("Test for going to my account option without a logged user", () => {
+      homepage.mainNavigationComponent.getMyAccountOption().click()
+      cy.url().should('contain', 'account/login')
+      loginPage.rightNavigationComponent.clickOnRightNavigationOption('My Account')
+      cy.url().should('contain', 'account/login')
     })
   })
 })
