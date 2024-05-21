@@ -1,6 +1,9 @@
+import Alert from "../e2e/components/Alert"
 class RegisterPage {
-    getWarningComponent = () => cy.get("nav[aria-label='breadcrumb'] + div[class*='alert-danger']")
-
+    constructor() {
+        this.alertComponent = new Alert()
+    }
+    
     getFirstnameInput = () => cy.get("input[name='firstname']")
     getFirstnameErrorText = () => cy.get("input[name='firstname'] + div.text-danger")
 

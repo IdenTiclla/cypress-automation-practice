@@ -7,6 +7,8 @@ import ModulesPage from "../pages/ModulesPage"
 import WidgetsPage from "../pages/WidgetsPage"
 import DesignsPage from "../pages/DesignsPages"
 
+import ForgottenPasswordPage from "../pages/ForgottenPasswordPage"
+
 import SearchResultPage from "../pages/SearchResultPage"
 
 import ShoppingCartModal from "./components/ShoppingCartModal"
@@ -25,6 +27,7 @@ const modulesPage = new ModulesPage()
 const widgetsPage = new WidgetsPage()
 const designsPage = new DesignsPage()
 const searchResultPage = new SearchResultPage()
+const forgottenPasswordPage = new ForgottenPasswordPage()
 
 Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
@@ -115,22 +118,24 @@ describe('Test suite edited with vim', () => {
     it('Testing register errors.', () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       rightNavigationBar.getRegisterOption().click()
-      registerPage.getWarningComponent().should('not.exist')
+
+      registerPage.alertComponent.getAlert().should('not.exist')
       registerPage.getContinueButton().click()
       registerPage.getFirstnameErrorText().should('have.text', 'First Name must be between 1 and 32 characters!')
       registerPage.getLastnameIErrorText().should('have.text', 'Last Name must be between 1 and 32 characters!')
       registerPage.getEmailErrorText().should('have.text', 'E-Mail Address does not appear to be valid!')
       registerPage.getTelephoneErrorText().should('have.text', 'Telephone must be between 3 and 32 characters!')
       registerPage.getPasswordErrorText().should('have.text', 'Password must be between 4 and 20 characters!')
-      registerPage.getWarningComponent().should('be.visible')
-      registerPage.getWarningComponent().should('have.text', ' Warning: You must agree to the Privacy Policy!')
+      registerPage.alertComponent.getAlert().should('be.visible')
+      registerPage.alertComponent.getAlert().should('have.text', ' Warning: You must agree to the Privacy Policy!')
+      registerPage.alertComponent.getAlert().should('have.class', 'alert-danger')
     })
   
     it('Test for already registered email', () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       rightNavigationBar.getRegisterOption().click()
       cy.url().should('contain', 'account/register')
-      registerPage.getWarningComponent().should('not.exist')
+      registerPage.alertComponent.getAlert().should('not.exist')
       registerPage.getFirstnameInput().type('Jose')
       registerPage.getLastnameInput().type('Lopez')
       registerPage.getEmailInput().type('jose.lopez@gmail.com')
@@ -140,8 +145,9 @@ describe('Test suite edited with vim', () => {
       registerPage.getYesRadioButton().click()
       registerPage.getPolicyPrivacyCheckbox().click()
       registerPage.getContinueButton().click()
-      registerPage.getWarningComponent().should('be.visible')
-      registerPage.getWarningComponent().should('have.text', ' Warning: E-Mail Address is already registered!')
+      registerPage.alertComponent.getAlert().should('be.visible')
+      registerPage.alertComponent.getAlert().should('have.text', ' Warning: E-Mail Address is already registered!')
+      registerPage.alertComponent.getAlert().should('have.class', 'alert-danger')      
     })
   
     it('test for adding an item to the cart', () => {
@@ -258,7 +264,7 @@ describe('Test suite edited with vim', () => {
       searchResultPage.getPagination().should('have.length', 7)
     })
   
-    it.only("Testing yellow color filter on search results page", () => {
+    it("Testing yellow color filter on search results page", () => {
       homepage.mainHeaderComponent.getSearchInputField().should('have.text', '')
       homepage.mainHeaderComponent.getSearchButton().click()
       searchResultPage.getProducts().should('have.length', 15)
@@ -267,6 +273,22 @@ describe('Test suite edited with vim', () => {
       searchResultPage.getProducts().eq(0).scrollIntoView()
       searchResultPage.getProducts().should('have.length', 1)
       cy.contains("Showing 1 to 1 of 1 (1 Pages)")
+    })
+    
+    it("testing forgotten password, email not found", () => {
+      homepage.mainNavigationComponent.getMyAccountOption().click()
+      cy.url().should('contain', 'account/login')
+      homepage.rightNavigationComponent.getLoginOption().should('have.class', 'active')
+      homepage.rightNavigationComponent.getForgottenPasswordOption().should('not.have.class', 'active')
+      homepage.rightNavigationComponent.clickOnRightNavigationOption('Forgotten Password')
+      homepage.rightNavigationComponent.getLoginOption().should('not.have.class', 'active')
+      cy.url().should('contain', 'account/forgotten')
+      homepage.rightNavigationComponent.getForgottenPasswordOption().should('have.class', 'active')
+      // forgottenPasswordPage.fillEmailAndSubmit('email@example.com') already exists xd
+      forgottenPasswordPage.fillEmailAndSubmit('trashemail@eg.com')
+      forgottenPasswordPage.alertComponent.getAlert().should('be.visible')
+      forgottenPasswordPage.alertComponent.getAlert().should('have.text', ' Warning: The E-Mail Address was not found in our records, please try again!')
+      forgottenPasswordPage.alertComponent.getAlert().should('have.class', 'alert-danger')
     })
   })
 })

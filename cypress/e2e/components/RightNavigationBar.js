@@ -13,7 +13,12 @@ class RightNavigationBar {
     getReturnsOption = () => cy.get("aside#column-right a[href*='/return']")
     getTransactionOption = () => cy.get("aside#column-right a[href*='/transaction']")
     getNewsletterOption = () => cy.get("aside#column-right a[href*='/newsletter']")
+    
+    getOptions = () => cy.get("aside#column-right a[href]")
 
+    clickOnRightNavigationOption = (option) => {
+        this.getOptions().contains(option).click()
+    }
 }
 
 export default RightNavigationBar
