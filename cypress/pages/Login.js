@@ -1,4 +1,9 @@
+import RightNavigationBar from "../e2e/components/RightNavigationBar"
+
 class Login{
+    constructor() {
+        this.rightNavigationComponent = new RightNavigationBar()
+    }
     getEmailInputField = () => {
         return cy.get("input[name='email']")
     }
