@@ -345,7 +345,7 @@ describe('Test suite edited with vim', () => {
       cy.url().should('contain', 'account/login')
     })
 
-    it.only("Test for change password functionality default behavior", () => {
+    it("Test for change password functionality default behavior", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       changePasswordPage.rightNavigationComponent.getOptions().eq(0).should('have.class', 'active')
       loginPage.getEmailInputField().should('be.visible')
@@ -359,6 +359,13 @@ describe('Test suite edited with vim', () => {
       changePasswordPage.getContinueButton().click()
       cy.contains("Password must be between 4 and 20 characters!")
     })
-    
+
+    it.only("Test for not matching change passwords", () => {
+      homepage.mainNavigationComponent.getMyAccountOption().click()
+      loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
+      myAccountPage.rightNavigationComponent.clickOnRightNavigationOption('Password')
+      changePasswordPage.submitChangePasswordForm('asdf','zxcv')
+      cy.contains("Password confirmation does not match password!")
+    })
   })
 })
