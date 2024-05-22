@@ -360,12 +360,24 @@ describe('Test suite edited with vim', () => {
       cy.contains("Password must be between 4 and 20 characters!")
     })
 
-    it.only("Test for not matching change passwords", () => {
+    it("Test for not matching change passwords", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
       myAccountPage.rightNavigationComponent.clickOnRightNavigationOption('Password')
       changePasswordPage.submitChangePasswordForm('asdf','zxcv')
       cy.contains("Password confirmation does not match password!")
+    })
+
+    it("Test for testing change password success", () => {
+      homepage.mainNavigationComponent.getMyAccountOption().click()
+      myAccountPage.rightNavigationComponent.getOptions().eq(0).should('have.class', 'active')
+      loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
+      myAccountPage.rightNavigationComponent.clickOnRightNavigationOption('Password')
+      myAccountPage.rightNavigationComponent.getOptions().eq(2).should('have.class', 'active')
+      changePasswordPage.submitChangePasswordForm('P@ssw0rd','P@ssw0rd')
+      changePasswordPage.alertComponent.getAlert().should('have.class', 'alert-success')
+      myAccountPage.rightNavigationComponent.getOptions().eq(0).should('have.class', 'active')
+      myAccountPage.alertComponent.getAlert().should('have.text', ' Success: Your password has been successfully updated.')
     })
   })
 })
