@@ -27,3 +27,8 @@
 import "cypress-real-events"
 // import "cypress-drag-drop"
 import "@4tw/cypress-drag-drop"
+
+Cypress.Commands.add('waitForCarousel', (carouselSelector, activeClass, index) => {
+    cy.get(carouselSelector).eq(index).should('have.class', activeClass, { timeout: 5000 })
+})
+

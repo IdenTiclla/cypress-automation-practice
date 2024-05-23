@@ -65,15 +65,6 @@ describe('Test suite edited with vim', () => {
   
     })
   
-    it('Testing wish list with not logged user', () => {
-      homepage.mainHeaderComponent.getWishListIconButton().click()
-      cy.wait(3000)
-      loginPage.getEmailInputField().should('be.visible')
-      loginPage.getPasswordInputField().should('be.visible')
-      loginPage.getSubmitButton().should('be.visible')
-      loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
-      cy.wait(3000)
-    })
     it("Test for testing login functionality", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       loginPage.rightNavigationComponent.getOptions().should('have.length', 13)
@@ -103,17 +94,23 @@ describe('Test suite edited with vim', () => {
     })
   
     it('Testing the corousel component', () => {
-      homepage.getFirstImageInMainCarousel().should('be.visible')
+      cy.log('Checking first image is visisble')
+      homepage.getMainCarouselImages().eq(0).should('be.visible')
+      homepage.getMainCarouselImages().eq(0).should('have.class', 'active')
       homepage.getCarouselNextButton().realHover()
+      // homepage.getCarouselNextButton().trigger('mouseover')
+      cy.log('Checking second image is visisble')
       homepage.getCarouselNextButton().click()
-      cy.wait(1000)
-      homepage.getSecondImageInMainCarousel().should('be.visible')
+      homepage.getMainCarouselImages().eq(1).should('be.visible', {timeout: 5000})
+      homepage.getMainCarouselImages().eq(1).should('have.class', 'active')
       homepage.getCarouselNextButton().realHover()
-      cy.wait(1000)
+      // homepage.getCarouselNextButton().trigger('mouseover')`
+      cy.log('Checking third image is visisble')
       homepage.getCarouselNextButton().click()
-      homepage.getThirdImageInMainCarousel().should('be.visible')
-  
+      homepage.getMainCarouselImages().eq(2).should('have.class', 'active')
+      homepage.getMainCarouselImages().eq(2).should('be.visible', {timeout: 5000})
     })
+
     it('Testing Right navigation component', () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       rightNavigationBar.getLoginOption().should('be.visible')
@@ -183,7 +180,6 @@ describe('Test suite edited with vim', () => {
   
     it('test for adding an item to the cart', () => {
       homepage.getTopProducts().should('have.length', 10)
-      cy.wait(3000)
       homepage.getTopProducts().eq(0).realHover()
       homepage.getTopProducts().eq(0).find('div.product-action').should('be.visible')
       homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('have.length', 4)
@@ -200,15 +196,6 @@ describe('Test suite edited with vim', () => {
       notificationComponent.getCheckoutButton().should('be.visible')
     })
   
-    it('adding item to the wishlist without a login user', () => {
-      cy.wait(3000)
-      homepage.getTopProducts().eq(0).realHover()
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).click()
-      notificationComponent.getHeaderTitle().should('contain', 'Login')
-      notificationComponent.getLoginButton().should('be.visible')
-      notificationComponent.getRegisterButton().should('be.visible')
-    })
-    
     it("Test for the shopping cart page with no items", () => {
       homepage.mainHeaderComponent.getCartIconButton().click()
       shoppingCartModal.getEditCartButton().click()
@@ -378,6 +365,22 @@ describe('Test suite edited with vim', () => {
       changePasswordPage.alertComponent.getAlert().should('have.class', 'alert-success')
       myAccountPage.rightNavigationComponent.getOptions().eq(0).should('have.class', 'active')
       myAccountPage.alertComponent.getAlert().should('have.text', ' Success: Your password has been successfully updated.')
+    })
+
+    it('adding item to the wishlist without a login user', () => {
+      homepage.getTopProducts().eq(0).realHover()
+      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).click()
+      notificationComponent.getHeaderTitle().should('contain', 'Login')
+      notificationComponent.getLoginButton().should('be.visible')
+      notificationComponent.getRegisterButton().should('be.visible')
+    })
+
+    it('Testing wish list with not logged user', () => {
+      homepage.mainHeaderComponent.getWishListIconButton().click()
+      loginPage.getEmailInputField().should('be.visible')
+      loginPage.getPasswordInputField().should('be.visible')
+      loginPage.getSubmitButton().should('be.visible')
+      loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
     })
   })
 })
