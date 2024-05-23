@@ -1,7 +1,9 @@
 import Home from "../pages/Home"
 import Login from "../pages/Login"
 import RegisterPage from "../pages/RegisterPage"
+
 import ShoppingCartPage from "../pages/ShoppingCartPage"
+import WishListPage from "../pages/WishListPage"
 
 import ModulesPage from "../pages/ModulesPage"
 import WidgetsPage from "../pages/WidgetsPage"
@@ -22,6 +24,7 @@ const loginPage = new Login()
 const homepage = new Home()
 const registerPage = new RegisterPage()
 const shoppingCartPage = new ShoppingCartPage()
+const wishListPage = new WishListPage()
 const shoppingCartModal = new ShoppingCartModal()
 const rightNavigationBar = new RightNavigationBar()
 const notificationComponent = new Notification()
@@ -189,24 +192,6 @@ describe('Test suite edited with vim', () => {
       registerPage.alertComponent.getAlert().should('be.visible')
       registerPage.alertComponent.getAlert().should('have.text', ' Warning: E-Mail Address is already registered!')
       registerPage.alertComponent.getAlert().should('have.class', 'alert-danger')      
-    })
-  
-    it('test for adding an item to the cart', () => {
-      homepage.getTopProducts().should('have.length', 10)
-      homepage.getTopProducts().eq(0).realHover()
-      homepage.getTopProducts().eq(0).find('div.product-action').should('be.visible')
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('have.length', 4)
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('be.be.visible')
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(0).click()
-      notificationComponent.getHeaderTitle().should('be.visible')
-      notificationComponent.getHeaderTitle().should('contain', '1 item(s) - $170.00')
-      notificationComponent.getBodyMessage().should('be.visible')
-      notificationComponent.getBodyMessage().should('contain', 'Success: You have added ')
-      notificationComponent.getBodyMessage().should('contain', ' to your ')
-      notificationComponent.getBodyMessage().should('have.text', 'Success: You have added iMac to your shopping cart!')
-      notificationComponent.getCloseButton().should('be.visible')
-      notificationComponent.getViewCartButton().should('be.visible')
-      notificationComponent.getCheckoutButton().should('be.visible')
     })
   
     it("Test for the shopping cart page with no items", () => {
@@ -394,6 +379,52 @@ describe('Test suite edited with vim', () => {
       loginPage.getPasswordInputField().should('be.visible')
       loginPage.getSubmitButton().should('be.visible')
       loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
+    })
+
+    it('test for adding an item to the cart', () => {
+      homepage.getTopProducts().should('have.length', 10)
+      homepage.getTopProducts().eq(0).realHover()
+      homepage.getTopProducts().eq(0).find('div.product-action').should('be.visible')
+      homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('have.length', 4)
+      homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('be.be.visible')
+      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(0).click()
+      notificationComponent.getHeaderTitle().should('be.visible')
+      notificationComponent.getHeaderTitle().should('contain', '1 item(s) - $170.00')
+      notificationComponent.getBodyMessage().should('be.visible')
+      notificationComponent.getBodyMessage().should('contain', 'Success: You have added ')
+      notificationComponent.getBodyMessage().should('contain', ' to your ')
+      notificationComponent.getBodyMessage().should('have.text', 'Success: You have added iMac to your shopping cart!')
+      notificationComponent.getCloseButton().should('be.visible')
+      notificationComponent.getViewCartButton().should('be.visible')
+      notificationComponent.getCheckoutButton().should('be.visible')
+    })
+
+    it("Test for testing adding an item to the wishlist with a logged user", () => {
+      cy.log("Login a user")
+      homepage.mainNavigationComponent.getMyAccountOption().click()
+      loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
+      
+      cy.log("adding product to the wishlist")
+      myAccountPage.mainNavigationComponent.getHomeOption().click()
+      homepage.getTopProducts().should('have.length', 10)
+      homepage.getTopProducts().should('be.visible', {timeout: 5000})
+      homepage.getTopProducts().eq(0).scrollIntoView({ easing: 'linear' }).should('be.visible')
+      homepage.getTopProducts().eq(0).realHover()
+      
+      // homepage.getTopProducts().eq(0).trigger('mouseover')
+      homepage.getTopProducts().eq(0).find('div.product-action').should('be.visible' , {timeout: 5000})
+      homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('be.be.visible', {timeout: 5000})
+      homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('have.length', 4)
+      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).should('be.visible', {timeout: 5000})
+      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).click({force: true})
+      cy.log("Making assertions on notification component.")
+      notificationComponent.getHeaderTitle().should('contain', 'Wish List (1)')
+      notificationComponent.getBodyMessage().should('contain', 'Success: You have added iMac to your wish list!')
+      notificationComponent.getWishListButton().click()
+      cy.log("Making assertions on wish list page.")
+      wishListPage.getProducts().should('have.length', 1)
+      cy.url().should('contain', 'account/wishlist')
+      wishListPage.rightNavigationComponent.getOptions(4).should('have.class', 'active')
     })
   })
 })

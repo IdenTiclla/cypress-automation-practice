@@ -6,6 +6,7 @@ class Notification {
     getCheckoutButton = () => cy.get("div.toast-body div.form-row a[href*='/checkout']")
     getLoginButton = () => cy.get("div.toast-body div.form-row a[href*='/login']")
     getRegisterButton = () => cy.get("div.toast-body div.form-row a[href*='/register']")
+    getWishListButton = () => cy.get("div.toast-body a[class*='btn-block'][href*='wishlist']")
 }
 
 export default Notification
