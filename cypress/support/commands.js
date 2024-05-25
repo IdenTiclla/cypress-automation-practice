@@ -24,11 +24,28 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-import "cypress-real-events"
+import "cypress-real-events";
 // import "cypress-drag-drop"
-import "@4tw/cypress-drag-drop"
+import "@4tw/cypress-drag-drop";
 
-Cypress.Commands.add('waitForCarousel', (carouselSelector, activeClass, index) => {
-    cy.get(carouselSelector).eq(index).should('have.class', activeClass, { timeout: 5000 })
-})
+Cypress.Commands.add("getRandomEmail", () => {
+  const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+  const emailLength = 10;
+  let email = "";
 
+  for (let i = 0; i < emailLength; i++) {
+    email += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+
+  email += "@example.com";
+  return email;
+});
+
+Cypress.Commands.add("generateRandomPhoneNumber", () => {
+  const digits = "0123456789";
+  let phoneNumber = "";
+  for (let i = 0; i < 8; i++) {
+    phoneNumber += digits[Math.floor(Math.random() * digits.length)];
+  }
+  return phoneNumber;
+});

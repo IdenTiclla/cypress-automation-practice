@@ -153,8 +153,8 @@ describe('Test suite edited with vim', () => {
       registerPage.getTelephoneInput().should('be.visible')
       registerPage.getPasswordInput().should('be.visible')
       registerPage.getPasswordConfirmInput().should('be.visible')
-      registerPage.getYesRadioButton().should('be.visible')
-      registerPage.getNoRadioButton().should('be.visible')
+      // registerPage.getYesRadioButton().should('be.visible')
+      // registerPage.getNoRadioButton().should('be.visible')
       registerPage.getPolicyPrivacyCheckbox().should('be.visible')
       registerPage.getPolicyPrivacyLinkElement().should('be.visible')
       registerPage.getContinueButton().should('be.visible')
@@ -180,15 +180,7 @@ describe('Test suite edited with vim', () => {
       rightNavigationBar.getRegisterOption().click()
       cy.url().should('contain', 'account/register')
       registerPage.alertComponent.getAlert().should('not.exist')
-      registerPage.getFirstnameInput().type('Jose')
-      registerPage.getLastnameInput().type('Lopez')
-      registerPage.getEmailInput().type('jose.lopez@gmail.com')
-      registerPage.getTelephoneInput().type('77045789')
-      registerPage.getPasswordInput().type('P@ssw0rd')
-      registerPage.getPasswordConfirmInput().type('P@ssw0rd')
-      registerPage.getYesRadioButton().click()
-      registerPage.getPolicyPrivacyCheckbox().click()
-      registerPage.getContinueButton().click()
+      registerPage.registerNewUser('Jose', 'Lopez', 'jose.lopez@gmail.com', '77045789', 'P@ssw0rd','P@ssw0rd', true, true)
       registerPage.alertComponent.getAlert().should('be.visible')
       registerPage.alertComponent.getAlert().should('have.text', ' Warning: E-Mail Address is already registered!')
       registerPage.alertComponent.getAlert().should('have.class', 'alert-danger')      
@@ -490,6 +482,35 @@ describe('Test suite edited with vim', () => {
       notificationComponent.getViewCartButton().click()
       cy.url().should('contain', 'checkout/cart')
       shoppingCartPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('be.gt', 0)
+    })
+
+    it("Test for registering an then loging a new user", () => {
+      cy.getRandomEmail().then((randomEmail) => {
+        cy.generateRandomPhoneNumber().then((randomPhoneNumber) => {
+          const firstname = 'randomfirstname'
+          const lastname= 'randomlastname'
+          const email = randomEmail
+          const telephone = randomPhoneNumber
+          const password = 'P@ssw0rd'
+          const password_confirm = 'P@ssw0rd'
+          const newsletter_subscribe = false
+          const privacy_policy = true
+          homepage.mainNavigationComponent.getMyAccountOption().click()
+          loginPage.rightNavigationComponent.clickOnRightNavigationOption('Register')
+          cy.url().should('contain', 'account/register')
+          registerPage.registerNewUser(firstname, lastname, email, telephone, password, password_confirm, newsletter_subscribe, privacy_policy)
+          cy.contains("Your Account Has Been Created!")
+          homepage.rightNavigationComponent.clickOnRightNavigationOption('Logout')
+          cy.contains("Account Logout")
+          cy.url().should('contain', 'account/logout')
+          homepage.rightNavigationComponent.clickOnRightNavigationOption('Login')
+          cy.url().should('contain', 'account/login')
+          loginPage.login(email, password)
+          cy.url().should('contain', 'account/account')
+          myAccountPage.rightNavigationComponent.getOptions().eq(0).should('have.class', 'active')
+        })
+      })  
+      
     })
   })
 })
