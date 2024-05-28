@@ -18,6 +18,10 @@ class MainNavigation {
     }
 
     clickOnMegaMenuDropdownOptions = (option) => {
+        this.getMegaMenuOption().scrollIntoView().should('be.visible').and('exist')
+        // homepage.mainNavigationComponent.getMegaMenuOption().realHover()
+        this.getMegaMenuOption().trigger('mouseover')
+        this.getMegaMenuOptionsDropdown().should('exist').and('be.visible')
         this.getMegaMenuOptionsDropdown().contains(option).click()
     }
 }

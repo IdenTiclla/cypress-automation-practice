@@ -252,12 +252,10 @@ describe('Test suite edited with vim', () => {
     })
   
     it("Test for clicking a mega menu option", () => {
-      homepage.mainNavigationComponent.getMegaMenuOption().scrollIntoView().should('be.visible').and('exist')
-      // homepage.mainNavigationComponent.getMegaMenuOption().realHover()
-      homepage.mainNavigationComponent.getMegaMenuOption().trigger('mouseover')
-      homepage.mainNavigationComponent.getMegaMenuOptionsDropdown().should('exist').and('be.visible')
       homepage.mainNavigationComponent.clickOnMegaMenuDropdownOptions('Apple')
       cy.url().should('contain', 'manufacturer_id=8')
+      homepage.mainNavigationComponent.clickOnMegaMenuDropdownOptions('HTC')
+      cy.url().should('contain', 'manufacturer_id=5')
     })
     
     it('Test for default search with any criteria', () => {
