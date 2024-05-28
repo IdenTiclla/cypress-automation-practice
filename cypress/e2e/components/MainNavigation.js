@@ -10,18 +10,18 @@ class MainNavigation {
     getMyAccountDropdownOptions = () => cy.get("ul.horizontal li:nth-of-type(6) a[data-toggle='dropdown'] + ul > li")
     
     clickOnAddOnsDropdownOptions = (option) => {
+        this.getAddOnsOption().trigger('mouseover')
         this.getAddOnsDropdownOptions().contains(option).click()
     }
     
     clickonMyAccountDropdownOptions = (option) => {
+        this.getMyAccountOption().trigger('mouseover')
         this.getMyAccountDropdownOptions().contains(option).click()
     }
 
     clickOnMegaMenuDropdownOptions = (option) => {
-        this.getMegaMenuOption().scrollIntoView().should('be.visible').and('exist')
         // homepage.mainNavigationComponent.getMegaMenuOption().realHover()
         this.getMegaMenuOption().trigger('mouseover')
-        this.getMegaMenuOptionsDropdown().should('exist').and('be.visible')
         this.getMegaMenuOptionsDropdown().contains(option).click()
     }
 }

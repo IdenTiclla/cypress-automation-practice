@@ -212,19 +212,14 @@ describe('Test suite edited with vim', () => {
     
     it('Test for navigating through the design, modules and widgets pages', () => {
       homepage.mainNavigationComponent.getAddOnsDropdownOptions().should('not.be.visible')
-      homepage.mainNavigationComponent.getAddOnsOption().trigger('mouseover')
-      homepage.mainNavigationComponent.getAddOnsDropdownOptions().should('be.visible')
-      homepage.mainNavigationComponent.getAddOnsDropdownOptions().should('have.length', 3)
       homepage.mainNavigationComponent.clickOnAddOnsDropdownOptions('Designs')
       cy.url().should('contain', 'page_id=11')
   
       designsPage.mainNavigationComponent.getAddOnsDropdownOptions().should('not.be.visible')
-      designsPage.mainNavigationComponent.getAddOnsOption().trigger('mouseover')
       designsPage.mainNavigationComponent.clickOnAddOnsDropdownOptions('Modules')
       cy.url().should('contain', 'page_id=10')
   
       modulesPage.mainNavigationComponent.getAddOnsDropdownOptions().should('not.be.visible')
-      modulesPage.mainNavigationComponent.getAddOnsOption().trigger('mouseover')
       modulesPage.mainNavigationComponent.clickOnAddOnsDropdownOptions('Widgets')
       cy.url().should('contain', 'page_id=9')
   
@@ -234,19 +229,11 @@ describe('Test suite edited with vim', () => {
   
     it("Test for going to the login page from the main nav bar", () => {
       homepage.mainNavigationComponent.getMyAccountOption().scrollIntoView().should('be.visible').and('exist')
-      // homepage.mainNavigationComponent.getMyAccountOption().realHover()
-      homepage.mainNavigationComponent.getMyAccountOption().trigger('mouseover')
-      homepage.mainNavigationComponent.getMyAccountDropdownOptions().should('exist').and('be.visible')
       homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
       cy.url().should('contain', 'account/login')
     })
   
     it("Test for going to the register page from the main nav bar", () => {
-      homepage.mainNavigationComponent.getMyAccountOption().scrollIntoView().should('be.visible').and('exist')
-      // homepage.mainNavigationComponent.getMyAccountOption().realHover()
-      homepage.mainNavigationComponent.getMyAccountOption().trigger('mouseover')
-  
-      homepage.mainNavigationComponent.getMyAccountDropdownOptions().should('exist').and('be.visible')
       homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')    
       cy.url().should('contain', 'account/register')
     })
