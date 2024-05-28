@@ -498,4 +498,27 @@ describe('Test suite edited with vim', () => {
       
     })
   })
+  context('Iphone resolution', () => {
+    beforeEach(() => {
+      homepage.visit()
+      cy.get('body').should('be.visible')
+      cy.viewport('iphone-x')
+    })
+    afterEach(() => {
+      cy.clearCookies()
+      cy.clearLocalStorage()
+    })
+    
+    it.only('First test for iphone viewport => testing the search functionality', () => {
+      homepage.visit()
+      homepage.mainHeaderComponent.getWishListIconButton().should('not.be.visible')
+      homepage.mainHeaderComponent.getMobileSearchInputField().type('hello world')
+      homepage.mainHeaderComponent.getMobileSearchButton().click()
+      cy.url().should('contain', 'search=hello+world')
+      cy.contains('There is no product that matches the search criteria.')
+      searchResultPage.getMobileKeywordsInputField().should('have.value', 'hello world')
+      searchResultPage.getMobileKeywordsInputField().should('have.attr', 'value', 'hello world')
+
+    })
+  })
 })
