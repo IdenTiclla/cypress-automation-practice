@@ -344,7 +344,7 @@ describe('Test suite edited with vim', () => {
 
     it('adding item to the wishlist without a login user', () => {
       homepage.getTopProducts().eq(0).realHover()
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).click()
+      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).click({force: true})
       notificationComponent.getHeaderTitle().should('contain', 'Login')
       notificationComponent.getLoginButton().should('be.visible')
       notificationComponent.getRegisterButton().should('be.visible')
@@ -364,7 +364,7 @@ describe('Test suite edited with vim', () => {
       homepage.getTopProducts().eq(0).find('div.product-action').should('be.visible')
       homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('have.length', 4)
       homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('be.be.visible')
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(0).click()
+      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(0).click({force: true})
       notificationComponent.getHeaderTitle().should('be.visible')
       notificationComponent.getHeaderTitle().should('contain', '1 item(s) - $170.00')
       notificationComponent.getBodyMessage().should('be.visible')
@@ -520,13 +520,33 @@ describe('Test suite edited with vim', () => {
       searchResultPage.getMobileKeywordsInputField().should('have.attr', 'value', 'hello world')
     })
     
-    it.only("Test for Login functionality on iphone resolution", () => {
+    it("Test for Login functionality on iphone resolution", () => {
       homepage.visit()
       homepage.mainHeaderComponent.getMobilePersonIconButton().click()
       homepage.quickLinksComponent.clickOnSpecificQuickLink('My account')
       cy.url().should('contain', 'account/login')
       loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
       cy.url().should('contain', 'account/account')
+    })
+
+    it("Test for navigating throught the top categories on iphone resolution", () => {
+      homepage.visit()
+      homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Components')
+      homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Cameras')
+      homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Phone, Tablets & Ipod')
+      homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Software')
+      homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('MP3 Players')
+      homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Laptops & Notebooks')
+      homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Desktops and Monitors')
+      homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Printers & Scanners')
+      homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Mice and Trackballs')
+      homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Fashion and Accessories')
+      homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Beauty and Saloon')
+      homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Autoparts and Accessories')
+      homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Washing machine')
+      homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Gaming consoles')
+      homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Air conditioner')
+      homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Web Cameras')
     })
   })
 })
