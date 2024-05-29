@@ -10,6 +10,10 @@ class MainHeader {
     // mobile version
     getMobileSearchInputField = () => cy.get("div#main-navigation div#search input[name='search']")
     getMobileSearchButton = () => cy.get("div#main-navigation div.search-button button")
+    getMobileHamburgerMegaStoreIcon = () => cy.get("div#main-header > div:nth-of-type(2) div a").eq(0)
+    getMobilePocoMegaStoreIcon = () => cy.get("div#main-header > div:nth-of-type(2) div a").eq(1)
+    getMobilePersonIconButton = () => cy.get("div#main-header > div:nth-of-type(2) div a").eq(2)
+    getMobileCartIconButton = () => cy.get("div#main-header > div:nth-of-type(2) div a").eq(3)
 }
 
 export default MainHeader

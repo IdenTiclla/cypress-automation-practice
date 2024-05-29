@@ -19,6 +19,16 @@ class Login{
         this.getPasswordInputField().type(password)
         this.getSubmitButton().click()
     }
+
+    // mobile version
+    getMobileEmailInputField = () => cy.get("input[name='email']")
+    getMobilePasswordInputField = () => cy.get("input[name='password']")
+    getMobileSubmitButton = () => cy.get("input[type='submit']")
+    loginOnMobileVersion = (email, password) => {
+        this.getMobileEmailInputField().type(email)
+        this.getMobilePasswordInputField().type(password)
+        this.getMobileSubmitButton.click()
+    }
 }
 
 export default Login

@@ -509,7 +509,7 @@ describe('Test suite edited with vim', () => {
       cy.clearLocalStorage()
     })
     
-    it.only('First test for iphone viewport => testing the search functionality', () => {
+    it('First test for iphone viewport => testing the search functionality', () => {
       homepage.visit()
       homepage.mainHeaderComponent.getWishListIconButton().should('not.be.visible')
       homepage.mainHeaderComponent.getMobileSearchInputField().type('hello world')
@@ -518,7 +518,15 @@ describe('Test suite edited with vim', () => {
       cy.contains('There is no product that matches the search criteria.')
       searchResultPage.getMobileKeywordsInputField().should('have.value', 'hello world')
       searchResultPage.getMobileKeywordsInputField().should('have.attr', 'value', 'hello world')
-
+    })
+    
+    it.only("Test for Login functionality on iphone resolution", () => {
+      homepage.visit()
+      homepage.mainHeaderComponent.getMobilePersonIconButton().click()
+      homepage.quickLinksComponent.clickOnSpecificQuickLink('My account')
+      cy.url().should('contain', 'account/login')
+      loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
+      cy.url().should('contain', 'account/account')
     })
   })
 })
