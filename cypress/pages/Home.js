@@ -2,6 +2,7 @@ import MainNavigation from "../e2e/components/MainNavigation"
 import MainHeader from "../e2e/components/MainHeader"
 import RightNavigationBar from "../e2e/components/RightNavigationBar"
 import QuickLinks from "../e2e/components/QuickLinks"
+import Notification from "../e2e/components/Notification"
 
 class Home {
     visit() {
@@ -12,6 +13,7 @@ class Home {
         this.mainHeaderComponent = new MainHeader()
         this.rightNavigationComponent = new RightNavigationBar()
         this.quickLinksComponent = new QuickLinks()
+        this.notificationComponent = new Notification()
     }
 
     getCarouselPrevButton = () => cy.get("div[data-ride='carousel'] a.carousel-control-prev")
