@@ -22,6 +22,8 @@ class Home {
     getTopProducts = () => cy.get("div#common-home > div:nth-of-type(5) div.swiper-slide > div.product-thumb.image-top")
     
     getProductActions = () => cy.get("div#common-home > div:nth-of-type(5) div.product-action")
+
+    getCarouselPaginationItems = () => cy.get("div#mz-carousel-213240 ul[class*='indicators'] li")
 }
 
 export default Home

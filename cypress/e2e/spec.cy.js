@@ -607,5 +607,27 @@ describe('Test suite edited with vim', () => {
       homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().contains('MP3 Players').should('have.class', 'active')
 
     })
+
+    it("Test for testing the main carousel component in homepage on mobile version.", () => {
+      homepage.visit()
+      homepage.getMainCarouselImages().eq(0).should('have.class', 'active')
+      homepage.getCarouselPaginationItems().eq(0).should('have.class', 'active')
+
+      homepage.getCarouselNextButton().click({force: true})
+      homepage.getMainCarouselImages().eq(1).should('have.class', 'active')
+      homepage.getCarouselPaginationItems().eq(1).should('have.class', 'active')
+
+      homepage.getCarouselNextButton().click({force: true})
+      homepage.getMainCarouselImages().eq(2).should('have.class', 'active')
+      homepage.getCarouselPaginationItems().eq(2).should('have.class', 'active')
+
+      homepage.getCarouselPrevButton().click({force: true})
+      homepage.getMainCarouselImages().eq(1).should('have.class', 'active')
+      homepage.getCarouselPaginationItems().eq(1).should('have.class', 'active')
+
+      homepage.getCarouselPrevButton().click({force: true})
+      homepage.getMainCarouselImages().eq(0).should('have.class', 'active')
+      homepage.getCarouselPaginationItems().eq(0).should('have.class', 'active')
+    })
   })
 })
