@@ -199,7 +199,7 @@ describe('Test suite edited with vim', () => {
     })
   
     it("Test for testing the search functionality with no results", () => {
-      homepage.mainHeaderComponent.getAllCategoriesDropdown().should('be.visible')
+      homepage.mainHeaderComponent.getCategoriesDropdown().should('be.visible')
       homepage.mainHeaderComponent.getSearchInputField().should('have.value', '')
       homepage.mainHeaderComponent.getSearchInputField().should('be.visible')
       homepage.mainHeaderComponent.getSearchInputField().should('have.attr', 'placeholder', 'Search For Products')
@@ -566,6 +566,46 @@ describe('Test suite edited with vim', () => {
       homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Gaming consoles')
       homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Air conditioner')
       homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Web Cameras')
+    })
+    
+    it("Test for testing the category selector on the main header component.", () => {
+      homepage.visit()
+      homepage.mainHeaderComponent.getMobileCategoriesDropdown().click()
+      homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().should('not.have.class', 'active')
+      homepage.mainHeaderComponent.selectCategory('All Categories')
+      
+      homepage.mainHeaderComponent.getMobileCategoriesDropdown().click()
+      homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().contains('All Categories').should('have.class', 'active')
+      homepage.mainHeaderComponent.selectCategory('Desktops')
+      
+      homepage.mainHeaderComponent.getMobileCategoriesDropdown().click()
+      homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().contains('Desktops').should('have.class', 'active')
+      homepage.mainHeaderComponent.selectCategory('Laptops')
+      
+      homepage.mainHeaderComponent.getMobileCategoriesDropdown().click()
+      homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().contains('Laptops').should('have.class', 'active')
+      homepage.mainHeaderComponent.selectCategory('Components')
+      
+      homepage.mainHeaderComponent.getMobileCategoriesDropdown().click()
+      homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().contains('Components').should('have.class', 'active')
+      homepage.mainHeaderComponent.selectCategory('Tablets')
+      
+      
+      homepage.mainHeaderComponent.getMobileCategoriesDropdown().click()
+      homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().contains('Tablets').should('have.class', 'active')
+      homepage.mainHeaderComponent.selectCategory('Phones & PDAs')
+      
+      homepage.mainHeaderComponent.getMobileCategoriesDropdown().click()
+      homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().contains('Phones & PDAs').should('have.class', 'active')
+      homepage.mainHeaderComponent.selectCategory('Cameras')
+      
+      homepage.mainHeaderComponent.getMobileCategoriesDropdown().click()
+      homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().contains('Cameras').should('have.class', 'active')
+      homepage.mainHeaderComponent.selectCategory('MP3 Players')
+
+      homepage.mainHeaderComponent.getMobileCategoriesDropdown().click()
+      homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().contains('MP3 Players').should('have.class', 'active')
+
     })
   })
 })
