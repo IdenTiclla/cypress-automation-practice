@@ -29,9 +29,14 @@ class Home {
 
     getTopCollectionOptions = () => cy.get("div#mz-product-listing-39213264 ul li a")
     getTopCollectionContent = () => cy.get("div#mz-product-listing-39213264 div.tab-content > div")
-    
+
+    getQuickViewModal = () => cy.get("div#product-quick-view")
+
     selectTopCollectionOption = (option) => {
         this.getTopCollectionOptions().contains(option).click()
+    }
+    showQuickViewModal = (product) => {
+        product.find('div.product-action').find('button').eq(2).click({force: true})
     }
 }
 
