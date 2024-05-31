@@ -3,6 +3,7 @@ import MainHeader from "../e2e/components/MainHeader"
 import RightNavigationBar from "../e2e/components/RightNavigationBar"
 import QuickLinks from "../e2e/components/QuickLinks"
 import Notification from "../e2e/components/Notification"
+import QuickViewModal from "../e2e/components/QuickViewModal"
 
 class Home {
     visit() {
@@ -14,6 +15,7 @@ class Home {
         this.rightNavigationComponent = new RightNavigationBar()
         this.quickLinksComponent = new QuickLinks()
         this.notificationComponent = new Notification()
+        this.quickViewModalComponent = new QuickViewModal()
     }
 
     getCarouselPrevButton = () => cy.get("div[data-ride='carousel'] a.carousel-control-prev")
@@ -30,7 +32,7 @@ class Home {
     getTopCollectionOptions = () => cy.get("div#mz-product-listing-39213264 ul li a")
     getTopCollectionContent = () => cy.get("div#mz-product-listing-39213264 div.tab-content > div")
 
-    getQuickViewModal = () => cy.get("div#product-quick-view")
+    // getQuickViewModal = () => cy.get("div#product-quick-view")
 
     selectTopCollectionOption = (option) => {
         this.getTopCollectionOptions().contains(option).click()

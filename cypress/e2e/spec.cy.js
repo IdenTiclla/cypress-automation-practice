@@ -519,12 +519,12 @@ describe('Test suite edited with vim', () => {
       homepage.mainNavigationComponent.clickOnSpecificTopCategory('Web Cameras')
     })
 
-    it("Test for testing quick view functionality.", () => {
+    it.only("Test for testing quick view functionality.", () => {
       homepage.visit()
-      homepage.getQuickViewModal().should('not.exist')
+      homepage.quickViewModalComponent.getModal().should('not.exist')
       const first_product = homepage.getTopProducts().eq(0)
       homepage.showQuickViewModal(first_product)
-      homepage.getQuickViewModal().should('be.visible')
+      homepage.quickViewModalComponent.getModal().should('be.visible')
     })
   })
   context('Iphone resolution', () => {
