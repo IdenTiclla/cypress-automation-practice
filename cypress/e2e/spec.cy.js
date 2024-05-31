@@ -645,15 +645,18 @@ describe('Test suite edited with vim', () => {
       homepage.visit()
       homepage.getTopCollectionOptions().contains('Popular').should('have.class', 'active')
       homepage.getTopCollectionContent().eq(0).should('have.class', 'active')
+      homepage.getTopCollectionContent().eq(0).should('be.visible')
       homepage.selectTopCollectionOption('Popular')
 
       homepage.selectTopCollectionOption('Latest')
       homepage.getTopCollectionOptions().contains('Latest').should('have.class', 'active')
       homepage.getTopCollectionContent().eq(1).should('have.class', 'active')
-      
+      homepage.getTopCollectionContent().eq(1).should('be.visible')
+
       homepage.selectTopCollectionOption('Best seller')
       homepage.getTopCollectionOptions().contains('Best seller').should('have.class', 'active')
       homepage.getTopCollectionContent().eq(2).should('have.class', 'active')
+      homepage.getTopCollectionContent().eq(2).should('be.visible')
     })
   })
 })
