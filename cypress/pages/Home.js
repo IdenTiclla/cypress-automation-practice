@@ -26,6 +26,13 @@ class Home {
     getProductActions = () => cy.get("div#common-home > div:nth-of-type(5) div.product-action")
 
     getCarouselPaginationItems = () => cy.get("div#mz-carousel-213240 ul[class*='indicators'] li")
+
+    getTopCollectionOptions = () => cy.get("div#mz-product-listing-39213264 ul li a")
+    getTopCollectionContent = () => cy.get("div#mz-product-listing-39213264 div.tab-content > div")
+    
+    selectTopCollectionOption = (option) => {
+        this.getTopCollectionOptions().contains(option).click()
+    }
 }
 
 export default Home

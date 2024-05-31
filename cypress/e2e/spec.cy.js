@@ -640,5 +640,20 @@ describe('Test suite edited with vim', () => {
       homepage.notificationComponent.getLoginButton().should('be.visible')
       homepage.notificationComponent.getRegisterButton().should('be.visible')
     })
+
+    it("test for selecting specifc top collection option.", () => {
+      homepage.visit()
+      homepage.getTopCollectionOptions().contains('Popular').should('have.class', 'active')
+      homepage.getTopCollectionContent().eq(0).should('have.class', 'active')
+      homepage.selectTopCollectionOption('Popular')
+
+      homepage.selectTopCollectionOption('Latest')
+      homepage.getTopCollectionOptions().contains('Latest').should('have.class', 'active')
+      homepage.getTopCollectionContent().eq(1).should('have.class', 'active')
+      
+      homepage.selectTopCollectionOption('Best seller')
+      homepage.getTopCollectionOptions().contains('Best seller').should('have.class', 'active')
+      homepage.getTopCollectionContent().eq(2).should('have.class', 'active')
+    })
   })
 })
