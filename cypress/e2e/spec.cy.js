@@ -344,9 +344,10 @@ describe('Test suite edited with vim', () => {
       myAccountPage.alertComponent.getAlert().should('have.text', ' Success: Your password has been successfully updated.')
     })
 
-    it('adding item to the wishlist without a login user', () => {
+    it('adding item to the wishlist without a logged user', () => {
       homepage.getTopProducts().eq(0).realHover()
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).click({force: true})
+      const first_product = homepage.getTopProducts().eq(0)
+      homepage.addProductToWishList(first_product)
       homepage.notificationComponent.getHeaderTitle().should('contain', 'Login')
       homepage.notificationComponent.getLoginButton().should('be.visible')
       homepage.notificationComponent.getRegisterButton().should('be.visible')
@@ -365,8 +366,8 @@ describe('Test suite edited with vim', () => {
       homepage.getTopProducts().eq(0).realHover()
       homepage.getTopProducts().eq(0).find('div.product-action').should('be.visible')
       homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('have.length', 4)
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('be.be.visible')
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(0).click({force: true})
+      homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('be.visible')
+      homepage.addProductToCart(homepage.getTopProducts().eq(0))
       homepage.notificationComponent.getHeaderTitle().should('be.visible')
       homepage.notificationComponent.getHeaderTitle().should('contain', '1 item(s) - $170.00')
       homepage.notificationComponent.getBodyMessage().should('be.visible')
@@ -395,7 +396,7 @@ describe('Test suite edited with vim', () => {
       homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('be.be.visible', {timeout: 5000})
       homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('have.length', 4)
       homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).should('be.visible', {timeout: 5000})
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).click({force: true})
+      homepage.addProductToWishList(homepage.getTopProducts().eq(0))
       cy.log("Making assertions on notification component.")
       homepage.notificationComponent.getHeaderTitle().should('contain', 'Wish List (1)')
       homepage.notificationComponent.getBodyMessage().should('contain', 'Success: You have added iMac to your wish list!')
@@ -405,6 +406,7 @@ describe('Test suite edited with vim', () => {
       cy.url().should('contain', 'account/wishlist')
       wishListPage.rightNavigationComponent.getOptions(4).should('have.class', 'active')
     })
+
     it("Test for adding and removing an item from wish list page.", () => {
       cy.log("Loging an user")
       homepage.mainNavigationComponent.getMyAccountOption().click()
@@ -415,8 +417,7 @@ describe('Test suite edited with vim', () => {
       homepage.getTopProducts().eq(0).scrollIntoView().should('be.visible')
       homepage.getTopProducts().eq(0).realHover()
       homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).should('be.visible', {timeout: 5000})
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).click({force: true})
-    
+      homepage.addProductToWishList(homepage.getTopProducts().eq(0))
       cy.log("Making assertions on notification component.")
       homepage.notificationComponent.getHeaderTitle().should('contain', 'Wish List (1)')
       homepage.notificationComponent.getBodyMessage().should('contain', 'Success: You have added iMac to your wish list!')
@@ -447,8 +448,7 @@ describe('Test suite edited with vim', () => {
       homepage.getTopProducts().eq(0).scrollIntoView().should('be.visible')
       homepage.getTopProducts().eq(0).realHover()
       homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).should('be.visible', {timeout: 5000})
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).click({force: true})
-    
+      homepage.addProductToWishList(homepage.getTopProducts().eq(0))
       cy.log("Making assertions on notification component.")
       homepage.notificationComponent.getHeaderTitle().should('contain', 'Wish List (1)')
       homepage.notificationComponent.getBodyMessage().should('contain', 'Success: You have added iMac to your wish list!')
@@ -519,7 +519,7 @@ describe('Test suite edited with vim', () => {
       homepage.mainNavigationComponent.clickOnSpecificTopCategory('Web Cameras')
     })
 
-    it.only("Test for testing quick view functionality.", () => {
+    it("Test for testing quick view functionality.", () => {
       homepage.visit()
       homepage.getQuickViewModal().should('not.exist')
       const first_product = homepage.getTopProducts().eq(0)

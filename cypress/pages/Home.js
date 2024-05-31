@@ -38,6 +38,12 @@ class Home {
     showQuickViewModal = (product) => {
         product.find('div.product-action').find('button').eq(2).click({force: true})
     }
+    addProductToWishList = (product) => {
+        product.find('div.product-action').find('button').eq(1).click({force: true})
+    }
+    addProductToCart = (product) => {
+        product.find('div.product-action').find('button').eq(0).click({force: true})
+    }
 }
 
 export default Home
