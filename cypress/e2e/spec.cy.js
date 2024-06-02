@@ -519,12 +519,49 @@ describe('Test suite edited with vim', () => {
       homepage.mainNavigationComponent.clickOnSpecificTopCategory('Web Cameras')
     })
 
-    it.only("Test for testing quick view functionality.", () => {
+    it("Test for testing quick view functionality.", () => {
       homepage.visit()
       homepage.quickViewModalComponent.getModal().should('not.exist')
       const first_product = homepage.getTopProducts().eq(0)
       homepage.showQuickViewModal(first_product)
       homepage.quickViewModalComponent.getModal().should('be.visible')
+    })
+
+    it.only("Testing the quick view functionality on many products on top products section", () => {
+      homepage.visit()
+      homepage.quickViewModalComponent.getModal().should('not.exist')
+      // homepage.getTopProducts().eq(0).realHover()
+      homepage.getTopProducts().eq(0).trigger('mouseover')
+      homepage.showQuickViewModal(homepage.getTopProducts().eq(0))
+      homepage.quickViewModalComponent.getModal().should('be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getCloseButton().click()
+      homepage.quickViewModalComponent.getModal().should('not.be.visible', {timeout: 5000})
+
+      // homepage.getTopProducts().eq(1).realHover()
+      homepage.getTopProducts().eq(1).trigger('mouseover')
+      homepage.showQuickViewModal(homepage.getTopProducts().eq(1))
+      homepage.quickViewModalComponent.getModal().should('be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getCloseButton().click()
+      homepage.quickViewModalComponent.getModal().should('not.be.visible', {timeout: 5000})
+
+
+      homepage.getTopProducts().eq(2).trigger('mouseover')
+      homepage.showQuickViewModal(homepage.getTopProducts().eq(2))
+      homepage.quickViewModalComponent.getModal().should('be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getCloseButton().click()
+      homepage.quickViewModalComponent.getModal().should('not.be.visible', {timeout: 5000})
+
+      homepage.getTopProducts().eq(3).trigger('mouseover')
+      homepage.showQuickViewModal(homepage.getTopProducts().eq(3))
+      homepage.quickViewModalComponent.getModal().should('be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getCloseButton().click()
+      homepage.quickViewModalComponent.getModal().should('not.be.visible', {timeout: 5000})
+
+      homepage.getTopProducts().eq(4).trigger('mouseover')
+      homepage.showQuickViewModal(homepage.getTopProducts().eq(4))
+      homepage.quickViewModalComponent.getModal().should('be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getCloseButton().click()
+      homepage.quickViewModalComponent.getModal().should('not.be.visible', {timeout: 5000})
     })
   })
   context('Iphone resolution', () => {
