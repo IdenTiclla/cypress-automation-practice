@@ -527,7 +527,7 @@ describe('Test suite edited with vim', () => {
       homepage.quickViewModalComponent.getModal().should('be.visible')
     })
 
-    it.only("Testing the quick view functionality on many products on top products section", () => {
+    it("Testing the quick view functionality on many products on top products section", () => {
       homepage.visit()
       homepage.quickViewModalComponent.getModal().should('not.exist')
       // homepage.getTopProducts().eq(0).realHover()
@@ -562,6 +562,82 @@ describe('Test suite edited with vim', () => {
       homepage.quickViewModalComponent.getModal().should('be.visible', {timeout: 5000})
       homepage.quickViewModalComponent.getCloseButton().click()
       homepage.quickViewModalComponent.getModal().should('not.be.visible', {timeout: 5000})
+    })
+
+    it("Test for testing buttons on quick view functionality", () => {
+      homepage.visit()
+      homepage.getTopProducts().eq(0).trigger('mouseover')
+      homepage.showQuickViewModal(homepage.getTopProducts().eq(0))
+      homepage.quickViewModalComponent.getModal().should('be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getAvailability().invoke('text').then((text) => {
+        console.log(text)
+        if(text === 'Out Of Stock') {
+          homepage.quickViewModalComponent.getButtons().eq(0).should('have.attr', 'disabled')
+          homepage.quickViewModalComponent.getButtons().eq(1).should('have.attr', 'disabled')
+        } else {
+          homepage.quickViewModalComponent.getButtons().eq(0).should('not.have.attr', 'disabled')
+          homepage.quickViewModalComponent.getButtons().eq(1).should('not.have.attr', 'disabled')
+        }
+      })
+      
+      homepage.quickViewModalComponent.getCloseButton().click()
+      homepage.quickViewModalComponent.getModal().should('not.be.visible', {timeout: 5000})
+      
+
+
+      homepage.getTopProducts().eq(1).trigger('mouseover')
+      homepage.showQuickViewModal(homepage.getTopProducts().eq(1))
+      homepage.quickViewModalComponent.getModal().should('be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getAvailability().invoke('text').then((text) => {
+        console.log(text)
+        if(text === 'Out Of Stock') {
+          homepage.quickViewModalComponent.getButtons().eq(0).should('have.attr', 'disabled')
+          homepage.quickViewModalComponent.getButtons().eq(1).should('have.attr', 'disabled')
+        } else {
+          homepage.quickViewModalComponent.getButtons().eq(0).should('not.have.attr', 'disabled')
+          homepage.quickViewModalComponent.getButtons().eq(1).should('not.have.attr', 'disabled')
+        }
+      })
+      homepage.quickViewModalComponent.getCloseButton().click()
+      homepage.quickViewModalComponent.getModal().should('not.be.visible', {timeout: 5000})
+      
+
+      homepage.getTopProducts().eq(2).trigger('mouseover')
+      homepage.showQuickViewModal(homepage.getTopProducts().eq(2))
+      homepage.quickViewModalComponent.getModal().should('be.visible', {timeout: 5000})
+      
+      homepage.quickViewModalComponent.getAvailability().invoke('text').then((text) => {
+        console.log(text)
+        if(text === 'Out Of Stock') {
+          homepage.quickViewModalComponent.getButtons().eq(0).should('have.attr', 'disabled')
+          homepage.quickViewModalComponent.getButtons().eq(1).should('have.attr', 'disabled')
+        } else {
+          homepage.quickViewModalComponent.getButtons().eq(0).should('not.have.attr', 'disabled')
+          homepage.quickViewModalComponent.getButtons().eq(1).should('not.have.attr', 'disabled')
+        }
+      })
+      homepage.quickViewModalComponent.getCloseButton().click()
+      homepage.quickViewModalComponent.getModal().should('not.be.visible', {timeout: 5000})
+
+
+
+      homepage.getTopProducts().eq(3).trigger('mouseover')
+      homepage.showQuickViewModal(homepage.getTopProducts().eq(3))
+      homepage.quickViewModalComponent.getModal().should('be.visible', {timeout: 5000})
+      
+      homepage.quickViewModalComponent.getAvailability().invoke('text').then((text) => {
+        console.log(text)
+        if(text === 'Out Of Stock') {
+          homepage.quickViewModalComponent.getButtons().eq(0).should('have.attr', 'disabled')
+          homepage.quickViewModalComponent.getButtons().eq(1).should('have.attr', 'disabled')
+        } else {
+          homepage.quickViewModalComponent.getButtons().eq(0).should('not.have.attr', 'disabled')
+          homepage.quickViewModalComponent.getButtons().eq(1).should('not.have.attr', 'disabled')
+        }
+      })
+      homepage.quickViewModalComponent.getCloseButton().click()
+      homepage.quickViewModalComponent.getModal().should('not.be.visible', {timeout: 5000})
+      
     })
   })
   context('Iphone resolution', () => {
