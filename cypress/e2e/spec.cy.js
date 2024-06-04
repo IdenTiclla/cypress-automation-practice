@@ -594,13 +594,28 @@ describe('Test suite edited with vim', () => {
       homepage.quickViewModalComponent.getModal().should('not.be.visible', {timeout: 5000})
 
     }
-    it.only("Test for testing buttons on quick view functionality", () => {
+    it("Test for testing buttons on quick view functionality", () => {
       homepage.visit()
       homepage.getTopProducts().its('length').then(length => {        
         for (let i = 0; i < length; i++) {
           checkQuickViewButtons(i)
         }
       })
+    })
+
+    it("test for adding to wishlist with not logged user from product detail page.", () => {
+      homepage.visit()
+      homepage.getTopProducts().eq(0).scrollIntoView()
+      homepage.getTopProducts().eq(0).click()
+      productDetailPage.notificationComponent.getNotification().should('not.be.visible')
+      productDetailPage.getDesktopHeartButton().click()
+      productDetailPage.notificationComponent.getNotification().should('be.visible')
+      productDetailPage.notificationComponent.getHeaderTitle().should('contain', 'Login')
+      productDetailPage.notificationComponent.getLoginButton().should('be.visible')
+      productDetailPage.notificationComponent.getRegisterButton().should('be.visible')
+      productDetailPage.notificationComponent.getCloseButton().click()
+      productDetailPage.notificationComponent.getCloseButton().click()  
+      productDetailPage.notificationComponent.getNotification().should('not.be.visible')
     })
   })
   context('Iphone resolution', () => {

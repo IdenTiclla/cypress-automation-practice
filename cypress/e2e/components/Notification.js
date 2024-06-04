@@ -1,4 +1,5 @@
 class Notification {
+    getNotification = () => cy.get("div#notification-box-top")
     getHeaderTitle = () => cy.get("div.toast-header")
     getCloseButton = () => cy.get("div.toast-header button")
     getBodyMessage = () => cy.get("div.toast-body p")
