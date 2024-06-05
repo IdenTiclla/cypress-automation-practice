@@ -1,5 +1,5 @@
 class Alert {
-    getAlert = () => cy.get("nav[aria-label='breadcrumb'] + div[class*='alert']")
+    getAlert = () => cy.get("div[class*='alert-dismissible']")
 }
 
 export default Alert

@@ -617,6 +617,14 @@ describe('Test suite edited with vim', () => {
       productDetailPage.notificationComponent.getCloseButton().click()  
       productDetailPage.notificationComponent.getNotification().should('not.be.visible')
     })
+
+    it("Test for writting a review on product detail page default error.", () => {
+      homepage.visit()
+      homepage.getTopProducts().eq(0).scrollIntoView()
+      homepage.getTopProducts().eq(0).click()
+      productDetailPage.submitYourReview()
+      productDetailPage.alertComponent.getAlert().should('contain', "Warning: Please select a review rating!")
+    })
   })
   context('Iphone resolution', () => {
     beforeEach(() => {
