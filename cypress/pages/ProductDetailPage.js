@@ -6,6 +6,7 @@ class ProductDetailPage {
         this.alertComponent = new Alert()
     }
     // desktop version
+    getStarsElements = () => cy.get("span.start-form-check   label:nth-last-child(n+2)")
     getDesktopHeartButton = () => cy.get("div#image-gallery-216811 button[class*='wishlist']")
     getYourNameInputField = () => cy.get("form#form-review input[name='name']")
     getYourReviewInputField = () => cy.get("form#form-review textarea")
@@ -20,6 +21,14 @@ class ProductDetailPage {
 
     submitYourReview = () => {
         this.getWriteReviewButton().click()
+    }
+
+    selectAmountOfStars = (position) => {
+        this.getStarsElements().then(($elements) => {
+            const elementsArray = Cypress._.toArray($elements)
+            const invertedArray = elementsArray.reverse()
+            invertedArray[position].click()
+        })
     }
 
     // mobile version
