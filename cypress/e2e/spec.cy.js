@@ -634,6 +634,16 @@ describe('Test suite edited with vim', () => {
       productDetailPage.submitYourReview()
       productDetailPage.alertComponent.getAlert().should('contain', " Warning: Review Name must be between 3 and 25 characters!")
     })
+
+    it.only("Test for writting empty review selecting stars and providing name.", () => {
+      homepage.visit()
+      homepage.getTopProducts().eq(0).scrollIntoView()
+      homepage.getTopProducts().eq(0).click()
+      productDetailPage.selectAmountOfStars(0)
+      productDetailPage.writeOnYourNameInputField("Jhoan")
+      productDetailPage.submitYourReview()
+      productDetailPage.alertComponent.getAlert().should('contain', "Warning: Review Text must be between 25 and 1000 characters!")
+    })
   })
   context('Iphone resolution', () => {
     beforeEach(() => {
