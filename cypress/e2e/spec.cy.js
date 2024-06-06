@@ -716,6 +716,29 @@ describe('Test suite edited with vim', () => {
     shoppingCartPage.alertComponent.getAlert().should('contain', 'Products marked with *** are not available in the desired quantity or not in stock!')
     shoppingCartPage.getItems().should('have.length', 1)
   })
+
+  it("Test or removing items on checkout cart page", () => {
+    cy.log("Adding first top product to the card.")
+    homepage.visit()
+    homepage.getTopProducts().eq(0).scrollIntoView()
+    homepage.getTopProducts().eq(0).trigger('mouseover')
+    homepage.addProductToCart(homepage.getTopProducts().eq(0))
+
+    homepage.mainHeaderComponent.getCartIconButton().click()
+    homepage.shoppingCartModalComponent.getCheckoutBUtton().click()
+
+    cy.log("Removing item.")
+    shoppingCartPage.removeNthItem(0)
+
+    cy.log("Performing assertions.")
+    cy.url().should('contain', 'checkout/cart')
+    shoppingCartPage.getWarningIcon().should('be.visible')
+    shoppingCartPage.getWarningIcon().should('have.class', 'text-warning')
+    shoppingCartPage.getTitle().should('be.visible')
+    shoppingCartPage.getMessage().should('be.visible')
+    shoppingCartPage.getMessage().should('have.text', 'Your shopping cart is empty!')
+    shoppingCartPage.getContinueButton().should('be.visible')
+  })
   context('Iphone resolution', () => {
     beforeEach(() => {
       homepage.visit()

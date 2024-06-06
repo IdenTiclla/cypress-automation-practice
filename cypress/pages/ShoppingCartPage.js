@@ -12,6 +12,10 @@ class ShoppingCartPage {
     getItems = () => cy.get("div.table-responsive table.table-bordered tbody tr")
     getContinueButton = () => cy.get("div#content >div > a[href*='common/home']")
     getCheckoutButton = () => cy.get("div#content >div > a[href*='checkout/checkout']")
+
+    removeNthItem = (index) => {
+        this.getItems().eq(index).find("button[title='Remove']").click()
+    }
 }
 
 export default ShoppingCartPage
