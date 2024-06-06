@@ -704,6 +704,18 @@ describe('Test suite edited with vim', () => {
       productDetailPage.getQuantityInputField().should('have.value', '1')
     })
   })
+  it("Test for checkout functionality with not available products", () => {
+    homepage.visit()
+    homepage.getTopProducts().eq(0).scrollIntoView()
+    homepage.getTopProducts().eq(0).trigger('mouseover')
+    homepage.addProductToCart(homepage.getTopProducts().eq(0))
+
+    homepage.mainHeaderComponent.getCartIconButton().click()
+    homepage.shoppingCartModalComponent.getCheckoutBUtton().click()
+
+    shoppingCartPage.alertComponent.getAlert().should('contain', 'Products marked with *** are not available in the desired quantity or not in stock!')
+    shoppingCartPage.getItems().should('have.length', 1)
+  })
   context('Iphone resolution', () => {
     beforeEach(() => {
       homepage.visit()

@@ -4,6 +4,7 @@ import RightNavigationBar from "../e2e/components/RightNavigationBar"
 import QuickLinks from "../e2e/components/QuickLinks"
 import Notification from "../e2e/components/Notification"
 import QuickViewModal from "../e2e/components/QuickViewModal"
+import ShoppingCartModal from "../e2e/components/ShoppingCartModal"
 
 class Home {
     visit() {
@@ -14,6 +15,7 @@ class Home {
         this.mainHeaderComponent = new MainHeader()
         this.rightNavigationComponent = new RightNavigationBar()
         this.quickLinksComponent = new QuickLinks()
+        this.shoppingCartModalComponent = new ShoppingCartModal()
         this.notificationComponent = new Notification()
         this.quickViewModalComponent = new QuickViewModal()
     }
