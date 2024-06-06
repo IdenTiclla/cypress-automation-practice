@@ -676,6 +676,33 @@ describe('Test suite edited with vim', () => {
       productDetailPage.increaseQuantity()
       productDetailPage.getQuantityInputField().should('have.value', '10')
     })
+
+    it("Test for decreasing quantity on product details page.", () => {
+      homepage.visit()
+      homepage.getTopProducts().eq(0).scrollIntoView()
+      homepage.getTopProducts().eq(0).click()
+
+      productDetailPage.decreaseQuantity()
+      productDetailPage.getQuantityInputField().should('have.value', '1')
+
+      productDetailPage.decreaseQuantity()
+      productDetailPage.getQuantityInputField().should('have.value', '1')
+
+      productDetailPage.decreaseQuantity()
+      productDetailPage.getQuantityInputField().should('have.value', '1')
+
+      productDetailPage.decreaseQuantity()
+      productDetailPage.getQuantityInputField().should('have.value', '1')
+
+      productDetailPage.decreaseQuantity()
+      productDetailPage.getQuantityInputField().should('have.value', '1')
+
+      productDetailPage.decreaseQuantity()
+      productDetailPage.getQuantityInputField().should('have.value', '1')
+
+      productDetailPage.decreaseQuantity()
+      productDetailPage.getQuantityInputField().should('have.value', '1')
+    })
   })
   context('Iphone resolution', () => {
     beforeEach(() => {
