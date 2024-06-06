@@ -6,6 +6,10 @@ class ProductDetailPage {
         this.alertComponent = new Alert()
     }
     // desktop version
+    getDecreaseButton = () => cy.get("div#entry_216841 button[aria-label*='Decrease']")
+    getQuantityInputField = () => cy.get("div#entry_216841 input[name='quantity']")
+    getIncreaseButton = () => cy.get("div#entry_216841 button[aria-label*='Increase']")
+
     getStarsElements = () => cy.get("span.start-form-check   label:nth-last-child(n+2)")
     getDesktopHeartButton = () => cy.get("div#image-gallery-216811 button[class*='wishlist']")
     getYourNameInputField = () => cy.get("form#form-review input[name='name']")
@@ -29,6 +33,12 @@ class ProductDetailPage {
             const invertedArray = elementsArray.reverse()
             invertedArray[position].click()
         })
+    }
+    increaseQuantity = () => {
+        this.getIncreaseButton().click()
+    }
+    decreaseQuantity = () => {
+        this.getDecreaseButton().click()
     }
 
     // mobile version

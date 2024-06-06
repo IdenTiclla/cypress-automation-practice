@@ -635,7 +635,7 @@ describe('Test suite edited with vim', () => {
       productDetailPage.alertComponent.getAlert().should('contain', " Warning: Review Name must be between 3 and 25 characters!")
     })
 
-    it.only("Test for writting empty review selecting stars and providing name.", () => {
+    it("Test for writting empty review selecting stars and providing name.", () => {
       homepage.visit()
       homepage.getTopProducts().eq(0).scrollIntoView()
       homepage.getTopProducts().eq(0).click()
@@ -643,6 +643,38 @@ describe('Test suite edited with vim', () => {
       productDetailPage.writeOnYourNameInputField("Jhoan")
       productDetailPage.submitYourReview()
       productDetailPage.alertComponent.getAlert().should('contain', "Warning: Review Text must be between 25 and 1000 characters!")
+    })
+
+    it("Test for Increasing quantity on product detail page.", () => {
+      homepage.visit()
+      homepage.getTopProducts().eq(0).scrollIntoView()
+      homepage.getTopProducts().eq(0).click()
+      productDetailPage.increaseQuantity()
+      productDetailPage.getQuantityInputField().should('have.value', '2')
+
+      productDetailPage.increaseQuantity()
+      productDetailPage.getQuantityInputField().should('have.value', '3')
+
+      productDetailPage.increaseQuantity()
+      productDetailPage.getQuantityInputField().should('have.value', '4')
+      
+      productDetailPage.increaseQuantity()
+      productDetailPage.getQuantityInputField().should('have.value', '5')
+
+      productDetailPage.increaseQuantity()
+      productDetailPage.getQuantityInputField().should('have.value', '6')
+
+      productDetailPage.increaseQuantity()
+      productDetailPage.getQuantityInputField().should('have.value', '7')
+
+      productDetailPage.increaseQuantity()
+      productDetailPage.getQuantityInputField().should('have.value', '8')
+
+      productDetailPage.increaseQuantity()
+      productDetailPage.getQuantityInputField().should('have.value', '9')
+
+      productDetailPage.increaseQuantity()
+      productDetailPage.getQuantityInputField().should('have.value', '10')
     })
   })
   context('Iphone resolution', () => {
