@@ -739,6 +739,33 @@ describe('Test suite edited with vim', () => {
       shoppingCartPage.getMessage().should('have.text', 'Your shopping cart is empty!')
       shoppingCartPage.getContinueButton().should('be.visible')
     })
+
+    const checkPriceNthItem = (index) => {
+      shoppingCartPage.getPriceUnitNthElement(index).then(priceUnit => {
+        shoppingCartPage.getQuantityNthElement(index).then(quantity => {
+          shoppingCartPage.getPriceTotalNthElement(index).then(totalPrice => {
+            expect(priceUnit * quantity).to.eq(totalPrice)
+          })
+        })
+      })
+    }
+
+    it.only("Test for updating product quantity on checkout cart page.", () => {
+      homepage.visit()
+      homepage.getTopProducts().eq(0).scrollIntoView()
+      homepage.getTopProducts().eq(0).trigger('mouseover')
+      homepage.addProductToCart(homepage.getTopProducts().eq(0))
+      homepage.notificationComponent.getCheckoutButton().click()
+      cy.url().should('contain', 'checkout/cart')
+      
+      checkPriceNthItem(0)
+      
+      
+      cy.log("updating product quantity on checkout cart page.")
+      shoppingCartPage.updateNthProductQuantity(0, 2)
+
+      checkPriceNthItem(0)
+    })
   })
   context('Iphone resolution', () => {
     beforeEach(() => {

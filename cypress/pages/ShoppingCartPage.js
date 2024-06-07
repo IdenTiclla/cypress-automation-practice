@@ -16,6 +16,35 @@ class ShoppingCartPage {
     removeNthItem = (index) => {
         this.getItems().eq(index).find("button[title='Remove']").click()
     }
+
+    getQuantityNthElement = (index) => {
+        return this.getItems().eq(index).find("input").invoke('val').then(text => {
+            const quantity = parseFloat(text)
+            return quantity
+        })
+    }
+
+    getPriceUnitNthElement = (index) => {
+        return this.getItems().eq(index).find("td:nth-of-type(5)").invoke('text').then(text => {
+            const priceUnit = parseFloat(text.replace('$',''))
+            return priceUnit
+        })
+    }
+
+    getPriceTotalNthElement = (index) => {
+        return this.getItems().eq(index).find("td:nth-of-type(6)").invoke('text').then(text => {
+            const priceUnit = parseFloat(text.replace('$',''))
+            return priceUnit
+        })
+    }
+    
+    updateNthProductQuantity = (index, quantity) => {
+        this.getItems().eq(index).find("input").clear()
+        this.getItems().eq(index).find("input").type(quantity)
+        this.getItems().eq(index).find("button[title='Update']").click()
+    }
+
+    
 }
 
 export default ShoppingCartPage
