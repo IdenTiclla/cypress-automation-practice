@@ -750,7 +750,7 @@ describe('Test suite edited with vim', () => {
       })
     }
 
-    it.only("Test for updating product quantity on checkout cart page.", () => {
+    it("Test for updating product quantity on checkout cart page.", () => {
       homepage.visit()
       homepage.getTopProducts().eq(0).scrollIntoView()
       homepage.getTopProducts().eq(0).trigger('mouseover')
@@ -765,6 +765,52 @@ describe('Test suite edited with vim', () => {
       shoppingCartPage.updateNthProductQuantity(0, 2)
 
       checkPriceNthItem(0)
+    })
+    const checkQuantityAccordingToCartIcon = () => {
+      shoppingCartPage.getItems().its('length').then(length => {
+        let counter = 0
+        Cypress._.times(length, (i) => {
+          shoppingCartPage.getQuantityNthElement(i).then(quantity => {
+            console.log(`quantity: ${quantity}`);
+            counter += parseInt(quantity, 10); // Ensure the quantity is parsed as an integer
+          });
+        });
+    
+        // Ensure the logging happens after the iteration is complete
+        cy.wrap(null).then(() => {
+          console.log(`quantity counter = ${counter}`);
+          // You can also make assertions on the counter here if needed
+          // expect(counter).to.equal(expectedValue);
+          shoppingCartPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', counter)
+        });
+      })
+    }
+
+    it.only("Test for testing the quantity of products on cart.", () => {
+      homepage.visit()
+      shoppingCartPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 0)
+      
+      homepage.getTopProducts().eq(0).scrollIntoView()
+      homepage.getTopProducts().eq(0).trigger('mouseover')
+      homepage.addProductToCart(homepage.getTopProducts().eq(0))
+
+
+      homepage.visit()
+
+      homepage.getTopProducts().eq(2).scrollIntoView()
+      homepage.getTopProducts().eq(2).trigger('mouseover')
+      homepage.addProductToCart(homepage.getTopProducts().eq(2))
+
+      homepage.visit()
+
+      homepage.getTopProducts().eq(3).scrollIntoView()
+      homepage.getTopProducts().eq(3).trigger('mouseover')
+      homepage.addProductToCart(homepage.getTopProducts().eq(3))
+
+      homepage.notificationComponent.getCheckoutButton().click()
+
+      checkQuantityAccordingToCartIcon()
+
     })
   })
   context('Iphone resolution', () => {
