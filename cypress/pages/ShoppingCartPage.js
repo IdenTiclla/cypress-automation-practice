@@ -10,6 +10,22 @@ class ShoppingCartPage {
     getTitle = () => cy.get("div#content > h1")
     getMessage = () => cy.get("div#content > p")
     getItems = () => cy.get("div.table-responsive table.table-bordered tbody tr")
+
+    getCollapseElements = () => cy.get("div#accordion div.card")
+
+    expandOrMinimizeUseCouponCodeCollapse = () => {
+        this.getCollapseElements().eq(0).find('h5').click()
+    }
+
+    expandOrMinimizeEstimateShippingTaxesCollapse = () => {
+        this.getCollapseElements().eq(1).find('h5').click()
+
+    }
+
+    expandOrMinimizeUseGiftCertificateCollapse = () => {
+        this.getCollapseElements().eq(2).find('h5').click()
+    }
+
     getContinueButton = () => cy.get("div#content >div > a[href*='common/home']")
     getCheckoutButton = () => cy.get("div#content >div > a[href*='checkout/checkout']")
 

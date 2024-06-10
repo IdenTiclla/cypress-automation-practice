@@ -812,7 +812,8 @@ describe('Test suite edited with vim', () => {
       checkQuantityAccordingToCartIcon()
 
     })
-    it.only("Test for the continue shopping button", () => {
+
+    it("Test for the continue shopping button", () => {
       homepage.visit()
 
       homepage.getTopProducts().eq(0).scrollIntoView()
@@ -823,6 +824,30 @@ describe('Test suite edited with vim', () => {
       cy.url().should('contain', 'checkout/cart')
       shoppingCartPage.getContinueButton().click()
       cy.url().should('contain', 'common/home')
+    })
+
+    it.only("Test for testing the collapse components on cart page.", () => {
+      homepage.visit()
+      homepage.getTopProducts().eq(0).scrollIntoView()
+      homepage.getTopProducts().eq(0).trigger('mouseover')
+      homepage.addProductToCart(homepage.getTopProducts().eq(0))
+
+      homepage.notificationComponent.getViewCartButton().click()
+
+      shoppingCartPage.expandOrMinimizeUseCouponCodeCollapse()
+      shoppingCartPage.getCollapseElements().eq(0).find('div#collapse-coupon').should('have.class', 'show')
+      shoppingCartPage.getCollapseElements().eq(1).find('div#collapse-shipping').should('not.have.class', 'show')
+      shoppingCartPage.getCollapseElements().eq(2).find('div#collapse-voucher').should('not.have.class', 'show')
+      
+      shoppingCartPage.expandOrMinimizeEstimateShippingTaxesCollapse()
+      shoppingCartPage.getCollapseElements().eq(0).find('div#collapse-coupon').should('not.have.class', 'show')
+      shoppingCartPage.getCollapseElements().eq(1).find('div#collapse-shipping').should('have.class', 'show')
+      shoppingCartPage.getCollapseElements().eq(2).find('div#collapse-voucher').should('not.have.class', 'show')
+      shoppingCartPage.expandOrMinimizeUseGiftCertificateCollapse()
+      shoppingCartPage.getCollapseElements().eq(0).find('div#collapse-coupon').should('not.have.class', 'show')
+      shoppingCartPage.getCollapseElements().eq(1).find('div#collapse-shipping').should('not.have.class', 'show')
+      shoppingCartPage.getCollapseElements().eq(2).find('div#collapse-voucher').should('have.class', 'show')
+      
     })
   })
   context('Iphone resolution', () => {
