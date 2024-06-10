@@ -786,7 +786,7 @@ describe('Test suite edited with vim', () => {
       })
     }
 
-    it.only("Test for testing the quantity of products on cart.", () => {
+    it("Test for testing the quantity of products on cart.", () => {
       homepage.visit()
       shoppingCartPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 0)
       
@@ -811,6 +811,18 @@ describe('Test suite edited with vim', () => {
 
       checkQuantityAccordingToCartIcon()
 
+    })
+    it.only("Test for the continue shopping button", () => {
+      homepage.visit()
+
+      homepage.getTopProducts().eq(0).scrollIntoView()
+      homepage.getTopProducts().eq(0).trigger('mouseover')
+      homepage.addProductToCart(homepage.getTopProducts().eq(0))
+
+      homepage.notificationComponent.getCheckoutButton().click()
+      cy.url().should('contain', 'checkout/cart')
+      shoppingCartPage.getContinueButton().click()
+      cy.url().should('contain', 'common/home')
     })
   })
   context('Iphone resolution', () => {
