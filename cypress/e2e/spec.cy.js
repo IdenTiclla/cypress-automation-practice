@@ -3,6 +3,9 @@ import Login from "../pages/Login"
 import RegisterPage from "../pages/RegisterPage"
 
 import ShoppingCartPage from "../pages/ShoppingCartPage"
+import CheckoutPage from "../pages/CheckoutPage"
+import ConfirmOrderPage from "../pages/ConfimOrderPage"
+import OrderHistoryPage from "../pages/OrderHistoryPage"
 import WishListPage from "../pages/WishListPage"
 
 import ModulesPage from "../pages/ModulesPage"
@@ -25,10 +28,12 @@ const loginPage = new Login()
 const homepage = new Home()
 const registerPage = new RegisterPage()
 const shoppingCartPage = new ShoppingCartPage()
+const checkoutPage = new CheckoutPage()
+const confirmOrderPage = new ConfirmOrderPage()
+const orderHistoryPage = new OrderHistoryPage()
 const wishListPage = new WishListPage()
 const shoppingCartModal = new ShoppingCartModal()
 const rightNavigationBar = new RightNavigationBar()
-const notificationComponent = new Notification()
 const modulesPage = new ModulesPage()
 const widgetsPage = new WidgetsPage()
 const designsPage = new DesignsPage()
@@ -826,7 +831,7 @@ describe('Test suite edited with vim', () => {
       cy.url().should('contain', 'common/home')
     })
 
-    it.only("Test for testing the collapse components on cart page.", () => {
+    it("Test for testing the collapse components on cart page.", () => {
       homepage.visit()
       homepage.getTopProducts().eq(0).scrollIntoView()
       homepage.getTopProducts().eq(0).trigger('mouseover')
@@ -849,6 +854,76 @@ describe('Test suite edited with vim', () => {
       shoppingCartPage.getCollapseElements().eq(2).find('div#collapse-voucher').should('have.class', 'show')
       
     })
+
+    it.only("Test for opening an account and performing an order.", () => {
+      homepage.visit()
+      cy.getRandomEmail().then((randomEmail) => {
+        cy.generateRandomPhoneNumber().then((randomPhoneNumber) => {
+          const firstname = 'randomfirstname'
+          const lastname= 'randomlastname'
+          const email = randomEmail
+          const telephone = randomPhoneNumber
+          const password = 'P@ssw0rd'
+          const password_confirm = 'P@ssw0rd'
+          const newsletter_subscribe = false
+          const privacy_policy = true
+          homepage.mainNavigationComponent.getMyAccountOption().click()
+          loginPage.rightNavigationComponent.clickOnRightNavigationOption('Register')
+          cy.url().should('contain', 'account/register')
+          registerPage.registerNewUser(firstname, lastname, email, telephone, password, password_confirm, newsletter_subscribe, privacy_policy)
+          cy.contains("Your Account Has Been Created!")
+          homepage.rightNavigationComponent.clickOnRightNavigationOption('Logout')
+          cy.contains("Account Logout")
+          cy.url().should('contain', 'account/logout')
+          homepage.rightNavigationComponent.clickOnRightNavigationOption('Login')
+          cy.url().should('contain', 'account/login')
+          loginPage.login(email, password)
+          cy.url().should('contain', 'account/account')
+          myAccountPage.rightNavigationComponent.getOptions().eq(0).should('have.class', 'active')
+
+          homepage.visit()
+          homepage.getTopProducts().eq(4).scrollIntoView()
+          homepage.getTopProducts().eq(4).trigger('mouseover')
+          homepage.addProductToCart(homepage.getTopProducts().eq(4))
+
+          homepage.notificationComponent.getCheckoutButton().click()
+          checkoutPage.getTelephoneInputField().should('not.have.value', '')
+          checkoutPage.getTelephoneInputField().should('have.value', randomPhoneNumber)
+
+          checkoutPage.fillBillingAddressSection('my firstname', 'my lastname', 'company 1', 'Av wisconsin 1', 'Av wisconsin 2', 'my city', '5775', 'Uganda', 'Moyo')
+          checkoutPage.addComments("hello world")
+          checkoutPage.checkOrUncheckTermsAndConditions()
+
+          checkoutPage.getContinueButton().click()
+          cy.url().should('contain', 'checkout/confirm')
+
+          cy.contains('my firstname')
+          cy.contains('my lastname')
+          cy.contains('company 1')
+          cy.contains('Av wisconsin 1')
+          cy.contains('Av wisconsin 2')
+          cy.contains('my city')
+          cy.contains('5775')
+          cy.contains('Uganda')
+          cy.contains('Moyo')
+
+          cy.log("Confirm order")
+          confirmOrderPage.getConfirmOrderButton().click()
+          cy.url().should('contain', 'checkout/success')
+          cy.contains(" Your order has been placed!")
+
+          cy.log('Verifying the order history')
+          homepage.visit()
+          homepage.mainNavigationComponent.getMyAccountOption().click()
+          homepage.rightNavigationComponent.clickOnRightNavigationOption('Order History')
+
+          cy.url().should('contain', 'account/order')
+          orderHistoryPage.getOrdersElements().should('have.length', 1)
+        })
+      })
+    })
+
+
   })
   context('Iphone resolution', () => {
     beforeEach(() => {
