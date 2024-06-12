@@ -855,7 +855,7 @@ describe('Test suite edited with vim', () => {
       
     })
 
-    it.only("Test for opening an account and performing an order.", () => {
+    it("Test for opening an account and performing an order.", () => {
       homepage.visit()
       cy.getRandomEmail().then((randomEmail) => {
         cy.generateRandomPhoneNumber().then((randomPhoneNumber) => {
@@ -923,6 +923,16 @@ describe('Test suite edited with vim', () => {
       })
     })
 
+    it.only("Test for testing the login page default errors", () => {
+      homepage.visit()
+      homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
+      loginPage.login('randomemail@gmail.com', 'dummypassword')
+      loginPage.alertComponent.getAlert().should('have.text', ' Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour.')
+      loginPage.alertComponent.getAlert().should('have.class', 'alert-danger')
+      loginPage.alertComponent.getAlert().should('have.css', 'background-color', 'rgb(248, 215, 218)')
+      loginPage.alertComponent.getAlert().should('have.css', 'color', 'rgb(114, 28, 36)')
+      loginPage.alertComponent.getAlert().should('have.css', 'border-color', 'rgb(245, 198, 203)')
+    })
 
   })
   context('Iphone resolution', () => {

@@ -1,8 +1,10 @@
+import Alert from "../e2e/components/Alert"
 import RightNavigationBar from "../e2e/components/RightNavigationBar"
 
 class Login{
     constructor() {
         this.rightNavigationComponent = new RightNavigationBar()
+        this.alertComponent = new Alert()
     }
     getEmailInputField = () => {
         return cy.get("input[name='email']")
