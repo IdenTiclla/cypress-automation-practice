@@ -14,12 +14,12 @@ import DesignsPage from "../pages/DesignsPages"
 
 import ForgottenPasswordPage from "../pages/ForgottenPasswordPage"
 import MyAccountPage from "../pages/MyAccountPage"
+import NewsletterSubscriptionPage from "../pages/NewsletterSubscriptionPage"
 import ChangePasswordPage from "../pages/ChangePasswordPage"
 
 import SearchResultPage from "../pages/SearchResultPage"
 
 import ShoppingCartModal from "./components/ShoppingCartModal"
-import Notification from "./components/Notification"
 import RightNavigationBar from "./components/RightNavigationBar"
 import ProductDetailPage from "../pages/ProductDetailPage"
 
@@ -41,6 +41,7 @@ const productDetailPage = new ProductDetailPage()
 const searchResultPage = new SearchResultPage()
 const forgottenPasswordPage = new ForgottenPasswordPage()
 const myAccountPage = new MyAccountPage()
+const newsletterSubscriptionPage = new NewsletterSubscriptionPage()
 const changePasswordPage = new ChangePasswordPage()
 
 Cypress.on('uncaught:exception', (err, runnable) => {
@@ -925,6 +926,35 @@ describe('Test suite edited with vim', () => {
       loginPage.alertComponent.getAlert().should('have.css', 'background-color', 'rgb(248, 215, 218)')
       loginPage.alertComponent.getAlert().should('have.css', 'color', 'rgb(114, 28, 36)')
       loginPage.alertComponent.getAlert().should('have.css', 'border-color', 'rgb(245, 198, 203)')
+    })
+
+    it("Subscribe and unsubscribe to newsleter.", () => {
+      homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
+      loginPage.login('jose.lopez@gmail.com', 'P@ssw0rd')
+      myAccountPage.getMyAccountOptions().eq(4).click()
+      newsletterSubscriptionPage.getNoCheckbox().should('have.attr', 'checked')
+      newsletterSubscriptionPage.getYesCheckbox().should('not.have.attr', 'checked')
+
+      newsletterSubscriptionPage.checkYes()
+      newsletterSubscriptionPage.getContinueButton().click()
+
+      myAccountPage.alertComponent.getAlert().should('have.text', ' Success: Your newsletter subscription has been successfully updated!')
+      myAccountPage.alertComponent.getAlert().should('have.class', 'alert-success')
+      myAccountPage.alertComponent.getAlert().should('have.css', 'color', 'rgb(21, 87, 36)')
+      myAccountPage.alertComponent.getAlert().should('have.css', 'background-color', 'rgb(212, 237, 218)')
+
+      myAccountPage.getMyAccountOptions().eq(4).click()
+      newsletterSubscriptionPage.getNoCheckbox().should('not.have.attr', 'checked')
+      newsletterSubscriptionPage.getYesCheckbox().should('have.attr', 'checked')
+
+
+      newsletterSubscriptionPage.checkNo()
+      newsletterSubscriptionPage.getContinueButton().click()
+
+      myAccountPage.alertComponent.getAlert().should('have.text', ' Success: Your newsletter subscription has been successfully updated!')
+      myAccountPage.alertComponent.getAlert().should('have.class', 'alert-success')
+      myAccountPage.alertComponent.getAlert().should('have.css', 'color', 'rgb(21, 87, 36)')
+      myAccountPage.alertComponent.getAlert().should('have.css', 'background-color', 'rgb(212, 237, 218)')
     })
 
   })
