@@ -167,20 +167,32 @@ describe('Test suite edited with vim', () => {
       registerPage.getPolicyPrivacyLinkElement().should('be.visible')
       registerPage.getContinueButton().should('be.visible')
     })
-    it('Testing register errors.', () => {
-      homepage.mainNavigationComponent.getMyAccountOption().click()
-      rightNavigationBar.getRegisterOption().click()
+    it.only('Test for testing the default register errors.', () => {
+      homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
 
       registerPage.alertComponent.getAlert().should('not.exist')
       registerPage.getContinueButton().click()
-      registerPage.getFirstnameErrorText().should('have.text', 'First Name must be between 1 and 32 characters!')
-      registerPage.getLastnameIErrorText().should('have.text', 'Last Name must be between 1 and 32 characters!')
-      registerPage.getEmailErrorText().should('have.text', 'E-Mail Address does not appear to be valid!')
-      registerPage.getTelephoneErrorText().should('have.text', 'Telephone must be between 3 and 32 characters!')
-      registerPage.getPasswordErrorText().should('have.text', 'Password must be between 4 and 20 characters!')
+
       registerPage.alertComponent.getAlert().should('be.visible')
       registerPage.alertComponent.getAlert().should('have.text', ' Warning: You must agree to the Privacy Policy!')
       registerPage.alertComponent.getAlert().should('have.class', 'alert-danger')
+      registerPage.alertComponent.getAlert().should('have.css', 'background-color', 'rgb(248, 215, 218)')
+      registerPage.alertComponent.getAlert().should('have.css', 'color', 'rgb(114, 28, 36)')
+      
+      registerPage.getFirstnameErrorText().should('have.text', 'First Name must be between 1 and 32 characters!')
+      registerPage.getFirstnameErrorText().should('have.css', 'color', 'rgb(220, 53, 69)')
+      
+      registerPage.getLastnameIErrorText().should('have.text', 'Last Name must be between 1 and 32 characters!')
+      registerPage.getLastnameIErrorText().should('have.css', 'color', 'rgb(220, 53, 69)')
+      
+      registerPage.getEmailErrorText().should('have.text', 'E-Mail Address does not appear to be valid!')
+      registerPage.getEmailErrorText().should('have.css', 'color', 'rgb(220, 53, 69)')
+      
+      registerPage.getTelephoneErrorText().should('have.text', 'Telephone must be between 3 and 32 characters!')
+      registerPage.getTelephoneErrorText().should('have.css', 'color', 'rgb(220, 53, 69)')
+      
+      registerPage.getPasswordErrorText().should('have.text', 'Password must be between 4 and 20 characters!')
+      registerPage.getPasswordErrorText().should('have.css', 'color', 'rgb(220, 53, 69)')
     })
   
     it('Test for already registered email', () => {
@@ -923,7 +935,7 @@ describe('Test suite edited with vim', () => {
       })
     })
 
-    it.only("Test for testing the login page default errors", () => {
+    it("Test for testing the login page default errors", () => {
       homepage.visit()
       homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
       loginPage.login('randomemail@gmail.com', 'dummypassword')
