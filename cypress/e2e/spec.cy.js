@@ -167,7 +167,8 @@ describe('Test suite edited with vim', () => {
       registerPage.getPolicyPrivacyLinkElement().should('be.visible')
       registerPage.getContinueButton().should('be.visible')
     })
-    it.only('Test for testing the default register errors.', () => {
+
+    it('Test for testing the default register errors.', () => {
       homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
 
       registerPage.alertComponent.getAlert().should('not.exist')
@@ -518,7 +519,6 @@ describe('Test suite edited with vim', () => {
     })
 
     it("Test for testing the navigation on top  categories", () => {
-      homepage.visit()
       homepage.mainNavigationComponent.clickOnSpecificTopCategory('Component')
       homepage.mainNavigationComponent.clickOnSpecificTopCategory('Cameras')
       homepage.mainNavigationComponent.clickOnSpecificTopCategory('Phone, Tablets & Ipod')
@@ -538,7 +538,6 @@ describe('Test suite edited with vim', () => {
     })
 
     it("Test for testing quick view functionality.", () => {
-      homepage.visit()
       homepage.quickViewModalComponent.getModal().should('not.exist')
       const first_product = homepage.getTopProducts().eq(0)
       homepage.showQuickViewModal(first_product)
@@ -546,7 +545,6 @@ describe('Test suite edited with vim', () => {
     })
 
     it("Testing the quick view functionality on many products on top products section", () => {
-      homepage.visit()
       homepage.quickViewModalComponent.getModal().should('not.exist')
       // homepage.getTopProducts().eq(0).realHover()
       homepage.getTopProducts().eq(0).trigger('mouseover')
@@ -612,7 +610,6 @@ describe('Test suite edited with vim', () => {
 
     }
     it("Test for testing buttons on quick view functionality", () => {
-      homepage.visit()
       homepage.getTopProducts().its('length').then(length => {        
         for (let i = 0; i < length; i++) {
           checkQuickViewButtons(i)
@@ -621,7 +618,6 @@ describe('Test suite edited with vim', () => {
     })
 
     it("test for adding to wishlist with not logged user from product detail page.", () => {
-      homepage.visit()
       homepage.getTopProducts().eq(0).scrollIntoView()
       homepage.getTopProducts().eq(0).click()
       productDetailPage.notificationComponent.getNotification().should('not.be.visible')
@@ -636,14 +632,12 @@ describe('Test suite edited with vim', () => {
     })
 
     it("Test for writting a review on product detail page default error.", () => {
-      homepage.visit()
       homepage.getTopProducts().eq(0).scrollIntoView()
       homepage.getTopProducts().eq(0).click()
       productDetailPage.submitYourReview()
       productDetailPage.alertComponent.getAlert().should('contain', "Warning: Please select a review rating!")
     })
     it("Test for writting an  review but not providing review name.", () => {
-      homepage.visit()
       homepage.getTopProducts().eq(0).scrollIntoView()
       homepage.getTopProducts().eq(0).click()
       productDetailPage.selectAmountOfStars(0)
@@ -653,7 +647,6 @@ describe('Test suite edited with vim', () => {
     })
 
     it("Test for writting empty review selecting stars and providing name.", () => {
-      homepage.visit()
       homepage.getTopProducts().eq(0).scrollIntoView()
       homepage.getTopProducts().eq(0).click()
       productDetailPage.selectAmountOfStars(0)
@@ -663,7 +656,6 @@ describe('Test suite edited with vim', () => {
     })
 
     it("Test for Increasing quantity on product detail page.", () => {
-      homepage.visit()
       homepage.getTopProducts().eq(0).scrollIntoView()
       homepage.getTopProducts().eq(0).click()
       productDetailPage.increaseQuantity()
@@ -695,7 +687,6 @@ describe('Test suite edited with vim', () => {
     })
 
     it("Test for decreasing quantity on product details page.", () => {
-      homepage.visit()
       homepage.getTopProducts().eq(0).scrollIntoView()
       homepage.getTopProducts().eq(0).click()
 
@@ -722,21 +713,17 @@ describe('Test suite edited with vim', () => {
     })
 
     it("Test for checkout functionality with not available products", () => {
-      homepage.visit()
       homepage.getTopProducts().eq(0).scrollIntoView()
       homepage.getTopProducts().eq(0).trigger('mouseover')
       homepage.addProductToCart(homepage.getTopProducts().eq(0))
   
-      homepage.mainHeaderComponent.getCartIconButton().click()
-      homepage.shoppingCartModalComponent.getCheckoutBUtton().click()
-  
+      homepage.notificationComponent.getViewCartButton().click()  
       shoppingCartPage.alertComponent.getAlert().should('contain', 'Products marked with *** are not available in the desired quantity or not in stock!')
       shoppingCartPage.getItems().should('have.length', 1)
     })
   
     it("Test or removing items on checkout cart page", () => {
       cy.log("Adding first top product to the card.")
-      homepage.visit()
       homepage.getTopProducts().eq(0).scrollIntoView()
       homepage.getTopProducts().eq(0).trigger('mouseover')
       homepage.addProductToCart(homepage.getTopProducts().eq(0))
@@ -768,7 +755,6 @@ describe('Test suite edited with vim', () => {
     }
 
     it("Test for updating product quantity on checkout cart page.", () => {
-      homepage.visit()
       homepage.getTopProducts().eq(0).scrollIntoView()
       homepage.getTopProducts().eq(0).trigger('mouseover')
       homepage.addProductToCart(homepage.getTopProducts().eq(0))
@@ -804,7 +790,6 @@ describe('Test suite edited with vim', () => {
     }
 
     it("Test for testing the quantity of products on cart.", () => {
-      homepage.visit()
       shoppingCartPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 0)
       
       homepage.getTopProducts().eq(0).scrollIntoView()
@@ -831,7 +816,6 @@ describe('Test suite edited with vim', () => {
     })
 
     it("Test for the continue shopping button", () => {
-      homepage.visit()
 
       homepage.getTopProducts().eq(0).scrollIntoView()
       homepage.getTopProducts().eq(0).trigger('mouseover')
@@ -844,7 +828,6 @@ describe('Test suite edited with vim', () => {
     })
 
     it("Test for testing the collapse components on cart page.", () => {
-      homepage.visit()
       homepage.getTopProducts().eq(0).scrollIntoView()
       homepage.getTopProducts().eq(0).trigger('mouseover')
       homepage.addProductToCart(homepage.getTopProducts().eq(0))
@@ -868,7 +851,6 @@ describe('Test suite edited with vim', () => {
     })
 
     it("Test for opening an account and performing an order.", () => {
-      homepage.visit()
       cy.getRandomEmail().then((randomEmail) => {
         cy.generateRandomPhoneNumber().then((randomPhoneNumber) => {
           const firstname = 'randomfirstname'
@@ -936,7 +918,6 @@ describe('Test suite edited with vim', () => {
     })
 
     it("Test for testing the login page default errors", () => {
-      homepage.visit()
       homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
       loginPage.login('randomemail@gmail.com', 'dummypassword')
       loginPage.alertComponent.getAlert().should('have.text', ' Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour.')
@@ -959,7 +940,6 @@ describe('Test suite edited with vim', () => {
     })
     
     it('First test for iphone viewport => testing the search functionality', () => {
-      homepage.visit()
       homepage.mainHeaderComponent.getWishListIconButton().should('not.be.visible')
       homepage.mainHeaderComponent.getMobileSearchInputField().type('hello world')
       homepage.mainHeaderComponent.getMobileSearchButton().click()
@@ -970,7 +950,6 @@ describe('Test suite edited with vim', () => {
     })
     
     it("Test for Login functionality on iphone resolution", () => {
-      homepage.visit()
       homepage.mainHeaderComponent.getMobilePersonIconButton().click()
       homepage.quickLinksComponent.clickOnSpecificQuickLink('My account')
       cy.url().should('contain', 'account/login')
@@ -979,7 +958,6 @@ describe('Test suite edited with vim', () => {
     })
 
     it("Test for navigating throught the top categories on iphone resolution", () => {
-      homepage.visit()
       homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Components')
       homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Cameras')
       homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Phone, Tablets & Ipod')
@@ -999,7 +977,7 @@ describe('Test suite edited with vim', () => {
     })
     
     it("Test for testing the category selector on the main header component.", () => {
-      homepage.visit()
+      
       homepage.mainHeaderComponent.getMobileCategoriesDropdown().click()
       homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().should('not.have.class', 'active')
       homepage.mainHeaderComponent.selectCategory('All Categories')
@@ -1039,7 +1017,6 @@ describe('Test suite edited with vim', () => {
     })
 
     it("Test for testing the main carousel component in homepage on mobile version.", () => {
-      homepage.visit()
       homepage.getMainCarouselImages().eq(0).should('have.class', 'active')
       homepage.getCarouselPaginationItems().eq(0).should('have.class', 'active')
 
@@ -1061,7 +1038,6 @@ describe('Test suite edited with vim', () => {
     })
 
     it("adding product to the wishlist without a logged user", () => {
-      homepage.visit()
       homepage.getTopProducts().eq(0).click()
       productDetailPage.addToTheWishListOnMobile()
       homepage.notificationComponent.getHeaderTitle().should('contain', 'Login')
@@ -1070,7 +1046,6 @@ describe('Test suite edited with vim', () => {
     })
 
     it("test for selecting specifc top collection option.", () => {
-      homepage.visit()
       homepage.getTopCollectionOptions().contains('Popular').should('have.class', 'active')
       homepage.getTopCollectionContent().eq(0).should('have.class', 'active')
       homepage.getTopCollectionContent().eq(0).should('be.visible')
