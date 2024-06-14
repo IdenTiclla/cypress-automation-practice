@@ -1,4 +1,10 @@
 class CheckoutPage {
+
+    getAccountLoginCheckbox = () => cy.get("input#input-account-login")
+    getAccountRegisterCheckbox = () => cy.get("input#input-account-register")
+    getAccountGuestCheckoutCheckbox = () => cy.get("input#input-account-guest")
+
+
     getTelephoneInputField = () => cy.get("input[name='telephone']")
 
     getBillingFirstNameInputField = () => cy.get("input[name='firstname']")
