@@ -1,4 +1,9 @@
+import MainHeader from "../e2e/components/MainHeader"
+
 class CheckoutPage {
+    constructor() {
+        this.mainHeaderComponent = new MainHeader()
+    }
 
     getAccountLoginCheckbox = () => cy.get("input#input-account-login")
     getAccountRegisterCheckbox = () => cy.get("input#input-account-register")

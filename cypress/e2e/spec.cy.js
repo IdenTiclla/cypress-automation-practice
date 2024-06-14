@@ -958,6 +958,7 @@ describe('Test suite edited with vim', () => {
     })
 
     it.only("Test buy now functionality from quick view without a logged user.", () => {
+      checkoutPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 0)
       homepage.getTopProducts().eq(4).scrollIntoView()
       homepage.getTopProducts().eq(4).trigger('mouseover')
       homepage.showQuickViewModal(homepage.getTopProducts().eq(4))
@@ -968,6 +969,30 @@ describe('Test suite edited with vim', () => {
       checkoutPage.getAccountLoginCheckbox().should('not.be.checked')
       checkoutPage.getAccountRegisterCheckbox().should('be.checked')
       checkoutPage.getAccountGuestCheckoutCheckbox().should('not.be.checked')
+      checkoutPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 1)
+    })
+
+    it.only("Test buy now functionality from quick view with a logged user.", () => {
+      cy.generateRandomPhoneNumber().then(telephone => {
+        cy.getRandomEmail().then(email => {
+          homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
+          registerPage.registerNewUser('firstname','lastname', email,telephone, 'P@ssw0rd','P@ssw0rd', true, true)
+          homepage.visit()
+          checkoutPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 0)
+          homepage.getTopProducts().eq(4).scrollIntoView()
+          homepage.getTopProducts().eq(4).trigger('mouseover')
+          homepage.showQuickViewModal(homepage.getTopProducts().eq(4))
+          homepage.quickViewModalComponent.getButtons().eq(1).click()
+          cy.url().should('contain', 'checkout/checkout')
+
+          checkoutPage.getAccountLoginCheckbox().should('not.exist')
+          checkoutPage.getAccountRegisterCheckbox().should('not.exist')
+          checkoutPage.getAccountGuestCheckoutCheckbox().should('not.exist')
+
+          checkoutPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 1)
+
+        })
+      })
     })
 
   })
