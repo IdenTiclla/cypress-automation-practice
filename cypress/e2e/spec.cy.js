@@ -957,6 +957,19 @@ describe('Test suite edited with vim', () => {
       myAccountPage.alertComponent.getAlert().should('have.css', 'background-color', 'rgb(212, 237, 218)')
     })
 
+    it.only("Test buy now functionality from quick view without a logged user.", () => {
+      homepage.getTopProducts().eq(4).scrollIntoView()
+      homepage.getTopProducts().eq(4).trigger('mouseover')
+      homepage.showQuickViewModal(homepage.getTopProducts().eq(4))
+
+      homepage.quickViewModalComponent.getButtons().eq(1).click()
+      cy.url().should('contain', 'checkout/checkout')
+
+      checkoutPage.getAccountLoginCheckbox().should('not.be.checked')
+      checkoutPage.getAccountRegisterCheckbox().should('be.checked')
+      checkoutPage.getAccountGuestCheckoutCheckbox().should('not.be.checked')
+    })
+
   })
   context('Iphone resolution', () => {
     beforeEach(() => {
