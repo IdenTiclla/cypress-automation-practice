@@ -12,6 +12,11 @@ class CheckoutPage {
 
     getTelephoneInputField = () => cy.get("input[name='telephone']")
 
+    getBillingIwantToUseAnExistingAddressCheckbox = () => cy.get("input#input-payment-address-existing")
+    getExistingAdressesSelector = () => cy.get("select[name='address_id']")
+    
+    getBillingIwantToUseAnewAddress = () => cy.get("input#input-payment-address-new")
+
     getBillingFirstNameInputField = () => cy.get("input[name='firstname']")
     getBillingLastNameInputField = () => cy.get("input[name='lastname']")
     getBillingCompanyInputField = () => cy.get("input[name='lastname']")

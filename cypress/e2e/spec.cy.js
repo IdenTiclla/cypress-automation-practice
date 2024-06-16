@@ -1,6 +1,9 @@
 import Home from "../pages/Home"
 import Login from "../pages/Login"
 import RegisterPage from "../pages/RegisterPage"
+import SuccessPage from "../pages/SuccessPage"
+import AddressBookPage from "../pages/AddressBookPage"
+import AddAddressPage from "../pages/AddAddressPage"
 
 import ShoppingCartPage from "../pages/ShoppingCartPage"
 import CheckoutPage from "../pages/CheckoutPage"
@@ -27,6 +30,9 @@ import ProductDetailPage from "../pages/ProductDetailPage"
 const loginPage = new Login()
 const homepage = new Home()
 const registerPage = new RegisterPage()
+const successPage = new SuccessPage()
+const addressBookPage = new AddressBookPage()
+const addAddressPage = new AddAddressPage()
 const shoppingCartPage = new ShoppingCartPage()
 const checkoutPage = new CheckoutPage()
 const confirmOrderPage = new ConfirmOrderPage()
@@ -957,7 +963,7 @@ describe('Test suite edited with vim', () => {
       myAccountPage.alertComponent.getAlert().should('have.css', 'background-color', 'rgb(212, 237, 218)')
     })
 
-    it.only("Test buy now functionality from quick view without a logged user.", () => {
+    it("Test buy now functionality from quick view without a logged user.", () => {
       checkoutPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 0)
       homepage.getTopProducts().eq(4).scrollIntoView()
       homepage.getTopProducts().eq(4).trigger('mouseover')
@@ -972,7 +978,7 @@ describe('Test suite edited with vim', () => {
       checkoutPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 1)
     })
 
-    it.only("Test buy now functionality from quick view with a logged user.", () => {
+    it("Test buy now functionality from quick view with a logged user.", () => {
       cy.generateRandomPhoneNumber().then(telephone => {
         cy.getRandomEmail().then(email => {
           homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
@@ -991,6 +997,50 @@ describe('Test suite edited with vim', () => {
 
           checkoutPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 1)
 
+        })
+      })
+    })
+
+    it.only("Test for testing the buy now functionality from quick view with logged user and with address.", () => {
+      cy.getRandomEmail().then(email => {
+        cy.generateRandomPhoneNumber().then(phoneNumber => {
+          cy.log('Registering a new user account')
+          homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
+          registerPage.registerNewUser('My firstname', 'lastname', email, phoneNumber, 'P@ssw0rd', 'P@ssw0rd', true, true)
+          cy.log('Checking redirection to success page.')
+          cy.url().should('include', 'account/success')
+          successPage.rightNavigationComponent.clickOnRightNavigationOption('Address Book')
+          cy.url().should('include', 'account/address')
+          cy.log('adding a new address')
+          addressBookPage.getNewAddressButton().click()
+          cy.url().should('include', '/address/add')
+          addAddressPage.fillAddressForm('my firstname', 'my lastname', 'my company', 'my address 1', 'my address 2', 'some city', '75007', 'Taiwan', 'Chia-i', true)
+          addAddressPage.submitForm()
+          cy.log('Performing some assertions after adding first address')
+          addressBookPage.alertComponent.getAlert().should('have.text', ' Your address has been successfully added')
+          addressBookPage.getAddresses().should('have.length', 1)
+
+          cy.log('Using the buy now functionality')
+
+          homepage.visit()
+          checkoutPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 0)
+          homepage.getTopProducts().eq(4).scrollIntoView()
+          homepage.getTopProducts().eq(4).trigger('mouseover')
+          homepage.showQuickViewModal(homepage.getTopProducts().eq(4))
+          homepage.quickViewModalComponent.getButtons().eq(1).click()
+          cy.url().should('contain', 'checkout/checkout')
+          
+          checkoutPage.getTelephoneInputField().should('have.value', phoneNumber)
+          checkoutPage.getAccountLoginCheckbox().should('not.exist')
+          checkoutPage.getAccountRegisterCheckbox().should('not.exist')
+          checkoutPage.getAccountGuestCheckoutCheckbox().should('not.exist')
+
+          checkoutPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 1)
+
+          checkoutPage.getBillingIwantToUseAnExistingAddressCheckbox().should('be.checked')
+          checkoutPage.getExistingAdressesSelector().find('option').should('have.length', 1)
+          checkoutPage.getBillingIwantToUseAnewAddress().should('not.be.checked')
+          
         })
       })
     })
