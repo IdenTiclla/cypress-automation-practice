@@ -1001,7 +1001,7 @@ describe('Test suite edited with vim', () => {
       })
     })
 
-    it.only("Test for testing the buy now functionality from quick view with logged user and with address.", () => {
+    it("Test for testing the buy now functionality from quick view with logged user and with address.", () => {
       cy.getRandomEmail().then(email => {
         cy.generateRandomPhoneNumber().then(phoneNumber => {
           cy.log('Registering a new user account')
@@ -1039,6 +1039,58 @@ describe('Test suite edited with vim', () => {
 
           checkoutPage.getBillingIwantToUseAnExistingAddressCheckbox().should('be.checked')
           checkoutPage.getExistingAdressesSelector().find('option').should('have.length', 1)
+          checkoutPage.getBillingIwantToUseAnewAddress().should('not.be.checked')
+          
+        })
+      })
+    })
+
+    it.only("Test for testing the buy now functionality from quick view with logged user and multiple addresses", () => {
+      cy.getRandomEmail().then(email => {
+        cy.generateRandomPhoneNumber().then(phoneNumber => {
+          cy.log('Registering a new user account')
+          homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
+          registerPage.registerNewUser('My firstname', 'lastname', email, phoneNumber, 'P@ssw0rd', 'P@ssw0rd', true, true)
+          cy.log('Checking redirection to success page.')
+          cy.url().should('include', 'account/success')
+          successPage.rightNavigationComponent.clickOnRightNavigationOption('Address Book')
+          cy.url().should('include', 'account/address')
+          cy.log('adding a new address')
+          addressBookPage.getNewAddressButton().click()
+          cy.url().should('include', '/address/add')
+          addAddressPage.fillAddressForm('my firstname', 'my lastname', 'my company', 'my address 1', 'my address 2', 'some city', '75007', 'Taiwan', 'Chia-i', true)
+          addAddressPage.submitForm()
+          cy.log('Performing some assertions after adding first address')
+          addressBookPage.alertComponent.getAlert().should('have.text', ' Your address has been successfully added')
+          addressBookPage.getAddresses().should('have.length', 1)
+
+          addressBookPage.getNewAddressButton().click()
+          cy.url().should('include', '/address/add')
+          addAddressPage.fillAddressForm('my firstname 2', 'my lastname 2', 'my company 2', 'my address 3', 'my address 4', 'some city', '57002', 'Taiwan', 'Chia-i', true)
+          addAddressPage.submitForm()
+          cy.log('Performing some assertions after adding first address')
+          addressBookPage.alertComponent.getAlert().should('have.text', ' Your address has been successfully added')
+          addressBookPage.getAddresses().should('have.length', 2)
+
+          cy.log('Using the buy now functionality')
+
+          homepage.visit()
+          checkoutPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 0)
+          homepage.getTopProducts().eq(4).scrollIntoView()
+          homepage.getTopProducts().eq(4).trigger('mouseover')
+          homepage.showQuickViewModal(homepage.getTopProducts().eq(4))
+          homepage.quickViewModalComponent.getButtons().eq(1).click()
+          cy.url().should('contain', 'checkout/checkout')
+          
+          checkoutPage.getTelephoneInputField().should('have.value', phoneNumber)
+          checkoutPage.getAccountLoginCheckbox().should('not.exist')
+          checkoutPage.getAccountRegisterCheckbox().should('not.exist')
+          checkoutPage.getAccountGuestCheckoutCheckbox().should('not.exist')
+
+          checkoutPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 1)
+
+          checkoutPage.getBillingIwantToUseAnExistingAddressCheckbox().should('be.checked')
+          checkoutPage.getExistingAdressesSelector().find('option').should('have.length', 2)
           checkoutPage.getBillingIwantToUseAnewAddress().should('not.be.checked')
           
         })
