@@ -9,8 +9,7 @@ Este proyecto contiene pruebas automatizadas para una aplicación de comercio el
 - [Configuración](#configuración)
 - [Ejecución de Pruebas](#ejecución-de-pruebas)
 - [Estructura del Proyecto](#estructura-del-proyecto)
-- [Contribuciones](#contribuciones)
-- [Licencia](#licencia)
+- [Contacto](#contacto)
 
 ## Instalación
 
@@ -65,7 +64,7 @@ npm run cypress:run --spec cypress/e2e/spec.cy.js
 
 
 
-### 7. Estructura del Proyecto
+## Estructura del Proyecto
 Describe la estructura del proyecto y los archivos más importantes.
 
 ```markdown
@@ -86,6 +85,6 @@ cypress-automation-practice/
 └── README.md # Este archivo
 ```
 
-## Información de Contacto
+## Contacto
 
 Para preguntas o soporte, puedes contactar a [Iden Ticlla](mailto:iden.ticlla@gmail.com).
