@@ -49,3 +49,27 @@ Cypress.Commands.add("generateRandomPhoneNumber", () => {
   }
   return phoneNumber;
 });
+
+Cypress.Commands.add("generateRandomFirstname", () => {
+  const prefix = 'user'
+  const randomString = Math.random().toString(36).substring(2, 10)
+  const randomFirstname = `${prefix}_${randomString}`
+  return cy.wrap(randomFirstname)
+})
+
+
+Cypress.Commands.add("generateRandomLastname", () => {
+  const randomLastname = Math.random().toString(36).substring(2, 10)
+  return cy.wrap(randomLastname)
+})
+
+Cypress.Commands.add("generateRandomPassword", () => {
+  const length = 12
+  const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+[]{}|;:,.<>?'; // Conjunto de caracteres
+  let randomPassword = ''
+  for (let i = 0;  i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * charset.length)
+    randomPassword += charset[randomIndex]
+  }
+  return cy.wrap(randomPassword)
+})

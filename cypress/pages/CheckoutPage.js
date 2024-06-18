@@ -19,7 +19,7 @@ class CheckoutPage {
 
     getBillingFirstNameInputField = () => cy.get("input[name='firstname']")
     getBillingLastNameInputField = () => cy.get("input[name='lastname']")
-    getBillingCompanyInputField = () => cy.get("input[name='lastname']")
+    getBillingCompanyInputField = () => cy.get("input#input-payment-company")
     getBillingAddress1InputField = () => cy.get("input[name='address_1']")
     getBillingAddress2InputField = () => cy.get("input[name='address_2']")
     getBillingCityInputField = () => cy.get("input[name='city']")
@@ -52,6 +52,10 @@ class CheckoutPage {
 
     checkOrUncheckTermsAndConditions = () => {
         this.getTermsAndConditionsCheckbox().click({force:true})
+    }
+
+    checkIwantToUseAnewAddress = () => {
+        this.getBillingIwantToUseAnewAddress().click({force:true})
     }
 }
 

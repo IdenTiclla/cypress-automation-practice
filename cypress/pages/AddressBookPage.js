@@ -1,7 +1,9 @@
 import Alert from "../e2e/components/Alert"
+import MainNavigation from "../e2e/components/MainNavigation"
 
 class AddressBookPage {
     constructor() {
+        this.mainNavigationComponent = new MainNavigation()
         this.alertComponent = new Alert()
     }
 

@@ -1045,6 +1045,51 @@ describe('Test suite edited with vim', () => {
       })
     })
 
+
+    it.only("Test for testing the buy now functionality from quick view with new user, add address, new address", () => {
+      cy.generateRandomFirstname().then(randomFirstname => {
+        cy.generateRandomLastname().then(randomLastname => {
+          cy.getRandomEmail().then(randomEmail => {
+            cy.generateRandomPhoneNumber().then(randomPhoneNumber => {
+              cy.generateRandomPassword().then(randomPassword => {
+                homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
+                registerPage.registerNewUser(randomFirstname, randomLastname, randomEmail, randomPhoneNumber, randomPassword, randomPassword, true, true)
+                
+                successPage.rightNavigationComponent.clickOnRightNavigationOption('Address Book')
+                cy.url().should('include', 'account/address')
+                cy.log('adding a new address')
+                addressBookPage.getNewAddressButton().click()
+                cy.url().should('include', '/address/add')
+                addAddressPage.fillAddressForm(randomFirstname, randomLastname, 'my company', 'my address 1', 'my address 2', 'some city', '75007', 'Taiwan', 'Chia-i', true)
+                addAddressPage.submitForm()
+                cy.log('Performing some assertions after adding first address')
+                addressBookPage.alertComponent.getAlert().should('have.text', ' Your address has been successfully added')
+                addressBookPage.getAddresses().should('have.length', 1)
+                
+
+                addressBookPage.mainNavigationComponent.getHomeOption().click()
+                
+                homepage.getTopProducts().eq(4).scrollIntoView()
+                homepage.getTopProducts().eq(4).trigger('mouseover')
+                homepage.showQuickViewModal(homepage.getTopProducts().eq(4))
+
+                homepage.quickViewModalComponent.getButtons().eq(1).click()
+
+                checkoutPage.checkIwantToUseAnewAddress()
+                checkoutPage.fillBillingAddressSection(randomFirstname, randomLastname, 'my company 02', 'my address 3', 'my address 4', 'some city', '75002', 'Taiwan', 'Chia-i')
+                
+                checkoutPage.addComments('Some comments')
+                checkoutPage.checkOrUncheckTermsAndConditions()
+                checkoutPage.getContinueButton().click()
+
+                confirmOrderPage.getConfirmOrderButton().click()
+                cy.contains("Continue").click()
+                homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('My order')
+                orderHistoryPage.getOrdersElements().should('have.length', 1)
+              })
+            })
+          })
+
     it.only("Test for testing the buy now functionality from quick view with logged user and multiple addresses", () => {
       cy.getRandomEmail().then(email => {
         cy.generateRandomPhoneNumber().then(phoneNumber => {
@@ -1093,6 +1138,7 @@ describe('Test suite edited with vim', () => {
           checkoutPage.getExistingAdressesSelector().find('option').should('have.length', 2)
           checkoutPage.getBillingIwantToUseAnewAddress().should('not.be.checked')
           
+
         })
       })
     })
