@@ -1046,7 +1046,7 @@ describe('Test suite edited with vim', () => {
     })
 
 
-    it.only("Test for testing the buy now functionality from quick view with new user, add address, new address", () => {
+    it("Test for testing the buy now functionality from quick view with new user, add address, new address", () => {
       cy.generateRandomFirstname().then(randomFirstname => {
         cy.generateRandomLastname().then(randomLastname => {
           cy.getRandomEmail().then(randomEmail => {
@@ -1089,8 +1089,11 @@ describe('Test suite edited with vim', () => {
               })
             })
           })
+        })
+      })
+    })
 
-    it.only("Test for testing the buy now functionality from quick view with logged user and multiple addresses", () => {
+    it("Test for testing the buy now functionality from quick view with logged user and multiple addresses", () => {
       cy.getRandomEmail().then(email => {
         cy.generateRandomPhoneNumber().then(phoneNumber => {
           cy.log('Registering a new user account')
@@ -1142,8 +1145,11 @@ describe('Test suite edited with vim', () => {
         })
       })
     })
-
   })
+
+  it.only("")
+
+  
   context('Iphone resolution', () => {
     beforeEach(() => {
       homepage.visit()
