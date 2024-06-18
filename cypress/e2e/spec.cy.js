@@ -1145,11 +1145,21 @@ describe('Test suite edited with vim', () => {
         })
       })
     })
+
+    it.only("Test for testing the increase quantity functionality on quick view modal component.", () => {
+      homepage.getTopProducts().eq(4).scrollIntoView()
+      homepage.getTopProducts().eq(4).trigger('mouseover')
+      homepage.showQuickViewModal(homepage.getTopProducts().eq(4))
+  
+      for(let i = 0; i < 50; i++) {
+        homepage.quickViewModalComponent.increaseQuantity()
+      }
+      homepage.quickViewModalComponent.getQuantityInput().should('have.value', '51')
+      
+    })
+
   })
 
-  it.only("")
-
-  
   context('Iphone resolution', () => {
     beforeEach(() => {
       homepage.visit()
