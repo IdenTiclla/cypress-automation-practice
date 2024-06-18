@@ -1146,7 +1146,7 @@ describe('Test suite edited with vim', () => {
       })
     })
 
-    it.only("Test for testing the increase quantity functionality on quick view modal component.", () => {
+    it("Test for testing the increase quantity functionality on quick view modal component.", () => {
       homepage.getTopProducts().eq(4).scrollIntoView()
       homepage.getTopProducts().eq(4).trigger('mouseover')
       homepage.showQuickViewModal(homepage.getTopProducts().eq(4))
@@ -1158,6 +1158,16 @@ describe('Test suite edited with vim', () => {
       
     })
 
+    it.only("Test for testing the decrease quantity functionality on quick view modal component", () => {
+      homepage.getTopProducts().eq(4).scrollIntoView()
+      homepage.getTopProducts().eq(4).trigger('mouseover')
+      homepage.showQuickViewModal(homepage.getTopProducts().eq(4))
+  
+      for(let i = 0; i < 50; i++) {
+        homepage.quickViewModalComponent.decreaseQuantity()
+      }
+      homepage.quickViewModalComponent.getQuantityInput().should('have.value', '1')
+    })
   })
 
   context('Iphone resolution', () => {
