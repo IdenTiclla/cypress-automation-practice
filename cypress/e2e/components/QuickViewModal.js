@@ -7,10 +7,15 @@ class QuickViewModal {
 
     getQuantityInput = () => cy.get("div#product-quick-view input[type='number']")
     
+    getDecreaseButton = () => cy.get("button[aria-label='Decrease quantity']")
     getIncreaseButton = () => cy.get("button[aria-label='Increase quantity']")
 
     increaseQuantity = () => {
         this.getIncreaseButton().click()
+    }
+    
+    decreaseQuantity = () => {
+        this.getDecreaseButton().click()
     }
 }
 
