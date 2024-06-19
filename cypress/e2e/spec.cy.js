@@ -1158,7 +1158,7 @@ describe('Test suite edited with vim', () => {
       
     })
 
-    it.only("Test for testing the decrease quantity functionality on quick view modal component", () => {
+    it("Test for testing the decrease quantity functionality on quick view modal component", () => {
       homepage.getTopProducts().eq(4).scrollIntoView()
       homepage.getTopProducts().eq(4).trigger('mouseover')
       homepage.showQuickViewModal(homepage.getTopProducts().eq(4))
@@ -1168,6 +1168,27 @@ describe('Test suite edited with vim', () => {
       }
       homepage.quickViewModalComponent.getQuantityInput().should('have.value', '1')
     })
+
+    it.only("Test for testing the increase and decrease quantity functionality on quick view modal component.", () => {
+      homepage.getTopProducts().eq(4).scrollIntoView();
+      homepage.getTopProducts().eq(4).trigger('mouseover');
+      cy.log('Showing quick view modal');
+      homepage.showQuickViewModal(homepage.getTopProducts().eq(4));
+      homepage.quickViewModalComponent.getModal().should('be.visible');
+      cy.log('Quick view modal is visible');
+    
+      for (let i = 1; i < 10; i++) {
+        cy.log(`Incrementing quantity to ${i}`);
+        homepage.quickViewModalComponent.getQuantityInput().should('have.value', `${i}`);
+        homepage.quickViewModalComponent.increaseQuantity();
+      }
+    
+      for (let j = 10; j > 0; j--) {
+        cy.log(`Decrementing quantity to ${j}`);
+        homepage.quickViewModalComponent.getQuantityInput().should('have.value', `${j}`);
+        homepage.quickViewModalComponent.decreaseQuantity();
+      }
+    });
   })
 
   context('Iphone resolution', () => {
