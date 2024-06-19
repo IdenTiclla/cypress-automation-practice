@@ -1169,7 +1169,7 @@ describe('Test suite edited with vim', () => {
       homepage.quickViewModalComponent.getQuantityInput().should('have.value', '1')
     })
 
-    it.only("Test for testing the increase and decrease quantity functionality on quick view modal component.", () => {
+    it("Test for testing the increase and decrease quantity functionality on quick view modal component.", () => {
       homepage.getTopProducts().eq(4).scrollIntoView();
       homepage.getTopProducts().eq(4).trigger('mouseover');
       cy.log('Showing quick view modal');
@@ -1212,11 +1212,12 @@ describe('Test suite edited with vim', () => {
       searchResultPage.getMobileKeywordsInputField().should('have.attr', 'value', 'hello world')
     })
     
-    it("Test for Login functionality on iphone resolution", () => {
+    it.only("Test for Login functionality on iphone resolution", () => {
       homepage.mainHeaderComponent.getMobilePersonIconButton().click()
       homepage.quickLinksComponent.clickOnSpecificQuickLink('My account')
       cy.url().should('contain', 'account/login')
-      loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
+      // loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
+      loginPage.login(Cypress.env("email"), Cypress.env("password"))
       cy.url().should('contain', 'account/account')
     })
 
