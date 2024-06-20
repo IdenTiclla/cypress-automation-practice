@@ -1,4 +1,4 @@
-import Alert from "../e2e/components/Alert"
+import Alert from "../components/Alert"
 class RegisterPage {
     constructor() {
         this.alertComponent = new Alert()

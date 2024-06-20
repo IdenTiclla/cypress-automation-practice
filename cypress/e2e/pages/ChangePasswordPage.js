@@ -1,7 +1,7 @@
-import MainNavigation from "../e2e/components/MainNavigation"
-import MainHeader from "../e2e/components/MainHeader"
-import RightNavigationBar from "../e2e/components/RightNavigationBar"
-import Alert from "../e2e/components/Alert"
+import MainNavigation from "../components/MainNavigation"
+import MainHeader from "../components/MainHeader"
+import RightNavigationBar from "../components/RightNavigationBar"
+import Alert from "../components/Alert"
 class ChangePasswordPage {
     constructor() {
         this.mainNavigationComponent = new MainNavigation()

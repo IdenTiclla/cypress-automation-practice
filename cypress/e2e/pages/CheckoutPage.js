@@ -1,4 +1,4 @@
-import MainHeader from "../e2e/components/MainHeader"
+import MainHeader from "../components/MainHeader"
 
 class CheckoutPage {
     constructor() {

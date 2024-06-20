@@ -1,4 +1,4 @@
-import Filter from "../e2e/components/Filter"
+import Filter from "../components/Filter"
 class SearchResultPage {
     constructor() {
         this.filterComponent = new Filter()

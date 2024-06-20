@@ -73,16 +73,17 @@ Describe la estructura del proyecto y los archivos más importantes.
 cypress-automation-practice/
 ├── cypress/
 │ ├── e2e/
-| | ├── components/ # aqui podemos encontrar todos los diferentes componentes que fueron reutilizados
-│ │ ├── spec.cy.js # Pruebas principales
+| | ├── components/ # aqui podemos encontrar todos los diferentes componentes que fueron reutilizados.
+| | ├── pages/ #aqui puedes ver todas la pages del pom.
+| | ├── tests/ #aqui puedes ver los archivos de pruebas. 
+│ │ ├── spec.cy.js # Pruebas principales.
 │ │ └── ...
-│ ├── fixtures/ # Datos de prueba
-│ ├── support/ # Comandos y configuraciones
-│ └── pages/ #aqui puedes ver todas la pages del pom 
-├── .gitignore # Archivos ignorados por git
-├── cypress.config.js # Configuración de Cypress
-├── package.json # Dependencias del proyecto y scripts
-└── README.md # Este archivo
+│ ├── fixtures/ # Datos de prueba.
+│ ├── support/ # Comandos y configuraciones.
+├── .gitignore # Archivos ignorados por git.
+├── cypress.config.js # Configuración de Cypress.
+├── package.json # Dependencias del proyecto y scripts.
+└── README.md # Este archivo.
 ```
 
 ## Contacto

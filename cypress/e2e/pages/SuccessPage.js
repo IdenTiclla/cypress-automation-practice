@@ -1,5 +1,5 @@
-import MainNavigation from "../e2e/components/MainNavigation"
-import RightNavigationBar from "../e2e/components/RightNavigationBar"
+import MainNavigation from "../components/MainNavigation"
+import RightNavigationBar from "../components/RightNavigationBar"
 
 class SuccessPage {
     constructor() {

@@ -1,5 +1,5 @@
-import Alert from "../e2e/components/Alert"
-import MainHeader from "../e2e/components/MainHeader"
+import Alert from "../components/Alert"
+import MainHeader from "../components/MainHeader"
 
 class ShoppingCartPage {
     constructor() {

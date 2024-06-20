@@ -1,5 +1,5 @@
-import MainNavigation from "../e2e/components/MainNavigation"
-import MainHeader from "../e2e/components/MainHeader"
+import MainNavigation from "../components/MainNavigation"
+import MainHeader from "../components/MainHeader"
 
 class DesignsPage {
     constructor() {

@@ -1,5 +1,5 @@
-import Alert from "../e2e/components/Alert"
-import RightNavigationBar from "../e2e/components/RightNavigationBar"
+import Alert from "../components/Alert"
+import RightNavigationBar from "../components/RightNavigationBar"
 
 class Login{
     constructor() {

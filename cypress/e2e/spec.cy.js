@@ -1,30 +1,30 @@
-import Home from "../pages/Home"
-import Login from "../pages/Login"
-import RegisterPage from "../pages/RegisterPage"
-import SuccessPage from "../pages/SuccessPage"
-import AddressBookPage from "../pages/AddressBookPage"
-import AddAddressPage from "../pages/AddAddressPage"
+import Home from "./pages/Home"
+import Login from "./pages/Login"
+import RegisterPage from "./pages/RegisterPage"
+import SuccessPage from "./pages/SuccessPage"
+import AddressBookPage from "./pages/AddressBookPage"
+import AddAddressPage from "./pages/AddAddressPage"
 
-import ShoppingCartPage from "../pages/ShoppingCartPage"
-import CheckoutPage from "../pages/CheckoutPage"
-import ConfirmOrderPage from "../pages/ConfimOrderPage"
-import OrderHistoryPage from "../pages/OrderHistoryPage"
-import WishListPage from "../pages/WishListPage"
+import ShoppingCartPage from "./pages/ShoppingCartPage"
+import CheckoutPage from "./pages/CheckoutPage"
+import ConfirmOrderPage from "./pages/ConfimOrderPage"
+import OrderHistoryPage from "./pages/OrderHistoryPage"
+import WishListPage from "./pages/WishListPage"
 
-import ModulesPage from "../pages/ModulesPage"
-import WidgetsPage from "../pages/WidgetsPage"
-import DesignsPage from "../pages/DesignsPages"
+import ModulesPage from "./pages/ModulesPage"
+import WidgetsPage from "./pages/WidgetsPage"
+import DesignsPage from "./pages/DesignsPages"
 
-import ForgottenPasswordPage from "../pages/ForgottenPasswordPage"
-import MyAccountPage from "../pages/MyAccountPage"
-import NewsletterSubscriptionPage from "../pages/NewsletterSubscriptionPage"
-import ChangePasswordPage from "../pages/ChangePasswordPage"
+import ForgottenPasswordPage from "./pages/ForgottenPasswordPage"
+import MyAccountPage from "./pages/MyAccountPage"
+import NewsletterSubscriptionPage from "./pages/NewsletterSubscriptionPage"
+import ChangePasswordPage from "./pages/ChangePasswordPage"
 
-import SearchResultPage from "../pages/SearchResultPage"
+import SearchResultPage from "./pages/SearchResultPage"
 
 import ShoppingCartModal from "./components/ShoppingCartModal"
 import RightNavigationBar from "./components/RightNavigationBar"
-import ProductDetailPage from "../pages/ProductDetailPage"
+import ProductDetailPage from "./pages/ProductDetailPage"
 
 
 const loginPage = new Login()
@@ -349,7 +349,7 @@ describe('Test suite edited with vim', () => {
       cy.contains("Password must be between 4 and 20 characters!")
     })
 
-    it.only("Test for not matching change passwords", () => {
+    it("Test for not matching change passwords", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
       myAccountPage.rightNavigationComponent.clickOnRightNavigationOption('Password')
@@ -405,7 +405,7 @@ describe('Test suite edited with vim', () => {
       homepage.notificationComponent.getRegisterButton().should('be.visible')
     })
 
-    it.only('Testing wish list with not logged user', () => {
+    it('Testing wish list with not logged user', () => {
       homepage.mainHeaderComponent.getWishListIconButton().click()
       loginPage.getEmailInputField().should('be.visible')
       loginPage.getPasswordInputField().should('be.visible')
@@ -431,7 +431,7 @@ describe('Test suite edited with vim', () => {
       homepage.notificationComponent.getCheckoutButton().should('be.visible')
     })
 
-    it.only("Test for testing adding an item to the wishlist with a logged user", () => {
+    it("Test for testing adding an item to the wishlist with a logged user", () => {
       cy.log("Login a user")
       homepage.mainNavigationComponent.getMyAccountOption().click()
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
@@ -459,7 +459,7 @@ describe('Test suite edited with vim', () => {
       wishListPage.rightNavigationComponent.getOptions(4).should('have.class', 'active')
     })
 
-    it.only("Test for adding and removing an item from wish list page.", () => {
+    it("Test for adding and removing an item from wish list page.", () => {
       cy.log("Loging an user")
       homepage.mainNavigationComponent.getMyAccountOption().click()
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
@@ -490,7 +490,7 @@ describe('Test suite edited with vim', () => {
       cy.contains("No results!")
     })
 
-    it.only("Test for adding to shopping cart from wish list page", () => {
+    it("Test for adding to shopping cart from wish list page", () => {
       cy.log("Loging an user")
       homepage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 0)
       homepage.mainNavigationComponent.getMyAccountOption().click()
@@ -961,7 +961,7 @@ describe('Test suite edited with vim', () => {
       loginPage.alertComponent.getAlert().should('have.css', 'border-color', 'rgb(245, 198, 203)')
     })
 
-    it.only("Subscribe and unsubscribe to newsleter.", () => {
+    it("Subscribe and unsubscribe to newsleter.", () => {
       homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
       

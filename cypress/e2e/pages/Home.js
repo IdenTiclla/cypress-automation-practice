@@ -1,10 +1,10 @@
-import MainNavigation from "../e2e/components/MainNavigation"
-import MainHeader from "../e2e/components/MainHeader"
-import RightNavigationBar from "../e2e/components/RightNavigationBar"
-import QuickLinks from "../e2e/components/QuickLinks"
-import Notification from "../e2e/components/Notification"
-import QuickViewModal from "../e2e/components/QuickViewModal"
-import ShoppingCartModal from "../e2e/components/ShoppingCartModal"
+import MainNavigation from "../components/MainNavigation"
+import MainHeader from "../components/MainHeader"
+import RightNavigationBar from "../components/RightNavigationBar"
+import QuickLinks from "../components/QuickLinks"
+import Notification from "../components/Notification"
+import QuickViewModal from "../components/QuickViewModal"
+import ShoppingCartModal from "../components/ShoppingCartModal"
 
 class Home {
     visit() {

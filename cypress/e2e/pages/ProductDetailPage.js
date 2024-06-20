@@ -1,5 +1,6 @@
-import Alert from "../e2e/components/Alert"
-import Notification from "../e2e/components/Notification"
+import Alert from "../components/Alert"
+import Notification from "../components/Notification"
+
 class ProductDetailPage {
     constructor() {
         this.notificationComponent = new Notification()

@@ -1,6 +1,6 @@
-import Alert from "../e2e/components/Alert"
-import Notification from "../e2e/components/Notification"
-import RightNavigationBar from "../e2e/components/RightNavigationBar"
+import Alert from "../components/Alert"
+import Notification from "../components/Notification"
+import RightNavigationBar from "../components/RightNavigationBar"
 
 class WishListPage {
     constructor() {

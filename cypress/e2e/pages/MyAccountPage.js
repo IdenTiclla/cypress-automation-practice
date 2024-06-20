@@ -1,6 +1,7 @@
-import MainNavigation from "../e2e/components/MainNavigation"
-import RightNavigationBar from "../e2e/components/RightNavigationBar"
-import Alert from "../e2e/components/Alert"
+import MainNavigation from "../components/MainNavigation"
+import RightNavigationBar from "../components/RightNavigationBar"
+import Alert from "../components/Alert"
+
 class MyAccountPage {
     constructor() {
         this.mainNavigationComponent = new MainNavigation()

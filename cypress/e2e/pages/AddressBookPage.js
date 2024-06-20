@@ -1,5 +1,5 @@
-import Alert from "../e2e/components/Alert"
-import MainNavigation from "../e2e/components/MainNavigation"
+import Alert from "../components/Alert"
+import MainNavigation from "../components/MainNavigation"
 
 class AddressBookPage {
     constructor() {
