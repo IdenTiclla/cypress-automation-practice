@@ -93,7 +93,7 @@ describe('Test suite edited with vim', () => {
       myAccountPage.rightNavigationComponent.getOptions().should('have.length', 14)
     })
 
-    it.only("Test for logout a user", () => {
+    it("Test for logout a user", () => {
       homepage.mainNavigationComponent.getMyAccountOption().trigger("mouseover")
       homepage.mainNavigationComponent.getMyAccountDropdownOptions().should('have.length', 2)
       homepage.mainNavigationComponent.getMyAccountOption().click()
@@ -335,17 +335,16 @@ describe('Test suite edited with vim', () => {
       cy.url().should('contain', 'account/login')
     })
 
-    it("Test for change password functionality default behavior", () => {
+    it.only("Test for change password functionality default behavior", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       changePasswordPage.rightNavigationComponent.getOptions().eq(0).should('have.class', 'active')
       loginPage.getEmailInputField().should('be.visible')
       loginPage.getPasswordInputField().should('be.visible')
       loginPage.getSubmitButton().should('be.visible')
-      loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
+      loginPage.login(Cypress.env("email"), Cypress.env("password"))
       myAccountPage.rightNavigationComponent.clickOnRightNavigationOption('Password')
       cy.url().should('contain', 'account/password')
       changePasswordPage.rightNavigationComponent.getOptions().eq(2).should('have.class', 'active')
-      // changePasswordPage.submitChangePasswordForm('','') type can't receive empty strings!
       changePasswordPage.getContinueButton().click()
       cy.contains("Password must be between 4 and 20 characters!")
     })
