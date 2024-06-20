@@ -349,9 +349,9 @@ describe('Test suite edited with vim', () => {
       cy.contains("Password must be between 4 and 20 characters!")
     })
 
-    it("Test for not matching change passwords", () => {
+    it.only("Test for not matching change passwords", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
-      loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
+      loginPage.login(Cypress.env("email"), Cypress.env("password"))
       myAccountPage.rightNavigationComponent.clickOnRightNavigationOption('Password')
       changePasswordPage.submitChangePasswordForm('asdf','zxcv')
       cy.contains("Password confirmation does not match password!")
@@ -405,12 +405,12 @@ describe('Test suite edited with vim', () => {
       homepage.notificationComponent.getRegisterButton().should('be.visible')
     })
 
-    it('Testing wish list with not logged user', () => {
+    it.only('Testing wish list with not logged user', () => {
       homepage.mainHeaderComponent.getWishListIconButton().click()
       loginPage.getEmailInputField().should('be.visible')
       loginPage.getPasswordInputField().should('be.visible')
       loginPage.getSubmitButton().should('be.visible')
-      loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
+      loginPage.login(Cypress.env("email"), Cypress.env("password"))
     })
 
     it('test for adding an item to the cart', () => {
@@ -431,11 +431,11 @@ describe('Test suite edited with vim', () => {
       homepage.notificationComponent.getCheckoutButton().should('be.visible')
     })
 
-    it("Test for testing adding an item to the wishlist with a logged user", () => {
+    it.only("Test for testing adding an item to the wishlist with a logged user", () => {
       cy.log("Login a user")
       homepage.mainNavigationComponent.getMyAccountOption().click()
-      loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
-      
+      loginPage.login(Cypress.env("email"), Cypress.env("password"))
+    
       cy.log("adding product to the wishlist")
       myAccountPage.mainNavigationComponent.getHomeOption().click()
       homepage.getTopProducts().should('have.length', 10)
@@ -459,10 +459,11 @@ describe('Test suite edited with vim', () => {
       wishListPage.rightNavigationComponent.getOptions(4).should('have.class', 'active')
     })
 
-    it("Test for adding and removing an item from wish list page.", () => {
+    it.only("Test for adding and removing an item from wish list page.", () => {
       cy.log("Loging an user")
       homepage.mainNavigationComponent.getMyAccountOption().click()
-      loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
+      loginPage.login(Cypress.env("email"), Cypress.env("password"))
+      
       cy.log("adding product to the wishlist")
       myAccountPage.mainNavigationComponent.getHomeOption().click()
       homepage.getTopProducts().eq(0).should('be.visible')
@@ -489,11 +490,11 @@ describe('Test suite edited with vim', () => {
       cy.contains("No results!")
     })
 
-    it("Test for adding to shopping cart from wish list page", () => {
+    it.only("Test for adding to shopping cart from wish list page", () => {
       cy.log("Loging an user")
       homepage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 0)
       homepage.mainNavigationComponent.getMyAccountOption().click()
-      loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
+      loginPage.login(Cypress.env("email"), Cypress.env("password"))
       cy.log("adding product to the wishlist")
       myAccountPage.mainNavigationComponent.getHomeOption().click()
       homepage.getTopProducts().eq(0).should('be.visible')
@@ -960,9 +961,10 @@ describe('Test suite edited with vim', () => {
       loginPage.alertComponent.getAlert().should('have.css', 'border-color', 'rgb(245, 198, 203)')
     })
 
-    it("Subscribe and unsubscribe to newsleter.", () => {
+    it.only("Subscribe and unsubscribe to newsleter.", () => {
       homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
-      loginPage.login('jose.lopez@gmail.com', 'P@ssw0rd')
+      loginPage.login(Cypress.env("email"), Cypress.env("password"))
+      
       myAccountPage.getMyAccountOptions().eq(4).click()
       newsletterSubscriptionPage.getNoCheckbox().should('have.attr', 'checked')
       newsletterSubscriptionPage.getYesCheckbox().should('not.have.attr', 'checked')
@@ -1305,7 +1307,7 @@ describe('Test suite edited with vim', () => {
 
     })
 
-    it.only("Test for testing the main carousel component in homepage on mobile version.", () => {
+    it("Test for testing the main carousel component in homepage on mobile version.", () => {
       homepage.getMainCarouselImages().eq(0).should('have.class', 'active')
       homepage.getCarouselPaginationItems().eq(0).should('have.class', 'active')
 
