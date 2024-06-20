@@ -83,7 +83,7 @@ describe('Test suite edited with vim', () => {
   
     })
   
-    it.only("Test for testing login functionality", () => {
+    it("Test for testing login functionality", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       loginPage.rightNavigationComponent.getOptions().should('have.length', 13)
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
@@ -93,11 +93,11 @@ describe('Test suite edited with vim', () => {
       myAccountPage.rightNavigationComponent.getOptions().should('have.length', 14)
     })
 
-    it("Test for logout a user", () => {
+    it.only("Test for logout a user", () => {
       homepage.mainNavigationComponent.getMyAccountOption().trigger("mouseover")
       homepage.mainNavigationComponent.getMyAccountDropdownOptions().should('have.length', 2)
       homepage.mainNavigationComponent.getMyAccountOption().click()
-      loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
+      loginPage.login(Cypress.env("email"), Cypress.env("password"))
       myAccountPage.mainNavigationComponent.getMyAccountOption().trigger("mouseover")
       myAccountPage.mainNavigationComponent.getMyAccountDropdownOptions().should('have.length', 6)
       myAccountPage.rightNavigationComponent.clickOnRightNavigationOption('Logout')
@@ -1212,11 +1212,10 @@ describe('Test suite edited with vim', () => {
       searchResultPage.getMobileKeywordsInputField().should('have.attr', 'value', 'hello world')
     })
     
-    it.only("Test for Login functionality on iphone resolution", () => {
+    it("Test for Login functionality on iphone resolution", () => {
       homepage.mainHeaderComponent.getMobilePersonIconButton().click()
       homepage.quickLinksComponent.clickOnSpecificQuickLink('My account')
       cy.url().should('contain', 'account/login')
-      // loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
       cy.url().should('contain', 'account/account')
     })
