@@ -1,5 +1,19 @@
+# Node Modules
 node_modules/
+
+# Cypress Screenshots
 cypress/screenshots/
-videos/
+
+# Cypress Videos
+cypress/videos/
+
+# Cypress Reports
+cypress/reports/
+
+# Environment variables file
 .env
+
+# IDE specific files
 .idx
+.vscode/
+.idea/
