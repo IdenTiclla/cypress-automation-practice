@@ -83,10 +83,10 @@ describe('Test suite edited with vim', () => {
   
     })
   
-    it("Test for testing login functionality", () => {
+    it.only("Test for testing login functionality", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       loginPage.rightNavigationComponent.getOptions().should('have.length', 13)
-      loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
+      loginPage.login(Cypress.env("email"), Cypress.env("password"))
       myAccountPage.getMyAccountOptions().should('have.length', 5)
       myAccountPage.getMyOrdersOptions().should('have.length', 6)
       myAccountPage.getMyAffiliateAccountOptions().should('have.length', 1)
