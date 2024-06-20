@@ -17,3 +17,10 @@ cypress/reports/
 .idx
 .vscode/
 .idea/
+
+# Output of build process
+dist/
+build/
+
+# Production
+public/
