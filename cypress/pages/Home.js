@@ -35,7 +35,13 @@ class Home {
     getTopCollectionOptions = () => cy.get("div#mz-product-listing-39213264 ul li a")
     getTopCollectionContent = () => cy.get("div#mz-product-listing-39213264 div.tab-content > div")
 
-    // getQuickViewModal = () => cy.get("div#product-quick-view")
+    clickOnNextButtonOnMainCarousel = () => {
+        this.getCarouselNextButton().click({force: true})
+    }
+
+    clickOnPrevButtonOnMainCarousel = () => {
+        this.getCarouselPrevButton().click({force:true})
+    }
 
     selectTopCollectionOption = (option) => {
         this.getTopCollectionOptions().contains(option).click()

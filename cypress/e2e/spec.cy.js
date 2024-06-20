@@ -357,8 +357,7 @@ describe('Test suite edited with vim', () => {
       cy.contains("Password confirmation does not match password!")
     })
 
-    it.only("Test for testing change password success", () => {
-
+    it("Test for testing change password success", () => {
       cy.getRandomEmail().then(email => {
         cy.generateRandomFirstname().then(firstname => {
           cy.generateRandomLastname().then(lastname => {
@@ -1306,23 +1305,23 @@ describe('Test suite edited with vim', () => {
 
     })
 
-    it("Test for testing the main carousel component in homepage on mobile version.", () => {
+    it.only("Test for testing the main carousel component in homepage on mobile version.", () => {
       homepage.getMainCarouselImages().eq(0).should('have.class', 'active')
       homepage.getCarouselPaginationItems().eq(0).should('have.class', 'active')
 
-      homepage.getCarouselNextButton().click({force: true})
+      homepage.clickOnNextButtonOnMainCarousel()
       homepage.getMainCarouselImages().eq(1).should('have.class', 'active')
       homepage.getCarouselPaginationItems().eq(1).should('have.class', 'active')
 
-      homepage.getCarouselNextButton().click({force: true})
+      homepage.clickOnNextButtonOnMainCarousel()
       homepage.getMainCarouselImages().eq(2).should('have.class', 'active')
       homepage.getCarouselPaginationItems().eq(2).should('have.class', 'active')
 
-      homepage.getCarouselPrevButton().click({force: true})
+      homepage.clickOnPrevButtonOnMainCarousel()
       homepage.getMainCarouselImages().eq(1).should('have.class', 'active')
       homepage.getCarouselPaginationItems().eq(1).should('have.class', 'active')
 
-      homepage.getCarouselPrevButton().click({force: true})
+      homepage.clickOnPrevButtonOnMainCarousel()
       homepage.getMainCarouselImages().eq(0).should('have.class', 'active')
       homepage.getCarouselPaginationItems().eq(0).should('have.class', 'active')
     })
