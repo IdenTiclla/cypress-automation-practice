@@ -335,7 +335,7 @@ describe('Test suite edited with vim', () => {
       cy.url().should('contain', 'account/login')
     })
 
-    it.only("Test for change password functionality default behavior", () => {
+    it("Test for change password functionality default behavior", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       changePasswordPage.rightNavigationComponent.getOptions().eq(0).should('have.class', 'active')
       loginPage.getEmailInputField().should('be.visible')
@@ -357,16 +357,44 @@ describe('Test suite edited with vim', () => {
       cy.contains("Password confirmation does not match password!")
     })
 
-    it("Test for testing change password success", () => {
-      homepage.mainNavigationComponent.getMyAccountOption().click()
-      myAccountPage.rightNavigationComponent.getOptions().eq(0).should('have.class', 'active')
-      loginPage.login("jose.lopez@gmail.com", "P@ssw0rd")
-      myAccountPage.rightNavigationComponent.clickOnRightNavigationOption('Password')
-      myAccountPage.rightNavigationComponent.getOptions().eq(2).should('have.class', 'active')
-      changePasswordPage.submitChangePasswordForm('P@ssw0rd','P@ssw0rd')
-      changePasswordPage.alertComponent.getAlert().should('have.class', 'alert-success')
-      myAccountPage.rightNavigationComponent.getOptions().eq(0).should('have.class', 'active')
-      myAccountPage.alertComponent.getAlert().should('have.text', ' Success: Your password has been successfully updated.')
+    it.only("Test for testing change password success", () => {
+
+      cy.getRandomEmail().then(email => {
+        cy.generateRandomFirstname().then(firstname => {
+          cy.generateRandomLastname().then(lastname => {
+            cy.generateRandomPassword().then(password1 => {
+              cy.generateRandomPassword().then(password2 => {
+                cy.generateRandomPhoneNumber().then(phoneNumber => {
+                  homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
+                  registerPage.registerNewUser(firstname, lastname, email, phoneNumber, password1, password1, true, true)
+                  successPage.rightNavigationComponent.clickOnRightNavigationOption('Password')
+                  changePasswordPage.submitChangePasswordForm(password2, password2)
+                  myAccountPage.rightNavigationComponent.getOptions().eq(0).should('have.class', 'active')
+                  myAccountPage.alertComponent.getAlert().should('have.class', 'alert-success')
+                  myAccountPage.alertComponent.getAlert().should('have.text', ' Success: Your password has been successfully updated.')
+                  myAccountPage.alertComponent.getAlert().should('have.css', 'background-color', 'rgb(212, 237, 218)')
+                  myAccountPage.alertComponent.getAlert().should('have.css', 'color', 'rgb(21, 87, 36)')
+                  myAccountPage.rightNavigationComponent.clickOnRightNavigationOption('Logout')
+                  myAccountPage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
+
+                  loginPage.login(email, password1)
+                  loginPage.alertComponent.getAlert().should('include.text', 'Warning: No match for E-Mail Address and/or Password.')
+                  loginPage.alertComponent.getAlert().should('have.css', 'background-color', 'rgb(248, 215, 218)')
+                  loginPage.alertComponent.getAlert().should('have.css', 'color', 'rgb(114, 28, 36)')
+
+                  loginPage.getEmailInputField().clear()
+                  loginPage.getPasswordInputField().clear()
+
+                  loginPage.login(email, password2)
+                  cy.url().should('contain', 'account/account')
+                })
+              })
+            })
+          })
+        })
+      })
+
+      
     })
 
     it('adding item to the wishlist without a logged user', () => {
