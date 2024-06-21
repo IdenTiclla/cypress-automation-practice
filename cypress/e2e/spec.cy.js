@@ -1352,5 +1352,22 @@ describe('Test suite edited with vim', () => {
       homepage.getTopCollectionContent().eq(2).should('have.class', 'active')
       homepage.getTopCollectionContent().eq(2).should('be.visible')
     })
+
+    it.only("Test for registering a new user on iphone.", () => {
+      cy.generateRandomFirstname().then(firstname => {
+        cy.generateRandomLastname().then(lastname => {
+          cy.getRandomEmail().then(email => {
+            cy.generateRandomPhoneNumber().then(phoneNumber => {
+              cy.generateRandomPassword().then(password => {
+                homepage.mainHeaderComponent.getMobilePersonIconButton().click()
+                homepage.quickLinksComponent.clickOnSpecificQuickLink('My account')
+                loginPage.rightNavigationComponent.clickOnRightNavigationOption('Register')
+                registerPage.registerNewUser(firstname, lastname, email, phoneNumber, password, password, true, true)
+              })
+            })
+          })
+        })
+      })
+    })
   })
 })
