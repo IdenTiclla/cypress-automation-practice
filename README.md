@@ -36,7 +36,7 @@ Asegúrate de configurar cualquier variable de entorno necesaria en un archivo `
 Ejemplo de archivo `.env`:
 ```sh
 CYPRESS_baseUrl=http://localhost:3000
-CYPRESS_username=your-username
+CYPRESS_email=your-email
 CYPRESS_password=your-password
 ```
 
