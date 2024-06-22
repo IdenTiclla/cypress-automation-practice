@@ -237,6 +237,12 @@ describe('Test suite edited with vim', () => {
       cy.url().should('contain', 'search=hello+world')
       cy.contains('There is no product that matches the search criteria.')
     })
+
+    it.only("Test for testing the search  functionality with results", () => {
+      homepage.mainHeaderComponent.getSearchInputField().type('iphone')
+      homepage.mainHeaderComponent.getSearchButton().click()
+      searchResultPage.getProducts().should('have.length', 4)
+    })
     
     it('Test for navigating through the design, modules and widgets pages', () => {
       homepage.mainNavigationComponent.getAddOnsDropdownOptions().should('not.be.visible')
@@ -1353,7 +1359,7 @@ describe('Test suite edited with vim', () => {
       homepage.getTopCollectionContent().eq(2).should('be.visible')
     })
 
-    it.only("Test for registering a new user on iphone.", () => {
+    it("Test for registering a new user on iphone.", () => {
       cy.generateRandomFirstname().then(firstname => {
         cy.generateRandomLastname().then(lastname => {
           cy.getRandomEmail().then(email => {
