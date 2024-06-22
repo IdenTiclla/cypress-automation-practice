@@ -238,10 +238,21 @@ describe('Test suite edited with vim', () => {
       cy.contains('There is no product that matches the search criteria.')
     })
 
-    it.only("Test for testing the search  functionality with results", () => {
+    it("Test for testing the search  functionality with results", () => {
       homepage.mainHeaderComponent.getSearchInputField().type('iphone')
       homepage.mainHeaderComponent.getSearchButton().click()
       searchResultPage.getProducts().should('have.length', 4)
+    })
+
+    it.only("Test for testing quick view from search results page.", () => {
+      homepage.mainHeaderComponent.getSearchInputField().type('iphone')
+      homepage.mainHeaderComponent.getSearchButton().click()
+      searchResultPage.getProducts().eq(0).scrollIntoView()
+      searchResultPage.getProducts().eq(0).trigger('mouseover')
+      searchResultPage.showQuickViewModal(searchResultPage.getProducts().eq(0))
+      searchResultPage.quickViewModalComponent.getModal().should('be.visible')
+      searchResultPage.quickViewModalComponent.getCloseButton().click()
+      searchResultPage.quickViewModalComponent.getModal().should('not.be.visible')
     })
     
     it('Test for navigating through the design, modules and widgets pages', () => {

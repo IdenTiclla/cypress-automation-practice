@@ -1,7 +1,9 @@
 import Filter from "../components/Filter"
+import QuickViewModal from "../components/QuickViewModal"
 class SearchResultPage {
     constructor() {
         this.filterComponent = new Filter()
+        this.quickViewModalComponent = new QuickViewModal()
     }
 
     getProducts = () => cy.get("div.product-layout.product-grid > div")
@@ -18,6 +20,9 @@ class SearchResultPage {
     getMobileKeywordsInputField = () => cy.get("div.form-row input[name='search']")
     getMobileCategoriesDropdown = () => cy.get("div.form-row select[name='category_id']")
 
+    showQuickViewModal = (product) => {
+        product.find('div.product-action').find('button').eq(2).click({force: true})
+    }
 }
 
 export default SearchResultPage
