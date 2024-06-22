@@ -238,13 +238,19 @@ describe('Test suite edited with vim', () => {
       cy.contains('There is no product that matches the search criteria.')
     })
 
-    it("Test for testing the search  functionality with results", () => {
+    it("Test for testing the search  functionality with results - iphone", () => {
       homepage.mainHeaderComponent.getSearchInputField().type('iphone')
       homepage.mainHeaderComponent.getSearchButton().click()
       searchResultPage.getProducts().should('have.length', 4)
     })
+    
+    it.only("Test for testing the search functionality with results - imac", () => {
+      homepage.mainHeaderComponent.getSearchInputField().type('imac')
+      homepage.mainHeaderComponent.getSearchButton().click()
+      searchResultPage.getProducts().should('have.length', 8)
+    })
 
-    it.only("Test for testing quick view from search results page.", () => {
+    it("Test for testing quick view from search results page.", () => {
       homepage.mainHeaderComponent.getSearchInputField().type('iphone')
       homepage.mainHeaderComponent.getSearchButton().click()
       searchResultPage.getProducts().eq(0).scrollIntoView()
