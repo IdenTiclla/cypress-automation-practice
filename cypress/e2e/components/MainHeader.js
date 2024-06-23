@@ -6,6 +6,8 @@ class MainHeader {
     getCategoriesDropdown = () => cy.get("div#main-header div#search div[class*='search-category']")
     getSearchInputField = () => cy.get("div#main-header div#search input[name='search']")
     getSearchButton = () => cy.get("div#main-header div#search div.search-button button")
+    getAutoCompleteDropdown = () => cy.get("div#main-header div#search ul.dropdown-menu.autocomplete")
+    getAutoCompleteDropdownOptions = () => cy.get("div#main-header div#search ul.dropdown-menu.autocomplete > li")
 
     getCompareIconButton = () => cy.get("div#main-header  a[href*='/compare']")
     getWishListIconButton = () => cy.get("a[aria-label='Wishlist']")
