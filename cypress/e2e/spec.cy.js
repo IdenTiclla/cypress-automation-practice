@@ -250,10 +250,18 @@ describe('Test suite edited with vim', () => {
       searchResultPage.getProducts().should('have.length', 8)
     })
     
-    it.only("Test for testing the autocomplete dropdown component.", () => {
+    it("Test for testing the autocomplete dropdown component.", () => {
       homepage.mainHeaderComponent.getSearchInputField().type('iphone')
       homepage.mainHeaderComponent.getAutoCompleteDropdown().should('be.visible')
       homepage.mainHeaderComponent.getAutoCompleteDropdownOptions().should('have.length', 4)
+    })
+
+    it.only("Test for testing the autocomplete dropdown component visibility.", () => {
+      homepage.mainHeaderComponent.getSearchInputField().type('iphone')
+      homepage.mainHeaderComponent.getAutoCompleteDropdown().should('be.visible')
+      homepage.mainHeaderComponent.getAutoCompleteDropdownOptions().should('have.length', 4)
+      homepage.mainHeaderComponent.getSearchInputField().clear()
+      homepage.mainHeaderComponent.getAutoCompleteDropdown().should('not.be.visible')
     })
 
     it("Test for testing quick view from search results page.", () => {
