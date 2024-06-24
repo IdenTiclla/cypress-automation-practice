@@ -339,13 +339,24 @@ describe('Test suite edited with vim', () => {
       cy.contains("Showing 1 to 1 of 1 (1 Pages)")
     })
 
-    it.only("Test for the list view mode on search results page.", () => {
+    it("Test for the list view mode on search results page.", () => {
       homepage.mainHeaderComponent.getSearchInputField().type('iphone')
       homepage.mainHeaderComponent.getSearchButton().click()
       searchResultPage.getProducts().should('exist')
       searchResultPage.getListViewButton().click()
       searchResultPage.getProducts().should('not.exist')
       searchResultPage.getProductsListView().should('have.length', 4)
+    })
+
+    it.only("Test for quick view from search results page.", () => {
+      homepage.mainHeaderComponent.getSearchInputField().type('iphone')
+      homepage.mainHeaderComponent.getSearchButton().click()
+      searchResultPage.getProducts().should('exist')
+      searchResultPage.getListViewButton().click()
+      searchResultPage.quickViewModalComponent.getModal().should('not.exist')
+      searchResultPage.showQuickViewModal(searchResultPage.getProductsListView().eq(0))
+      searchResultPage.quickViewModalComponent.getModal().should('exist')
+      searchResultPage.quickViewModalComponent.getModal().should('be.visible')
     })
     
     it("testing forgotten password, email not found", () => {
