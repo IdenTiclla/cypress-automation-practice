@@ -264,7 +264,7 @@ describe('Test suite edited with vim', () => {
       homepage.mainHeaderComponent.getAutoCompleteDropdown().should('not.be.visible')
     })
 
-    it.only("Test for testing the autocomplete dropdown component items with imac keyword.", () => {
+    it("Test for testing the autocomplete dropdown component items with imac keyword.", () => {
       homepage.mainHeaderComponent.getSearchInputField().type('imac')
       homepage.mainHeaderComponent.getAutoCompleteDropdown().should('be.visible')
       homepage.mainHeaderComponent.getAutoCompleteDropdownOptions().should('have.length', 5)
@@ -337,6 +337,15 @@ describe('Test suite edited with vim', () => {
       searchResultPage.getProducts().eq(0).scrollIntoView()
       searchResultPage.getProducts().should('have.length', 1)
       cy.contains("Showing 1 to 1 of 1 (1 Pages)")
+    })
+
+    it.only("Test for the list view mode on search results page.", () => {
+      homepage.mainHeaderComponent.getSearchInputField().type('iphone')
+      homepage.mainHeaderComponent.getSearchButton().click()
+      searchResultPage.getProducts().should('exist')
+      searchResultPage.getListViewButton().click()
+      searchResultPage.getProducts().should('not.exist')
+      searchResultPage.getProductsListView().should('have.length', 4)
     })
     
     it("testing forgotten password, email not found", () => {

@@ -7,6 +7,7 @@ class SearchResultPage {
     }
 
     getProducts = () => cy.get("div.product-layout.product-grid > div")
+    getProductsListView = () => cy.get("div[data-grid] > div")
     getKeywordsInputField = () => cy.get("div.content-search-criteria input[name='search']")
     getCategoriesDropdown = () => cy.get("div.content-search-criteria select")
     getSearchButton = () => cy.get("div.content-search-criteria input[type='button']")
