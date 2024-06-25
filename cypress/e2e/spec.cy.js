@@ -358,8 +358,17 @@ describe('Test suite edited with vim', () => {
       searchResultPage.quickViewModalComponent.getModal().should('exist')
       searchResultPage.quickViewModalComponent.getModal().should('be.visible')
     })
+    it.only("Test for checking the show quantity selector options", () => {
+      homepage.mainHeaderComponent.getSearchInputField().type('iphone')
+      homepage.mainHeaderComponent.getSearchButton().click()
+      searchResultPage.getShowSelector().find('option').should('have.length', 5)
+      searchResultPage.getShowSelector().find('option').then(options => {
+        const actual = [...options].map(option => option.text)
+        expect(actual).to.deep.eq(['15', '25', '50', '75', '100'])
+      })
+    })
 
-    it.only("Test for the show quantity selector when selecting options.", () => {
+    it("Test for the show quantity selector when selecting options.", () => {
       homepage.mainHeaderComponent.getSearchInputField().type('iphone')
       homepage.mainHeaderComponent.getSearchButton().click()
       searchResultPage.getProducts().should('exist')
