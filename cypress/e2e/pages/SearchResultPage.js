@@ -17,6 +17,8 @@ class SearchResultPage {
     getListViewButton = () => cy.get("button#list-view")
     getPagination = () => cy.get("ul.pagination li")
 
+    getShowSelector = () => cy.get("select#input-limit-212463")
+
     // mobile version
     getMobileKeywordsInputField = () => cy.get("div.form-row input[name='search']")
     getMobileCategoriesDropdown = () => cy.get("div.form-row select[name='category_id']")

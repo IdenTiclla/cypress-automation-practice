@@ -348,7 +348,7 @@ describe('Test suite edited with vim', () => {
       searchResultPage.getProductsListView().should('have.length', 4)
     })
 
-    it.only("Test for quick view from search results page.", () => {
+    it("Test for quick view from search results page.", () => {
       homepage.mainHeaderComponent.getSearchInputField().type('iphone')
       homepage.mainHeaderComponent.getSearchButton().click()
       searchResultPage.getProducts().should('exist')
@@ -357,6 +357,29 @@ describe('Test suite edited with vim', () => {
       searchResultPage.showQuickViewModal(searchResultPage.getProductsListView().eq(0))
       searchResultPage.quickViewModalComponent.getModal().should('exist')
       searchResultPage.quickViewModalComponent.getModal().should('be.visible')
+    })
+
+    it.only("Test for the show quantity selector when selecting options.", () => {
+      homepage.mainHeaderComponent.getSearchInputField().type('iphone')
+      homepage.mainHeaderComponent.getSearchButton().click()
+      searchResultPage.getProducts().should('exist')
+      searchResultPage.getListViewButton().click()
+      searchResultPage.quickViewModalComponent.getModal().should('not.exist')
+      searchResultPage.getShowSelector().select('15')
+      searchResultPage.getShowSelector().find('option:selected').should('have.text', '15')
+      searchResultPage.getShowSelector().should('have.value', 'https://ecommerce-playground.lambdatest.io/index.php?route=product/search&search=iphone&limit=15')
+      searchResultPage.getShowSelector().select('25')
+      searchResultPage.getShowSelector().find('option:selected').should('have.text', '25')
+      searchResultPage.getShowSelector().should('have.value', 'https://ecommerce-playground.lambdatest.io/index.php?route=product/search&search=iphone&limit=25')
+      searchResultPage.getShowSelector().select('50')
+      searchResultPage.getShowSelector().find('option:selected').should('have.text', '50')
+      searchResultPage.getShowSelector().should('have.value', 'https://ecommerce-playground.lambdatest.io/index.php?route=product/search&search=iphone&limit=50')
+      searchResultPage.getShowSelector().select('75')
+      searchResultPage.getShowSelector().find('option:selected').should('have.text', '75')
+      searchResultPage.getShowSelector().should('have.value', 'https://ecommerce-playground.lambdatest.io/index.php?route=product/search&search=iphone&limit=75')
+      searchResultPage.getShowSelector().select('100')
+      searchResultPage.getShowSelector().find('option:selected').should('have.text', '100')
+      searchResultPage.getShowSelector().should('have.value', 'https://ecommerce-playground.lambdatest.io/index.php?route=product/search&search=iphone&limit=100')
     })
     
     it("testing forgotten password, email not found", () => {
