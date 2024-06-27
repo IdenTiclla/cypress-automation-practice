@@ -18,6 +18,7 @@ class SearchResultPage {
     getPagination = () => cy.get("ul.pagination li")
 
     getShowSelector = () => cy.get("select#input-limit-212463")
+    getSortBySelector = () => cy.get("select#input-sort-212464")
 
     // mobile version
     getMobileKeywordsInputField = () => cy.get("div.form-row input[name='search']")

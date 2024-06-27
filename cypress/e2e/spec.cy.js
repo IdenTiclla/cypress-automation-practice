@@ -358,13 +358,24 @@ describe('Test suite edited with vim', () => {
       searchResultPage.quickViewModalComponent.getModal().should('exist')
       searchResultPage.quickViewModalComponent.getModal().should('be.visible')
     })
-    it.only("Test for checking the show quantity selector options", () => {
+    
+    it("Test for checking the show quantity selector options", () => {
       homepage.mainHeaderComponent.getSearchInputField().type('iphone')
       homepage.mainHeaderComponent.getSearchButton().click()
       searchResultPage.getShowSelector().find('option').should('have.length', 5)
       searchResultPage.getShowSelector().find('option').then(options => {
         const actual = [...options].map(option => option.text)
         expect(actual).to.deep.eq(['15', '25', '50', '75', '100'])
+      })
+    })
+
+    it.only("Test for testing the sort by functionality on search results page.", () => {
+      homepage.mainHeaderComponent.getSearchInputField().type('iphone')
+      homepage.mainHeaderComponent.getSearchButton().click()
+      searchResultPage.getSortBySelector().find('option').should('have.length', 12)
+      searchResultPage.getSortBySelector().find('option').then(options => {
+        const actual = [... options].map(option => option.text)
+        expect(actual).to.deep.eq(['Default', 'Best sellers', 'Popular', 'Newest', 'Name (A - Z)', 'Name (Z - A)', 'Price (Low > High)', 'Price (High > Low)', 'Rating (Highest)', 'Rating (Lowest)', 'Model (A - Z)', 'Model (Z - A)'])
       })
     })
 
