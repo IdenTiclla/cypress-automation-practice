@@ -280,6 +280,13 @@ describe('Test suite edited with vim', () => {
       searchResultPage.quickViewModalComponent.getCloseButton().click()
       searchResultPage.quickViewModalComponent.getModal().should('not.be.visible')
     })
+
+    it.only("Test for checking the addons navigation options.", () => {
+      homepage.mainNavigationComponent.getAddOnsDropdownOptions().find('a').then(options => {
+        const actual = [... options].map(option => option.text)
+        expect(actual).to.deep.eq(['\n  Modules\n \n', '\n  Designs\n \n', '\n  Widgets\n \n'])
+      })
+    })
     
     it('Test for navigating through the design, modules and widgets pages', () => {
       homepage.mainNavigationComponent.getAddOnsDropdownOptions().should('not.be.visible')
@@ -309,7 +316,7 @@ describe('Test suite edited with vim', () => {
       cy.url().should('contain', 'account/register')
     })
 
-    it.only("Test for checking the mega menu options", () => {
+    it("Test for checking the mega menu options", () => {
       homepage.mainNavigationComponent.getMegaMenuOptionsDropdown().find('a').then(options => {
         const actual = [... options].map(option => option.text)
         expect(actual).to.deep.eq(['\nApple\n', '\nHTC\n', '\nLG\n', '\nNokia\n', '\nSamsung\n', '\nXiomi\n', '\nApple Macbook\n', '\nAsus\n', '\nHP\n', '\nLenovo\n', '\nHeadphones\n', '\nMemory Card\n', '\nMobile cases\n', '\nPower bank\n', '\nScreenguards\n', '\nSmart Watch\n', '\nSmart band\n', '\nApple Ipad\n', '\nDesktop\n', '\nHard disk\n', '\nMouse & Keyboard\n', '\nPen Drive\n', '\nPrinter\n', '\nBluetooth Speaker\n', '\nDTH\n', '\nHome Audio\n', '\nHome Theatre\n', '\nSoundBar\n'])        
