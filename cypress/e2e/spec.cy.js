@@ -281,10 +281,18 @@ describe('Test suite edited with vim', () => {
       searchResultPage.quickViewModalComponent.getModal().should('not.be.visible')
     })
 
-    it.only("Test for checking the addons navigation options.", () => {
+    it("Test for checking the addons navigation options.", () => {
       homepage.mainNavigationComponent.getAddOnsDropdownOptions().find('a').then(options => {
         const actual = [... options].map(option => option.text)
         expect(actual).to.deep.eq(['\n  Modules\n \n', '\n  Designs\n \n', '\n  Widgets\n \n'])
+      })
+    })
+
+    it.only("Test for checking my account options with unlogged user.", () => {
+      homepage.mainNavigationComponent.getMyAccountDropdownOptions().find('a').then(options => {
+        const actual = [... options].map(option => option.text)
+        expect(actual).to.deep.eq(['\n  Login\n \n', '\n  Register\n \n'])
+        expect(actual).to.have.length(2)
       })
     })
     
