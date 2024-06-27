@@ -288,11 +288,21 @@ describe('Test suite edited with vim', () => {
       })
     })
 
-    it.only("Test for checking my account options with unlogged user.", () => {
+    it("Test for checking my account options with unlogged user.", () => {
       homepage.mainNavigationComponent.getMyAccountDropdownOptions().find('a').then(options => {
         const actual = [... options].map(option => option.text)
         expect(actual).to.deep.eq(['\n  Login\n \n', '\n  Register\n \n'])
         expect(actual).to.have.length(2)
+      })
+    })
+    
+    it.only("Test for checking my account options with a logged user.", () => {
+      homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
+      loginPage.login(Cypress.env("email"), Cypress.env("password"))
+      myAccountPage.mainNavigationComponent.getMyAccountDropdownOptions().find('a').then(options => {
+        const actual = [... options].map(option => option.text)
+        expect(actual).to.deep.eq(['\n  Dashboard\n \n', '\n  My order\n \n', '\n  Return\n \n', '\n  Tracking\n \n', '\n  My voucher\n \n', '\n  Logout\n \n'])
+        expect(actual).to.have.length(6)
       })
     })
     
