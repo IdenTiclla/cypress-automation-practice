@@ -296,7 +296,7 @@ describe('Test suite edited with vim', () => {
       })
     })
     
-    it.only("Test for checking my account options with a logged user.", () => {
+    it("Test for checking my account options with a logged user.", () => {
       homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
       myAccountPage.mainNavigationComponent.getMyAccountDropdownOptions().find('a').then(options => {
@@ -687,6 +687,14 @@ describe('Test suite edited with vim', () => {
           cy.url().should('contain', 'account/account')
           myAccountPage.rightNavigationComponent.getOptions().eq(0).should('have.class', 'active')
         })
+      })
+    })
+
+    it.only("test for checking the top categories options.", () => {
+      homepage.mainNavigationComponent.getShopByCategoryOption().click()
+      homepage.mainNavigationComponent.topCategoriesComponent.getCategories().find('a').then(options => {
+        const actual = [... options].map(option => option.text)
+        expect(actual).to.deep.eq([' \n  Components\n \n', ' \n  Cameras\n \n', ' \n  Phone, Tablets & Ipod\n \n', ' \n  Software\n \n', ' \n  MP3 Players\n \n', ' \n  Laptops & Notebooks\n \n', ' \n  Desktops and Monitors\n \n', ' \n  Printers & Scanners\n \n', ' \n  Mice and Trackballs\n \n', ' \n  Fashion and Accessories\n \n', ' \n  Beauty and Saloon\n \n', ' \n  Autoparts and Accessories\n \n', ' \n  Washing machine\n \n', ' \n  Gaming consoles\n \n', ' \n  Air conditioner\n \n', ' \n  Web Cameras\n \n'])
       })
     })
 
