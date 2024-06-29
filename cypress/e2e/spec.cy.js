@@ -225,6 +225,15 @@ describe('Test suite edited with vim', () => {
       shoppingCartPage.getMessage().should('have.text', 'Your shopping cart is empty!')
       shoppingCartPage.getContinueButton().should('be.visible')
     })
+
+    it.only("adding test for checking all categories dropdown options.", () => {
+      homepage.mainHeaderComponent.getCategoriesDropdown().click()
+      homepage.mainHeaderComponent.getCategoriesDropdownOptions().then(options => {
+        const actual = [... options].map(option => option.text)
+        expect(actual).to.deep.eq(['All Categories', 'Desktops', 'Laptops', 'Components', 'Tablets', 'Software', 'Phones & PDAs', 'Cameras', 'MP3 Players'])
+        expect(actual).to.have.length(9)
+      })
+    })
   
     it("Test for testing the search functionality with no results", () => {
       homepage.mainHeaderComponent.getCategoriesDropdown().should('be.visible')
@@ -690,7 +699,7 @@ describe('Test suite edited with vim', () => {
       })
     })
 
-    it.only("test for checking the top categories options.", () => {
+    it("test for checking the top categories options.", () => {
       homepage.mainNavigationComponent.getShopByCategoryOption().click()
       homepage.mainNavigationComponent.topCategoriesComponent.getCategories().find('a').then(options => {
         const actual = [... options].map(option => option.text)

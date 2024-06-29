@@ -4,6 +4,7 @@ class MainHeader {
         this.topCategoriesComponent = new TopCategories()
     }
     getCategoriesDropdown = () => cy.get("div#main-header div#search div[class*='search-category']")
+    getCategoriesDropdownOptions = () => cy.get("div#main-header div#search div[class*='search-category'] a")
     getSearchInputField = () => cy.get("div#main-header div#search input[name='search']")
     getSearchButton = () => cy.get("div#main-header div#search div.search-button button")
     getAutoCompleteDropdown = () => cy.get("div#main-header div#search ul.dropdown-menu.autocomplete")
