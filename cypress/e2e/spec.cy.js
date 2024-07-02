@@ -226,7 +226,7 @@ describe('Test suite edited with vim', () => {
       shoppingCartPage.getContinueButton().should('be.visible')
     })
 
-    it.only("adding test for checking all categories dropdown options.", () => {
+    it("adding test for checking all categories dropdown options.", () => {
       homepage.mainHeaderComponent.getCategoriesDropdown().click()
       homepage.mainHeaderComponent.getCategoriesDropdownOptions().then(options => {
         const actual = [... options].map(option => option.text)
@@ -367,6 +367,43 @@ describe('Test suite edited with vim', () => {
       searchResultPage.getSearchInSubcategoriesCheckbox().should('not.be.checked')
       searchResultPage.getSearchInProductDescriptionsCheckbox().should('not.be.checked')
       searchResultPage.getPagination().should('have.length', 7)
+    })
+    
+    it.only("Test for testing the pagination component.", () => {
+      homepage.mainNavigationComponent.clickOnSpecificTopCategory('Components')
+      searchResultPage.getPagination().contains('1').parent().should('have.class', 'active')
+      searchResultPage.getPagination().contains('2').parent().should('not.have.class', 'active')
+      searchResultPage.getPagination().contains('3').parent().should('not.have.class', 'active')
+      searchResultPage.getPagination().contains('4').parent().should('not.have.class', 'active')
+      searchResultPage.getPagination().contains('5').parent().should('not.have.class', 'active')
+
+      searchResultPage.navigateToPage('2')
+      searchResultPage.getPagination().contains('1').parent().should('not.have.class', 'active')
+      searchResultPage.getPagination().contains('2').parent().should('have.class', 'active')
+      searchResultPage.getPagination().contains('3').parent().should('not.have.class', 'active')
+      searchResultPage.getPagination().contains('4').parent().should('not.have.class', 'active')
+      searchResultPage.getPagination().contains('5').parent().should('not.have.class', 'active')
+    
+      searchResultPage.navigateToPage('3')
+      searchResultPage.getPagination().contains('1').parent().should('not.have.class', 'active')
+      searchResultPage.getPagination().contains('2').parent().should('not.have.class', 'active')
+      searchResultPage.getPagination().contains('3').parent().should('have.class', 'active')
+      searchResultPage.getPagination().contains('4').parent().should('not.have.class', 'active')
+      searchResultPage.getPagination().contains('5').parent().should('not.have.class', 'active')
+      
+      searchResultPage.navigateToPage('4')
+      searchResultPage.getPagination().contains('1').parent().should('not.have.class', 'active')
+      searchResultPage.getPagination().contains('2').parent().should('not.have.class', 'active')
+      searchResultPage.getPagination().contains('3').parent().should('not.have.class', 'active')
+      searchResultPage.getPagination().contains('4').parent().should('have.class', 'active')
+      searchResultPage.getPagination().contains('5').parent().should('not.have.class', 'active')
+
+      searchResultPage.navigateToPage('5')
+      searchResultPage.getPagination().contains('1').parent().should('not.have.class', 'active')
+      searchResultPage.getPagination().contains('2').parent().should('not.have.class', 'active')
+      searchResultPage.getPagination().contains('3').parent().should('not.have.class', 'active')
+      searchResultPage.getPagination().contains('4').parent().should('not.have.class', 'active')
+      searchResultPage.getPagination().contains('5').parent().should('have.class', 'active')
     })
   
     it("Testing yellow color filter on search results page", () => {

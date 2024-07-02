@@ -27,6 +27,9 @@ class SearchResultPage {
     showQuickViewModal = (product) => {
         product.find('div.product-action').find('button').eq(2).click({force: true})
     }
+    navigateToPage = (pageNumber) => {
+        this.getPagination().contains(pageNumber).click()
+    }
 }
 
 export default SearchResultPage

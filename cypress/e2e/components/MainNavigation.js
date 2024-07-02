@@ -35,7 +35,7 @@ class MainNavigation {
     }
     clickOnSpecificTopCategory = (category) => {
         this.getShopByCategoryOption().click()
-        this.topCategoriesComponent.getCategories().contains(category).click()
+        this.topCategoriesComponent.getCategories().contains(category).click({force: true})
     }
 }
 
