@@ -369,7 +369,7 @@ describe('Test suite edited with vim', () => {
       searchResultPage.getPagination().should('have.length', 7)
     })
     
-    it.only("Test for testing the pagination component.", () => {
+    it("Test for testing the pagination component.", () => {
       homepage.mainNavigationComponent.clickOnSpecificTopCategory('Components')
       searchResultPage.getPagination().contains('1').parent().should('have.class', 'active')
       searchResultPage.getPagination().contains('2').parent().should('not.have.class', 'active')
