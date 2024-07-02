@@ -25,7 +25,7 @@ describe("Test for testing an api.", () => {
             cy.wrap(response.body).should('have.length', 500)
         })
     })
-    it.only("Test 3 - Checking the amount of property of every of an object", () => {
+    it("Test 3 - Checking the amount of property of every of an object", () => {
         cy.request({
             method: 'GET',
             url: 'https://jsonplaceholder.typicode.com/comments'
@@ -33,6 +33,25 @@ describe("Test for testing an api.", () => {
             const firstObject = response.body[0]
             expect(Object.keys(firstObject)).to.have.length(5)
             cy.wrap(Object.keys(firstObject)).should('have.length', 5)
+        })
+    })
+    it.only("Test 4 - Checking object's properties on response.", () => {
+        cy.request({
+            method: 'GET',
+            url: 'https://jsonplaceholder.typicode.com/comments'
+        }).then(response => {
+            const firstObject = response.body[0]
+            expect(firstObject).to.have.property("postId")
+            expect(firstObject).to.have.property("id")
+            expect(firstObject).to.have.property("name")
+            expect(firstObject).to.have.property("email")
+            expect(firstObject).to.have.property("body")
+
+            cy.wrap(firstObject).should('have.a.property', 'postId')
+            cy.wrap(firstObject).should('have.a.property', 'id')
+            cy.wrap(firstObject).should('have.a.property', 'name')
+            cy.wrap(firstObject).should('have.a.property', 'email')
+            cy.wrap(firstObject).should('have.a.property', 'body')
         })
     })
 })
