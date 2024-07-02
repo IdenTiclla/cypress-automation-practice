@@ -76,6 +76,14 @@ tempora quo necessitatibus
 dolor quam autem quasi
 reiciendis et nam sapiente accusantium`)
 
+            expect(firstObject.id).to.deep.eq(1)
+            expect(firstObject.postId).to.deep.eq(1)
+            expect(firstObject.name).to.deep.eq('id labore ex et quam laborum')
+            expect(firstObject.email).to.deep.eq('Eliseo@gardner.biz')
+            expect(firstObject.body).to.deep.eq(`laudantium enim quasi est quidem magnam voluptate ipsam eos
+tempora quo necessitatibus
+dolor quam autem quasi
+reiciendis et nam sapiente accusantium`)
 
             cy.wrap(firstObject).should('have.a.property','id', 1)
             cy.wrap(firstObject).should('have.a.property','postId', 1)
