@@ -35,7 +35,7 @@ describe("Test for testing an api.", () => {
             cy.wrap(Object.keys(firstObject)).should('have.length', 5)
         })
     })
-    it.only("Test 4 - Checking object's properties on response.", () => {
+    it("Test 4 - Checking object's properties on response.", () => {
         cy.request({
             method: 'GET',
             url: 'https://jsonplaceholder.typicode.com/comments'
@@ -54,4 +54,39 @@ describe("Test for testing an api.", () => {
             cy.wrap(firstObject).should('have.a.property', 'body')
         })
     })
+
+    it.only("Test 5 - Checking object's properties values on response", () => {
+        cy.request({
+            method: 'GET',
+            url: 'https://jsonplaceholder.typicode.com/comments'
+        }).then(response => {
+            const firstObject = response.body[0]
+            console.log(firstObject)
+            expect(firstObject).to.have.property('id', 1)
+            expect(firstObject).to.have.property('postId', 1)
+            expect(firstObject).to.have.property('name', "id labore ex et quam laborum")
+            expect(firstObject).to.have.property('email', "Eliseo@gardner.biz")
+            const expectedBody = `laudantium enim quasi est quidem magnam voluptate ipsam eos
+tempora quo necessitatibus
+dolor quam autem quasi
+reiciendis et nam sapiente accusantium`
+            expect(firstObject).to.have.property('body', expectedBody)
+            expect(firstObject).to.have.property('body', `laudantium enim quasi est quidem magnam voluptate ipsam eos
+tempora quo necessitatibus
+dolor quam autem quasi
+reiciendis et nam sapiente accusantium`)
+
+
+            cy.wrap(firstObject).should('have.a.property','id', 1)
+            cy.wrap(firstObject).should('have.a.property','postId', 1)
+            cy.wrap(firstObject).should('have.a.property','name', 'id labore ex et quam laborum')
+            cy.wrap(firstObject).should('have.a.property','email', 'Eliseo@gardner.biz')
+            cy.wrap(firstObject).should('have.a.property','body', `laudantium enim quasi est quidem magnam voluptate ipsam eos
+tempora quo necessitatibus
+dolor quam autem quasi
+reiciendis et nam sapiente accusantium`)
+
+        })
+    })
+
 })
