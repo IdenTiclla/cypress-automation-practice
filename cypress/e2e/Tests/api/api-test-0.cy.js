@@ -55,7 +55,7 @@ describe("Test for testing an api.", () => {
         })
     })
 
-    it.only("Test 5 - Checking object's properties values on response", () => {
+    it("Test 5 - Checking object's properties values on response", () => {
         cy.request({
             method: 'GET',
             url: 'https://jsonplaceholder.typicode.com/comments'
@@ -94,6 +94,21 @@ tempora quo necessitatibus
 dolor quam autem quasi
 reiciendis et nam sapiente accusantium`)
 
+        })
+    })
+    it.only("Test 6 - Checking all object's properties values on response.", () => {
+        cy.request({
+            method: 'GET',
+            url: 'https://jsonplaceholder.typicode.com/comments'
+        }).then(response => {
+            const comments = response.body
+            comments.map(comment => {
+                expect(comment).to.have.property('id')  
+                expect(comment).to.have.property('postId')
+                expect(comment).to.have.property('name')
+                expect(comment).to.have.property('email')
+                expect(comment).to.have.property('body')
+            })
         })
     })
 
