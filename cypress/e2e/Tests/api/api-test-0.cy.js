@@ -96,7 +96,7 @@ reiciendis et nam sapiente accusantium`)
 
         })
     })
-    it.only("Test 6 - Checking all object's properties values on response.", () => {
+    it("Test 6 - Checking all object's properties values on response.", () => {
         cy.request({
             method: 'GET',
             url: 'https://jsonplaceholder.typicode.com/comments'
@@ -109,6 +109,21 @@ reiciendis et nam sapiente accusantium`)
                 expect(comment).to.have.property('email')
                 expect(comment).to.have.property('body')
             })
+        })
+    })
+
+    it.only("Test 7 - Checking elements type.", () => {
+        cy.request({
+            method: 'GET',
+            url: 'https://jsonplaceholder.typicode.com/comments'
+        }).then(response => {
+            const data = response.body
+            expect(data).to.be.an('array')
+            expect(data[0].id).to.be.an('number')
+            expect(data[0].postId).to.be.an('number')
+            expect(data[0].name).to.be.an('string')
+            expect(data[0].email).to.be.an('string')
+            expect(data[0].body).to.be.an('string')
         })
     })
 
