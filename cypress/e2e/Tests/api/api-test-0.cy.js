@@ -126,7 +126,7 @@ reiciendis et nam sapiente accusantium`)
             expect(data[0].body).to.be.an('string')
         })
     })
-    it.only("Test 8 - Checking comments for getting specific id with id = 1", () => {
+    it("Test 8 - Checking comments for getting specific id with id = 1", () => {
         cy.request({
             method: 'GET',
             url: 'https://jsonplaceholder.typicode.com/comments/1'
@@ -140,6 +140,34 @@ reiciendis et nam sapiente accusantium`)
             expect(data.name).to.be.an('string')
             expect(data.email).to.be.an('string')
             expect(data.body).to.be.an('string')
+        })
+    })
+    it.only("Test 9 - Requesting 2 routes and.", () => {
+        cy.request({
+            method: 'GET',
+            url: 'https://jsonplaceholder.typicode.com/comments'
+        }).then(commentsResponse => {
+            cy.request({
+                method: 'GET',
+                url: 'https://jsonplaceholder.typicode.com/posts'
+            }).then(postsResponse => {
+                const comments = commentsResponse.body
+                const posts = postsResponse.body
+                // console.log(comments)
+                // console.log(posts)
+                const joinedData = posts.map(post => {
+                    return {
+                        post: post,
+                        comments: comments.filter(comment => comment.postId === post.id)
+                    }
+                })
+                console.log(joinedData)
+                console.log(typeof(joinedData))
+                expect(joinedData).to.be.an('array')
+                expect(joinedData[0].post).to.be.an('object')
+                expect(joinedData[0].comments).to.be.an('array')
+                expect(joinedData[0].comments).to.have.length(5)
+            })
         })
     })
 
