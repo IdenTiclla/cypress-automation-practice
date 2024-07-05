@@ -112,7 +112,7 @@ reiciendis et nam sapiente accusantium`)
         })
     })
 
-    it.only("Test 7 - Checking elements type.", () => {
+    it("Test 7 - Checking elements type.", () => {
         cy.request({
             method: 'GET',
             url: 'https://jsonplaceholder.typicode.com/comments'
@@ -124,6 +124,22 @@ reiciendis et nam sapiente accusantium`)
             expect(data[0].name).to.be.an('string')
             expect(data[0].email).to.be.an('string')
             expect(data[0].body).to.be.an('string')
+        })
+    })
+    it.only("Test 8 - Checking comments for getting specific id with id = 1", () => {
+        cy.request({
+            method: 'GET',
+            url: 'https://jsonplaceholder.typicode.com/comments/1'
+        }).then(response => {
+            const data = response.body
+            expect(data).to.be.an('object')
+            expect(data).to.not.be.an('array')
+            expect(Object.keys(data)).to.have.length(5)
+            expect(data.postId).to.be.an('number')
+            expect(data.id).to.be.an('number')
+            expect(data.name).to.be.an('string')
+            expect(data.email).to.be.an('string')
+            expect(data.body).to.be.an('string')
         })
     })
 
