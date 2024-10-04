@@ -1,7 +1,7 @@
 class LoginPage {
     // properties / elements
     get = {
-        endpoint: "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login",
+        endpoint: "https://opensource-demo.orangehrmlive.com/auth/login",
         usernameInput: () => cy.get("input[name='username']"),
         passwordInput: () => cy.get("input[name='password']"),
         submitButton: () => cy.get("button[type='submit']"),

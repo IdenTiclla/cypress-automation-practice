@@ -1,5 +1,5 @@
 describe('Api testing test suite', () => {
-    it.only('should return a list of users', () => {
+    it('should return a list of users', () => {
         cy.request({
           method: 'GET',
           url: 'https://jsonplaceholder.typicode.com/users',
@@ -90,6 +90,26 @@ describe('Api testing test suite', () => {
           expect(album).to.have.property('userId')
         })
         console.log(response)
+      })
+    })
+    it.only("Test - checking the todos route", () => {
+      cy.request({
+        method: 'GET',
+        url: 'https://jsonplaceholder.typicode.com/todos',
+        header: {
+          'Content-Type': 'application/json'
+        }
+      }).then(response => {
+        console.log(response)
+        const todos = response.body
+        expect(todos).to.have.length(200)
+        console.log(todos)
+        todos.map(todo => {
+          expect(todo).to.have.property('userId')
+          expect(todo).to.have.property('id')
+          expect(todo).to.have.property('title')
+          expect(todo).to.have.property('completed')
+        })
       })
     })
 })
