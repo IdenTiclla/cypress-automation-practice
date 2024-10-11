@@ -4,4 +4,9 @@ Feature: Search functionality
     Scenario: Searching for cats
     Given The user is on the search page
     When The user search for cats
-    Then The user see the results page
+    Then The user see the results page for cats
+
+    Scenario: Searching for dogs with keyword
+    Given The user is on the search page
+    When The user search for "dogs"
+    Then The user see the results page for dogs
