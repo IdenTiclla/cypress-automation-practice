@@ -10,3 +10,9 @@ Feature: Search functionality
     Given The user is on the search page
     When The user search for "dogs"
     Then The user see the results page for dogs
+
+    Scenario: Multiple searchs
+    Given The user is on the search page
+    When I perform search with the keywords
+    | pinguino | salmon | oso | tigre |
+    Then The search page is displayed
