@@ -1545,7 +1545,7 @@ describe('Test suite edited with vim', () => {
       homepage.getTopCollectionContent().eq(2).should('be.visible')
     })
 
-    it("Test for registering a new user on iphone.", () => {
+    it.only("Test for registering a new user on iphone.", () => {
       cy.generateRandomFirstname().then(firstname => {
         cy.generateRandomLastname().then(lastname => {
           cy.getRandomEmail().then(email => {
@@ -1555,6 +1555,7 @@ describe('Test suite edited with vim', () => {
                 homepage.quickLinksComponent.clickOnSpecificQuickLink('My account')
                 loginPage.rightNavigationComponent.clickOnRightNavigationOption('Register')
                 registerPage.registerNewUser(firstname, lastname, email, phoneNumber, password, password, true, true)
+                cy.contains("Your Account Has Been Created!")
               })
             })
           })
