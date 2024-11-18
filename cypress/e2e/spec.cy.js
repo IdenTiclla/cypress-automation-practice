@@ -1555,7 +1555,7 @@ describe('Test suite edited with vim', () => {
                 homepage.quickLinksComponent.clickOnSpecificQuickLink('My account')
                 loginPage.rightNavigationComponent.clickOnRightNavigationOption('Register')
                 registerPage.registerNewUser(firstname, lastname, email, phoneNumber, password, password, true, true)
-                cy.contains("Your Account Has Been Created!")
+                successPage.contentComponent.getTitle().should('include.text', 'Your Account Has Been Created!')
               })
             })
           })
