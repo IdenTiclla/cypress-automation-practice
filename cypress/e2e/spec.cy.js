@@ -4,6 +4,7 @@ import RegisterPage from "./pages/RegisterPage"
 import SuccessPage from "./pages/SuccessPage"
 import AddressBookPage from "./pages/AddressBookPage"
 import AddAddressPage from "./pages/AddAddressPage"
+import GiftCertificatePage from "./pages/GiftCertificatePage"
 
 import ShoppingCartPage from "./pages/ShoppingCartPage"
 import CheckoutPage from "./pages/CheckoutPage"
@@ -34,6 +35,7 @@ const successPage = new SuccessPage()
 const addressBookPage = new AddressBookPage()
 const addAddressPage = new AddAddressPage()
 const shoppingCartPage = new ShoppingCartPage()
+const giftCertificatePage = new GiftCertificatePage()
 const checkoutPage = new CheckoutPage()
 const confirmOrderPage = new ConfirmOrderPage()
 const orderHistoryPage = new OrderHistoryPage()
@@ -313,6 +315,17 @@ describe('Test suite edited with vim', () => {
         expect(actual).to.deep.eq(['\n  Dashboard\n \n', '\n  My order\n \n', '\n  Return\n \n', '\n  Tracking\n \n', '\n  My voucher\n \n', '\n  Logout\n \n'])
         expect(actual).to.have.length(6)
       })
+    })
+    it.only("Test for testing the purchase a gift certificate functionality - Validations.", () => {
+      homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
+      loginPage.login(Cypress.env('email'), Cypress.env('password'))
+      myAccountPage.mainNavigationComponent.clickonMyAccountDropdownOptions('My voucher')
+      giftCertificatePage.clickOnContinueButton()
+      giftCertificatePage.alertComponent.getAlert().should('include.text', 'Warning: You must agree that the gift certificates are non-refundable!')
+
+      giftCertificatePage.getRecipientsNameLabelError().should('have.text', "Recipient's Name must be between 1 and 64 characters!")
+      giftCertificatePage.getRecipientsEmailLabelError().should('have.text', "E-Mail Address does not appear to be valid!")
+      giftCertificatePage.getGiftCertificateThemeOptionsLabelError().should('have.text', "You must select a theme!")
     })
     
     it('Test for navigating through the design, modules and widgets pages', () => {
@@ -1545,7 +1558,7 @@ describe('Test suite edited with vim', () => {
       homepage.getTopCollectionContent().eq(2).should('be.visible')
     })
 
-    it.only("Test for registering a new user on iphone.", () => {
+    it("Test for registering a new user on iphone.", () => {
       cy.generateRandomFirstname().then(firstname => {
         cy.generateRandomLastname().then(lastname => {
           cy.getRandomEmail().then(email => {
