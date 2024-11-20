@@ -326,6 +326,11 @@ describe('Test suite edited with vim', () => {
       giftCertificatePage.getRecipientsNameLabelError().should('have.text', "Recipient's Name must be between 1 and 64 characters!")
       giftCertificatePage.getRecipientsEmailLabelError().should('have.text', "E-Mail Address does not appear to be valid!")
       giftCertificatePage.getGiftCertificateThemeOptionsLabelError().should('have.text', "You must select a theme!")
+      giftCertificatePage.alertComponent.getAlert().should('have.css', 'color', 'rgb(114, 28, 36)')
+      giftCertificatePage.getRecipientsNameLabelError().should('have.css', 'color', 'rgb(220, 53, 69)')
+      giftCertificatePage.getRecipientsEmailLabelError().should('have.css', 'color', 'rgb(220, 53, 69)')
+      giftCertificatePage.getGiftCertificateThemeOptionsLabelError().should('have.css', 'color', 'rgb(220, 53, 69)')
+
     })
     
     it('Test for navigating through the design, modules and widgets pages', () => {
