@@ -316,7 +316,8 @@ describe('Test suite edited with vim', () => {
         expect(actual).to.have.length(6)
       })
     })
-    it.only("Test for testing the purchase a gift certificate functionality - Validations.", () => {
+
+    it("Test for testing the purchase a gift certificate functionality - Validations.", () => {
       homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
       loginPage.login(Cypress.env('email'), Cypress.env('password'))
       myAccountPage.mainNavigationComponent.clickonMyAccountDropdownOptions('My voucher')
@@ -331,6 +332,21 @@ describe('Test suite edited with vim', () => {
       giftCertificatePage.getRecipientsEmailLabelError().should('have.css', 'color', 'rgb(220, 53, 69)')
       giftCertificatePage.getGiftCertificateThemeOptionsLabelError().should('have.css', 'color', 'rgb(220, 53, 69)')
 
+    })
+
+    it.only("Test for testing the purchase a gift certificate functionality - Negative amount", () => {
+      homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
+      loginPage.login(Cypress.env("email"), Cypress.env("password"))
+      myAccountPage.mainNavigationComponent.clickonMyAccountDropdownOptions('My voucher')
+      giftCertificatePage.getRecipientsNameInput().type('my name')
+      giftCertificatePage.getRecipientsEmailInput().type('randomemail@gmail.com')
+      giftCertificatePage.getGiftCertificateThemeOptions().eq(0).click()
+      giftCertificatePage.getAmountInput().clear()
+      giftCertificatePage.getAmountInput().type('-1')
+      giftCertificatePage.getAgreeCheckbox().click()
+      giftCertificatePage.getContinueButton().click()
+      giftCertificatePage.getAmountInputLabelError().should('include.text', 'Amount must be between $1.00 and $1,000.00!')
+      giftCertificatePage.getAmountInputLabelError().should('have.css', 'color', 'rgb(220, 53, 69)')
     })
     
     it('Test for navigating through the design, modules and widgets pages', () => {

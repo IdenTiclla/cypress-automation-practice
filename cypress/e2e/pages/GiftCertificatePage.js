@@ -14,6 +14,7 @@ class GiftCertificatePage {
     getGiftCertificateThemeOptionsLabelError = () => cy.get("div.form-check+ div.text-danger")
     getMessageInput = () => cy.get("textarea[name='message']")
     getAmountInput = () => cy.get("input[name='amount']")
+    getAmountInputLabelError = () => cy.get("input[name='amount'] + div.text-danger")
     getAgreeCheckbox = () => cy.get("input[name='agree']")
     getContinueButton = () => cy.get("input[value='Continue']")
 
