@@ -334,7 +334,20 @@ describe('Test suite edited with vim', () => {
 
     })
 
-    it.only("Test for testing the purchase a gift certificate functionality - Negative amount", () => {
+    it.only("Test for testing the purchase a gift certificate functionality - Email validation", () => {
+      homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
+      loginPage.login(Cypress.env("email"), Cypress.env("password"))
+      myAccountPage.mainNavigationComponent.clickonMyAccountDropdownOptions("My voucher")
+      giftCertificatePage.getRecipientsNameInput().type("Your name")
+      giftCertificatePage.getRecipientsEmailInput().type("invalidemail.com")
+      giftCertificatePage.getGiftCertificateThemeOptions().eq(0).click()
+      giftCertificatePage.getAgreeCheckbox().click()
+      giftCertificatePage.getContinueButton().click()
+      giftCertificatePage.getRecipientsEmailLabelError().should('include.text', 'E-Mail Address does not appear to be valid!')
+      giftCertificatePage.getRecipientsEmailLabelError().should('have.css', 'color', 'rgb(220, 53, 69)')
+    })
+
+    it("Test for testing the purchase a gift certificate functionality - Negative amount", () => {
       homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
       myAccountPage.mainNavigationComponent.clickonMyAccountDropdownOptions('My voucher')
