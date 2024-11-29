@@ -334,7 +334,7 @@ describe('Test suite edited with vim', () => {
 
     })
 
-    it.only("Test for testing the purchase a gift certificate functionality - Email validation", () => {
+    it("Test for testing the purchase a gift certificate functionality - Email validation", () => {
       homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
       myAccountPage.mainNavigationComponent.clickonMyAccountDropdownOptions("My voucher")
@@ -360,6 +360,24 @@ describe('Test suite edited with vim', () => {
       giftCertificatePage.getContinueButton().click()
       giftCertificatePage.getAmountInputLabelError().should('include.text', 'Amount must be between $1.00 and $1,000.00!')
       giftCertificatePage.getAmountInputLabelError().should('have.css', 'color', 'rgb(220, 53, 69)')
+    })
+
+    it.only("Test for testing the purchase a gift certificate functionnality - Checking automatic data in form" , () => {
+      cy.generateRandomFirstname().then (randomFirstname=> {
+        cy.generateRandomLastname().then(randomLastname => {
+          cy.generateRandomPhoneNumber().then(randomPhoneNumber => {
+            cy.generateRandomPassword().then(randomPassword => {
+              cy.getRandomEmail().then(randomEmail => {
+                homepage.mainNavigationComponent.clickonMyAccountDropdownOptions("Register")
+                registerPage.registerNewUser(randomFirstname, randomLastname, randomEmail, randomPhoneNumber, randomPassword, randomPassword, true, true)
+                successPage.mainNavigationComponent.clickonMyAccountDropdownOptions("My voucher")
+                giftCertificatePage.getYourNameInput().should('have.value', `${randomFirstname} ${randomLastname}`)
+                giftCertificatePage.getYourEmailInput().should('have.value', randomEmail)
+              })
+            })
+          })
+        })
+      })
     })
     
     it('Test for navigating through the design, modules and widgets pages', () => {
