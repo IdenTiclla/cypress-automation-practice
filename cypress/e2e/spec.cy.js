@@ -362,7 +362,7 @@ describe('Test suite edited with vim', () => {
       giftCertificatePage.getAmountInputLabelError().should('have.css', 'color', 'rgb(220, 53, 69)')
     })
 
-    it.only("Test for testing the purchase a gift certificate functionnality - Checking automatic data in form" , () => {
+    it("Test for testing the purchase a gift certificate functionnality - Checking automatic data in form" , () => {
       cy.generateRandomFirstname().then (randomFirstname=> {
         cy.generateRandomLastname().then(randomLastname => {
           cy.generateRandomPhoneNumber().then(randomPhoneNumber => {
@@ -373,6 +373,34 @@ describe('Test suite edited with vim', () => {
                 successPage.mainNavigationComponent.clickonMyAccountDropdownOptions("My voucher")
                 giftCertificatePage.getYourNameInput().should('have.value', `${randomFirstname} ${randomLastname}`)
                 giftCertificatePage.getYourEmailInput().should('have.value', randomEmail)
+              })
+            })
+          })
+        })
+      })
+    })
+
+    it.only("Test for testing the purchase a gift certificate functionality - Checking behavior when input correct data.", () => {
+      cy.generateRandomFirstname().then(randomFirstname => {
+        cy.generateRandomFirstname().then(recipientsName => {
+          cy.generateRandomLastname().then(randomLastname => {
+            cy.generateRandomPhoneNumber().then(randomPhoneNumber => {
+              cy.generateRandomPassword().then(randomPassword => {
+                cy.getRandomEmail().then(randomEmail => {
+                  cy.getRandomEmail().then(recipientsEmail => {
+                    homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
+                    registerPage.registerNewUser(randomFirstname, randomLastname, randomEmail, randomPhoneNumber, randomPassword, randomPassword, true, true)
+                    successPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 0)
+                    successPage.mainNavigationComponent.clickonMyAccountDropdownOptions('My voucher')
+                    giftCertificatePage.getRecipientsNameInput().type(recipientsName)
+                    giftCertificatePage.getRecipientsEmailInput().type(recipientsEmail)
+                    giftCertificatePage.getGiftCertificateThemeOptions().eq(0).click()
+                    giftCertificatePage.getMessageInput().type('hello world')
+                    giftCertificatePage.getAgreeCheckbox().click()
+                    giftCertificatePage.getContinueButton().click()
+                    successPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 1)
+                  })
+                })
               })
             })
           })
