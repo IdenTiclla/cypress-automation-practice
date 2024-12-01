@@ -801,30 +801,28 @@ describe('Test suite edited with vim', () => {
       shoppingCartPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('be.gt', 0)
     })
 
-    it("Test for registering an then loging a new user", () => {
+    it.only("Test for registering an then loging a new user", () => {
       cy.getRandomEmail().then((randomEmail) => {
         cy.generateRandomPhoneNumber().then((randomPhoneNumber) => {
-          const firstname = 'randomfirstname'
-          const lastname= 'randomlastname'
-          const email = randomEmail
-          const telephone = randomPhoneNumber
-          const password = 'P@ssw0rd'
-          const password_confirm = 'P@ssw0rd'
-          const newsletter_subscribe = false
-          const privacy_policy = true
-          homepage.mainNavigationComponent.getMyAccountOption().click()
-          loginPage.rightNavigationComponent.clickOnRightNavigationOption('Register')
-          cy.url().should('contain', 'account/register')
-          registerPage.registerNewUser(firstname, lastname, email, telephone, password, password_confirm, newsletter_subscribe, privacy_policy)
-          cy.contains("Your Account Has Been Created!")
-          homepage.rightNavigationComponent.clickOnRightNavigationOption('Logout')
-          cy.contains("Account Logout")
-          cy.url().should('contain', 'account/logout')
-          homepage.rightNavigationComponent.clickOnRightNavigationOption('Login')
-          cy.url().should('contain', 'account/login')
-          loginPage.login(email, password)
-          cy.url().should('contain', 'account/account')
-          myAccountPage.rightNavigationComponent.getOptions().eq(0).should('have.class', 'active')
+          cy.generateRandomFirstname().then(randomFirstname => {
+            cy.generateRandomLastname().then(randomLastname => {
+              cy.generateRandomPassword().then(randomPassword => {
+                homepage.mainNavigationComponent.getMyAccountOption().click()
+                loginPage.rightNavigationComponent.clickOnRightNavigationOption('Register')
+                cy.url().should('contain', 'account/register')
+                registerPage.registerNewUser(randomFirstname, randomLastname, randomEmail, randomPhoneNumber, randomPassword, randomPassword, true, true)
+                cy.contains("Your Account Has Been Created!")
+                homepage.rightNavigationComponent.clickOnRightNavigationOption('Logout')
+                cy.contains("Account Logout")
+                cy.url().should('contain', 'account/logout')
+                homepage.rightNavigationComponent.clickOnRightNavigationOption('Login')
+                cy.url().should('contain', 'account/login')
+                loginPage.login(randomEmail, randomPassword)
+                cy.url().should('contain', 'account/account')
+                myAccountPage.rightNavigationComponent.getOptions().eq(0).should('have.class', 'active')
+              })
+            })
+          })
         })
       })
     })
@@ -1169,7 +1167,7 @@ describe('Test suite edited with vim', () => {
       
     })
 
-    it.only("Test for opening an account and performing an order.", () => {
+    it("Test for opening an account and performing an order.", () => {
       cy.getRandomEmail().then((randomEmail) => {
         cy.generateRandomPhoneNumber().then((randomPhoneNumber) => {
           cy.generateRandomFirstname().then(randomFirstname => {
