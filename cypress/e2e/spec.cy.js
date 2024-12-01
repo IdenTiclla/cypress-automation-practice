@@ -380,7 +380,7 @@ describe('Test suite edited with vim', () => {
       })
     })
 
-    it.only("Test for testing the purchase a gift certificate functionality - Checking behavior when input correct data.", () => {
+    it("Test for testing the purchase a gift certificate functionality - Checking behavior when input correct data.", () => {
       cy.generateRandomFirstname().then(randomFirstname => {
         cy.generateRandomFirstname().then(recipientsName => {
           cy.generateRandomLastname().then(randomLastname => {
@@ -1169,69 +1169,67 @@ describe('Test suite edited with vim', () => {
       
     })
 
-    it("Test for opening an account and performing an order.", () => {
+    it.only("Test for opening an account and performing an order.", () => {
       cy.getRandomEmail().then((randomEmail) => {
         cy.generateRandomPhoneNumber().then((randomPhoneNumber) => {
-          const firstname = 'randomfirstname'
-          const lastname= 'randomlastname'
-          const email = randomEmail
-          const telephone = randomPhoneNumber
-          const password = 'P@ssw0rd'
-          const password_confirm = 'P@ssw0rd'
-          const newsletter_subscribe = false
-          const privacy_policy = true
-          homepage.mainNavigationComponent.getMyAccountOption().click()
-          loginPage.rightNavigationComponent.clickOnRightNavigationOption('Register')
-          cy.url().should('contain', 'account/register')
-          registerPage.registerNewUser(firstname, lastname, email, telephone, password, password_confirm, newsletter_subscribe, privacy_policy)
-          cy.contains("Your Account Has Been Created!")
-          homepage.rightNavigationComponent.clickOnRightNavigationOption('Logout')
-          cy.contains("Account Logout")
-          cy.url().should('contain', 'account/logout')
-          homepage.rightNavigationComponent.clickOnRightNavigationOption('Login')
-          cy.url().should('contain', 'account/login')
-          loginPage.login(email, password)
-          cy.url().should('contain', 'account/account')
-          myAccountPage.rightNavigationComponent.getOptions().eq(0).should('have.class', 'active')
+          cy.generateRandomFirstname().then(randomFirstname => {
+            cy.generateRandomLastname().then(randomLastname => {
+              cy.generateRandomPassword().then(randomPassword => {
+                homepage.mainNavigationComponent.getMyAccountOption().click()
+                loginPage.rightNavigationComponent.clickOnRightNavigationOption('Register')
+                cy.url().should('contain', 'account/register')
+                registerPage.registerNewUser(randomFirstname, randomLastname, randomEmail, randomPhoneNumber, randomPassword, randomPassword, true, true)
+                cy.contains("Your Account Has Been Created!")
+                homepage.rightNavigationComponent.clickOnRightNavigationOption('Logout')
+                cy.contains("Account Logout")
+                cy.url().should('contain', 'account/logout')
+                homepage.rightNavigationComponent.clickOnRightNavigationOption('Login')
+                cy.url().should('contain', 'account/login')
+                loginPage.login(randomEmail, randomPassword)
+                cy.url().should('contain', 'account/account')
+                myAccountPage.rightNavigationComponent.getOptions().eq(0).should('have.class', 'active')
 
-          homepage.visit()
-          homepage.getTopProducts().eq(4).scrollIntoView()
-          homepage.getTopProducts().eq(4).trigger('mouseover')
-          homepage.addProductToCart(homepage.getTopProducts().eq(4))
+                homepage.visit()
+                homepage.getTopProducts().eq(4).scrollIntoView()
+                homepage.getTopProducts().eq(4).trigger('mouseover')
+                homepage.addProductToCart(homepage.getTopProducts().eq(4))
 
-          homepage.notificationComponent.getCheckoutButton().click()
-          checkoutPage.getTelephoneInputField().should('not.have.value', '')
-          checkoutPage.getTelephoneInputField().should('have.value', randomPhoneNumber)
+                homepage.notificationComponent.getCheckoutButton().click()
+                checkoutPage.getTelephoneInputField().should('not.have.value', '')
+                checkoutPage.getTelephoneInputField().should('have.value', randomPhoneNumber)
 
-          checkoutPage.fillBillingAddressSection('my firstname', 'my lastname', 'company 1', 'Av wisconsin 1', 'Av wisconsin 2', 'my city', '5775', 'Uganda', 'Moyo')
-          checkoutPage.addComments("hello world")
-          checkoutPage.checkOrUncheckTermsAndConditions()
+                checkoutPage.fillBillingAddressSection('my firstname', 'my lastname', 'company 1', 'Av wisconsin 1', 'Av wisconsin 2', 'my city', '5775', 'Uganda', 'Moyo')
+                checkoutPage.addComments("hello world")
+                checkoutPage.checkOrUncheckTermsAndConditions()
 
-          checkoutPage.getContinueButton().click()
-          cy.url().should('contain', 'checkout/confirm')
+                checkoutPage.getContinueButton().click()
+                cy.url().should('contain', 'checkout/confirm')
 
-          cy.contains('my firstname')
-          cy.contains('my lastname')
-          cy.contains('company 1')
-          cy.contains('Av wisconsin 1')
-          cy.contains('Av wisconsin 2')
-          cy.contains('my city')
-          cy.contains('5775')
-          cy.contains('Uganda')
-          cy.contains('Moyo')
+                cy.contains('my firstname')
+                cy.contains('my lastname')
+                cy.contains('company 1')
+                cy.contains('Av wisconsin 1')
+                cy.contains('Av wisconsin 2')
+                cy.contains('my city')
+                cy.contains('5775')
+                cy.contains('Uganda')
+                cy.contains('Moyo')
 
-          cy.log("Confirm order")
-          confirmOrderPage.getConfirmOrderButton().click()
-          cy.url().should('contain', 'checkout/success')
-          cy.contains(" Your order has been placed!")
+                cy.log("Confirm order")
+                confirmOrderPage.getConfirmOrderButton().click()
+                cy.url().should('contain', 'checkout/success')
+                cy.contains(" Your order has been placed!")
 
-          cy.log('Verifying the order history')
-          homepage.visit()
-          homepage.mainNavigationComponent.getMyAccountOption().click()
-          homepage.rightNavigationComponent.clickOnRightNavigationOption('Order History')
+                cy.log('Verifying the order history')
+                homepage.visit()
+                homepage.mainNavigationComponent.getMyAccountOption().click()
+                homepage.rightNavigationComponent.clickOnRightNavigationOption('Order History')
 
-          cy.url().should('contain', 'account/order')
-          orderHistoryPage.getOrdersElements().should('have.length', 1)
+                cy.url().should('contain', 'account/order')
+                orderHistoryPage.getOrdersElements().should('have.length', 1)
+              })
+            })
+          })
         })
       })
     })
