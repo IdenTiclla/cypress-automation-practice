@@ -362,12 +362,12 @@ describe('Test suite edited with vim', () => {
       giftCertificatePage.getAmountInputLabelError().should('have.css', 'color', 'rgb(220, 53, 69)')
     })
 
-    it("Test for testing the purchase a gift certificate functionnality - Checking automatic data in form" , () => {
+    it.only("Test for testing the purchase a gift certificate functionnality - Checking automatic data in form" , () => {
       cy.generateRandomFirstname().then (randomFirstname=> {
         cy.generateRandomLastname().then(randomLastname => {
           cy.generateRandomPhoneNumber().then(randomPhoneNumber => {
             cy.generateRandomPassword().then(randomPassword => {
-              cy.getRandomEmail().then(randomEmail => {
+              cy.generateRandomEmail().then(randomEmail => {
                 homepage.mainNavigationComponent.clickonMyAccountDropdownOptions("Register")
                 registerPage.registerNewUser(randomFirstname, randomLastname, randomEmail, randomPhoneNumber, randomPassword, randomPassword, true, true)
                 successPage.mainNavigationComponent.clickonMyAccountDropdownOptions("My voucher")
@@ -380,14 +380,14 @@ describe('Test suite edited with vim', () => {
       })
     })
 
-    it("Test for testing the purchase a gift certificate functionality - Checking behavior when input correct data.", () => {
+    it.only("Test for testing the purchase a gift certificate functionality - Checking behavior when input correct data.", () => {
       cy.generateRandomFirstname().then(randomFirstname => {
         cy.generateRandomFirstname().then(recipientsName => {
           cy.generateRandomLastname().then(randomLastname => {
             cy.generateRandomPhoneNumber().then(randomPhoneNumber => {
               cy.generateRandomPassword().then(randomPassword => {
-                cy.getRandomEmail().then(randomEmail => {
-                  cy.getRandomEmail().then(recipientsEmail => {
+                cy.generateRandomEmail().then(randomEmail => {
+                  cy.generateRandomEmail().then(recipientsEmail => {
                     homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
                     registerPage.registerNewUser(randomFirstname, randomLastname, randomEmail, randomPhoneNumber, randomPassword, randomPassword, true, true)
                     successPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 0)
@@ -634,8 +634,8 @@ describe('Test suite edited with vim', () => {
       cy.contains("Password confirmation does not match password!")
     })
 
-    it("Test for testing change password success", () => {
-      cy.getRandomEmail().then(email => {
+    it.only("Test for testing change password success", () => {
+      cy.generateRandomEmail().then(email => {
         cy.generateRandomFirstname().then(firstname => {
           cy.generateRandomLastname().then(lastname => {
             cy.generateRandomPassword().then(password1 => {
@@ -802,7 +802,7 @@ describe('Test suite edited with vim', () => {
     })
 
     it.only("Test for registering an then loging a new user", () => {
-      cy.getRandomEmail().then((randomEmail) => {
+      cy.generateRandomEmail().then((randomEmail) => {
         cy.generateRandomPhoneNumber().then((randomPhoneNumber) => {
           cy.generateRandomFirstname().then(randomFirstname => {
             cy.generateRandomLastname().then(randomLastname => {
@@ -1167,8 +1167,8 @@ describe('Test suite edited with vim', () => {
       
     })
 
-    it("Test for opening an account and performing an order.", () => {
-      cy.getRandomEmail().then((randomEmail) => {
+    it.only("Test for opening an account and performing an order.", () => {
+      cy.generateRandomEmail().then((randomEmail) => {
         cy.generateRandomPhoneNumber().then((randomPhoneNumber) => {
           cy.generateRandomFirstname().then(randomFirstname => {
             cy.generateRandomLastname().then(randomLastname => {
@@ -1287,9 +1287,9 @@ describe('Test suite edited with vim', () => {
       checkoutPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 1)
     })
 
-    it("Test buy now functionality from quick view with a logged user.", () => {
+    it.only("Test buy now functionality from quick view with a logged user.", () => {
       cy.generateRandomPhoneNumber().then(telephone => {
-        cy.getRandomEmail().then(email => {
+        cy.generateRandomEmail().then(email => {
           homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
           registerPage.registerNewUser('firstname','lastname', email,telephone, 'P@ssw0rd','P@ssw0rd', true, true)
           homepage.visit()
@@ -1310,8 +1310,8 @@ describe('Test suite edited with vim', () => {
       })
     })
 
-    it("Test for testing the buy now functionality from quick view with logged user and with address.", () => {
-      cy.getRandomEmail().then(email => {
+    it.only("Test for testing the buy now functionality from quick view with logged user and with address.", () => {
+      cy.generateRandomEmail().then(email => {
         cy.generateRandomPhoneNumber().then(phoneNumber => {
           cy.log('Registering a new user account')
           homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
@@ -1355,10 +1355,10 @@ describe('Test suite edited with vim', () => {
     })
 
 
-    it("Test for testing the buy now functionality from quick view with new user, add address, new address", () => {
+    it.only("Test for testing the buy now functionality from quick view with new user, add address, new address", () => {
       cy.generateRandomFirstname().then(randomFirstname => {
         cy.generateRandomLastname().then(randomLastname => {
-          cy.getRandomEmail().then(randomEmail => {
+          cy.generateRandomEmail().then(randomEmail => {
             cy.generateRandomPhoneNumber().then(randomPhoneNumber => {
               cy.generateRandomPassword().then(randomPassword => {
                 homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
@@ -1402,8 +1402,8 @@ describe('Test suite edited with vim', () => {
       })
     })
 
-    it("Test for testing the buy now functionality from quick view with logged user and multiple addresses", () => {
-      cy.getRandomEmail().then(email => {
+    it.only("Test for testing the buy now functionality from quick view with logged user and multiple addresses", () => {
+      cy.generateRandomEmail().then(email => {
         cy.generateRandomPhoneNumber().then(phoneNumber => {
           cy.log('Registering a new user account')
           homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
@@ -1634,10 +1634,10 @@ describe('Test suite edited with vim', () => {
       homepage.getTopCollectionContent().eq(2).should('be.visible')
     })
 
-    it("Test for registering a new user on iphone.", () => {
+    it.only("Test for registering a new user on iphone.", () => {
       cy.generateRandomFirstname().then(firstname => {
         cy.generateRandomLastname().then(lastname => {
-          cy.getRandomEmail().then(email => {
+          cy.generateRandomEmail().then(email => {
             cy.generateRandomPhoneNumber().then(phoneNumber => {
               cy.generateRandomPassword().then(password => {
                 homepage.mainHeaderComponent.getMobilePersonIconButton().click()

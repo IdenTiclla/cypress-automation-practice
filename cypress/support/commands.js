@@ -27,7 +27,7 @@
 import "cypress-real-events";
 import "@4tw/cypress-drag-drop";
 
-Cypress.Commands.add("getRandomEmail", () => {
+Cypress.Commands.add("generateRandomEmail", () => {
   const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
   const emailLength = 10;
   let email = "";
