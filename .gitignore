@@ -10,6 +10,9 @@ cypress/videos/
 # Cypress Reports
 cypress/reports/
 
+# Cypress downloads folder
+/cypress/downloads/
+
 # Environment variables file
 .env
 
