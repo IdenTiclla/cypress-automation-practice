@@ -85,7 +85,7 @@ describe('Test suite edited with vim', () => {
   
     })
   
-    it("Test for testing login functionality", () => {
+    it.only("Test for testing login functionality", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       loginPage.rightNavigationComponent.getOptions().should('have.length', 13)
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
@@ -362,7 +362,7 @@ describe('Test suite edited with vim', () => {
       giftCertificatePage.getAmountInputLabelError().should('have.css', 'color', 'rgb(220, 53, 69)')
     })
 
-    it.only("Test for testing the purchase a gift certificate functionnality - Checking automatic data in form" , () => {
+    it("Test for testing the purchase a gift certificate functionnality - Checking automatic data in form" , () => {
       cy.generateRandomFirstname().then (randomFirstname=> {
         cy.generateRandomLastname().then(randomLastname => {
           cy.generateRandomPhoneNumber().then(randomPhoneNumber => {
@@ -380,7 +380,7 @@ describe('Test suite edited with vim', () => {
       })
     })
 
-    it.only("Test for testing the purchase a gift certificate functionality - Checking behavior when input correct data.", () => {
+    it("Test for testing the purchase a gift certificate functionality - Checking behavior when input correct data.", () => {
       cy.generateRandomFirstname().then(randomFirstname => {
         cy.generateRandomFirstname().then(recipientsName => {
           cy.generateRandomLastname().then(randomLastname => {
@@ -634,7 +634,7 @@ describe('Test suite edited with vim', () => {
       cy.contains("Password confirmation does not match password!")
     })
 
-    it.only("Test for testing change password success", () => {
+    it("Test for testing change password success", () => {
       cy.generateRandomEmail().then(email => {
         cy.generateRandomFirstname().then(firstname => {
           cy.generateRandomLastname().then(lastname => {
@@ -801,7 +801,7 @@ describe('Test suite edited with vim', () => {
       shoppingCartPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('be.gt', 0)
     })
 
-    it.only("Test for registering an then loging a new user", () => {
+    it("Test for registering an then loging a new user", () => {
       cy.generateRandomEmail().then((randomEmail) => {
         cy.generateRandomPhoneNumber().then((randomPhoneNumber) => {
           cy.generateRandomFirstname().then(randomFirstname => {
@@ -1167,7 +1167,7 @@ describe('Test suite edited with vim', () => {
       
     })
 
-    it.only("Test for opening an account and performing an order.", () => {
+    it("Test for opening an account and performing an order.", () => {
       cy.generateRandomEmail().then((randomEmail) => {
         cy.generateRandomPhoneNumber().then((randomPhoneNumber) => {
           cy.generateRandomFirstname().then(randomFirstname => {
@@ -1287,7 +1287,7 @@ describe('Test suite edited with vim', () => {
       checkoutPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 1)
     })
 
-    it.only("Test buy now functionality from quick view with a logged user.", () => {
+    it("Test buy now functionality from quick view with a logged user.", () => {
       cy.generateRandomPhoneNumber().then(telephone => {
         cy.generateRandomEmail().then(email => {
           homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
@@ -1310,7 +1310,7 @@ describe('Test suite edited with vim', () => {
       })
     })
 
-    it.only("Test for testing the buy now functionality from quick view with logged user and with address.", () => {
+    it("Test for testing the buy now functionality from quick view with logged user and with address.", () => {
       cy.generateRandomEmail().then(email => {
         cy.generateRandomPhoneNumber().then(phoneNumber => {
           cy.log('Registering a new user account')
@@ -1355,7 +1355,7 @@ describe('Test suite edited with vim', () => {
     })
 
 
-    it.only("Test for testing the buy now functionality from quick view with new user, add address, new address", () => {
+    it("Test for testing the buy now functionality from quick view with new user, add address, new address", () => {
       cy.generateRandomFirstname().then(randomFirstname => {
         cy.generateRandomLastname().then(randomLastname => {
           cy.generateRandomEmail().then(randomEmail => {
@@ -1402,7 +1402,7 @@ describe('Test suite edited with vim', () => {
       })
     })
 
-    it.only("Test for testing the buy now functionality from quick view with logged user and multiple addresses", () => {
+    it("Test for testing the buy now functionality from quick view with logged user and multiple addresses", () => {
       cy.generateRandomEmail().then(email => {
         cy.generateRandomPhoneNumber().then(phoneNumber => {
           cy.log('Registering a new user account')
@@ -1634,7 +1634,7 @@ describe('Test suite edited with vim', () => {
       homepage.getTopCollectionContent().eq(2).should('be.visible')
     })
 
-    it.only("Test for registering a new user on iphone.", () => {
+    it("Test for registering a new user on iphone.", () => {
       cy.generateRandomFirstname().then(firstname => {
         cy.generateRandomLastname().then(lastname => {
           cy.generateRandomEmail().then(email => {
