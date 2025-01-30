@@ -113,7 +113,7 @@ describe('Test suite edited with vim', () => {
       homepage.mainNavigationComponent.getMyAccountDropdownOptions().should('have.length', 2)
     })
   
-    it.only('Testing the corousel component', () => {
+    it('Testing the corousel component', () => {
       cy.log('Checking first image is visisble')
       homepage.mainCarouselComponent.getImages().eq(0).should('be.visible')
       homepage.mainCarouselComponent.getImages().eq(0).should('have.class', 'active')
@@ -1594,24 +1594,28 @@ describe('Test suite edited with vim', () => {
 
     })
 
-    it("Test for testing the main carousel component in homepage on mobile version.", () => {
-      homepage.getMainCarouselImages().eq(0).should('have.class', 'active')
+    it.only("Test for testing the main carousel component in homepage on mobile version.", () => {
+      homepage.getCarouselPaginationItems().should('have.length', 3)
+      // homepage.getMainCarouselImages().eq(0).should('have.class', 'active')
+      homepage.mainCarouselComponent.getImages().eq(0).should('have.class', 'active')
       homepage.getCarouselPaginationItems().eq(0).should('have.class', 'active')
-
-      homepage.clickOnNextButtonOnMainCarousel()
-      homepage.getMainCarouselImages().eq(1).should('have.class', 'active')
+      
+      homepage.mainCarouselComponent.clickOnNextButton()
+      // homepage.getMainCarouselImages().eq(1).should('have.class', 'active')
+      homepage.mainCarouselComponent.getImages().eq(1).should('have.class', 'active')
       homepage.getCarouselPaginationItems().eq(1).should('have.class', 'active')
 
-      homepage.clickOnNextButtonOnMainCarousel()
-      homepage.getMainCarouselImages().eq(2).should('have.class', 'active')
+      
+      homepage.mainCarouselComponent.clickOnNextButton()
+      homepage.mainCarouselComponent.getImages().eq(2).should('have.class', 'active')
       homepage.getCarouselPaginationItems().eq(2).should('have.class', 'active')
 
-      homepage.clickOnPrevButtonOnMainCarousel()
-      homepage.getMainCarouselImages().eq(1).should('have.class', 'active')
+      homepage.mainCarouselComponent.clickOnPrevButton()
+      homepage.mainCarouselComponent.getImages().eq(1).should('have.class', 'active')
       homepage.getCarouselPaginationItems().eq(1).should('have.class', 'active')
 
-      homepage.clickOnPrevButtonOnMainCarousel()
-      homepage.getMainCarouselImages().eq(0).should('have.class', 'active')
+      homepage.mainCarouselComponent.clickOnPrevButton()
+      homepage.mainCarouselComponent.getImages().eq(0).should('have.class', 'active')
       homepage.getCarouselPaginationItems().eq(0).should('have.class', 'active')
     })
 
