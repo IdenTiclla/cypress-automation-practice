@@ -1595,28 +1595,38 @@ describe('Test suite edited with vim', () => {
     })
 
     it.only("Test for testing the main carousel component in homepage on mobile version.", () => {
-      homepage.getCarouselPaginationItems().should('have.length', 3)
+      homepage.mainCarouselComponent.getPaginationItems().should('have.length', 3)
       // homepage.getMainCarouselImages().eq(0).should('have.class', 'active')
       homepage.mainCarouselComponent.getImages().eq(0).should('have.class', 'active')
-      homepage.getCarouselPaginationItems().eq(0).should('have.class', 'active')
+      homepage.mainCarouselComponent.getPaginationItems().eq(0).should('have.class', 'active')
+      homepage.mainCarouselComponent.getPaginationItems().eq(1).should('not.have.class', 'active')
+      homepage.mainCarouselComponent.getPaginationItems().eq(2).should('not.have.class', 'active')
       
       homepage.mainCarouselComponent.clickOnNextButton()
       // homepage.getMainCarouselImages().eq(1).should('have.class', 'active')
       homepage.mainCarouselComponent.getImages().eq(1).should('have.class', 'active')
-      homepage.getCarouselPaginationItems().eq(1).should('have.class', 'active')
+      homepage.mainCarouselComponent.getPaginationItems().eq(0).should('not.have.class', 'active')
+      homepage.mainCarouselComponent.getPaginationItems().eq(1).should('have.class', 'active')
+      homepage.mainCarouselComponent.getPaginationItems().eq(2).should('not.have.class', 'active')
 
       
       homepage.mainCarouselComponent.clickOnNextButton()
       homepage.mainCarouselComponent.getImages().eq(2).should('have.class', 'active')
-      homepage.getCarouselPaginationItems().eq(2).should('have.class', 'active')
+      homepage.mainCarouselComponent.getPaginationItems().eq(0).should('not.have.class', 'active')
+      homepage.mainCarouselComponent.getPaginationItems().eq(1).should('not.have.class', 'active')
+      homepage.mainCarouselComponent.getPaginationItems().eq(2).should('have.class', 'active')
 
       homepage.mainCarouselComponent.clickOnPrevButton()
       homepage.mainCarouselComponent.getImages().eq(1).should('have.class', 'active')
-      homepage.getCarouselPaginationItems().eq(1).should('have.class', 'active')
+      homepage.mainCarouselComponent.getPaginationItems().eq(0).should('not.have.class', 'active')
+      homepage.mainCarouselComponent.getPaginationItems().eq(1).should('have.class', 'active')
+      homepage.mainCarouselComponent.getPaginationItems().eq(2).should('not.have.class', 'active')
 
       homepage.mainCarouselComponent.clickOnPrevButton()
       homepage.mainCarouselComponent.getImages().eq(0).should('have.class', 'active')
-      homepage.getCarouselPaginationItems().eq(0).should('have.class', 'active')
+      homepage.mainCarouselComponent.getPaginationItems().eq(0).should('have.class', 'active')
+      homepage.mainCarouselComponent.getPaginationItems().eq(1).should('not.have.class', 'active')
+      homepage.mainCarouselComponent.getPaginationItems().eq(2).should('not.have.class', 'active')
     })
 
     it("adding product to the wishlist without a logged user", () => {

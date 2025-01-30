@@ -27,8 +27,6 @@ class Home {
     getTopProductsNextButton = () => cy.get("div#mz-product-tab-37213259-0  div.swiper-pager a[class*='next']")
     getProductActions = () => cy.get("div#common-home > div:nth-of-type(5) div.product-action")
 
-    getCarouselPaginationItems = () => cy.get("div[data-ride='carousel'] ul > li")
-
     getTopCollectionOptions = () => cy.get("div#mz-product-listing-39213264 ul li a")
     getTopCollectionContent = () => cy.get("div#mz-product-listing-39213264 div.tab-content > div")
 

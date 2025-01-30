@@ -3,6 +3,7 @@ class MainCarouselComponent {
     getNextButton = () => cy.get("div[data-ride='carousel'] a.carousel-control-next")
 
     getImages = () => cy.get("div[data-ride='carousel'] div.carousel-item")
+    getPaginationItems = () => cy.get("div[data-ride='carousel'] ul > li")
 
 
     clickOnNextButton = () => {
