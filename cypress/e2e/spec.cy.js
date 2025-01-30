@@ -85,7 +85,7 @@ describe('Test suite edited with vim', () => {
   
     })
   
-    it.only("Test for testing login functionality", () => {
+    it("Test for testing login functionality", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       loginPage.rightNavigationComponent.getOptions().should('have.length', 13)
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
@@ -113,35 +113,41 @@ describe('Test suite edited with vim', () => {
       homepage.mainNavigationComponent.getMyAccountDropdownOptions().should('have.length', 2)
     })
   
-    it('Testing the corousel component', () => {
+    it.only('Testing the corousel component', () => {
       cy.log('Checking first image is visisble')
-      homepage.getMainCarouselImages().eq(0).should('be.visible')
-      homepage.getMainCarouselImages().eq(0).should('have.class', 'active')
-      homepage.getMainCarouselImages().eq(1).should('not.be.visible')
-      homepage.getMainCarouselImages().eq(1).should('not.have.class', 'active')
-      homepage.getMainCarouselImages().eq(2).should('not.have.class', 'active')
-      homepage.getMainCarouselImages().eq(2).should('not.be.visible')
-      
+      homepage.mainCarouselComponent.getImages().eq(0).should('be.visible')
+      homepage.mainCarouselComponent.getImages().eq(0).should('have.class', 'active')
+      homepage.mainCarouselComponent.getImages().eq(1).should('not.be.visible')
+      homepage.mainCarouselComponent.getImages().eq(1).should('not.have.class', 'active')
+      homepage.mainCarouselComponent.getImages().eq(2).should('not.have.class', 'active')
+      homepage.mainCarouselComponent.getImages().eq(2).should('not.be.visible')
+
       // homepage.getCarouselNextButton().trigger('mouseover')
       cy.log('Checking second image is visisble')
-      homepage.getCarouselNextButton().realHover()
-      homepage.getCarouselNextButton().click()
-      homepage.getMainCarouselImages().eq(0).should('not.be.visible')
-      homepage.getMainCarouselImages().eq(0).should('not.have.class', 'active')
-      homepage.getMainCarouselImages().eq(1).should('be.visible', {timeout: 5000})
-      homepage.getMainCarouselImages().eq(1).should('have.class', 'active')
-      homepage.getMainCarouselImages().eq(2).should('not.have.class', 'active')
-      homepage.getMainCarouselImages().eq(2).should('not.be.visible')
-      homepage.getCarouselNextButton().realHover()
+
+      homepage.mainCarouselComponent.getNextButton().realHover()
+      homepage.mainCarouselComponent.getNextButton().click()
+
+
+      homepage.mainCarouselComponent.getImages().eq(0).should('not.be.visible')
+      homepage.mainCarouselComponent.getImages().eq(0).should('not.have.class', 'active')
+      homepage.mainCarouselComponent.getImages().eq(1).should('be.visible', {timeout: 5000})
+      homepage.mainCarouselComponent.getImages().eq(1).should('have.class', 'active')
+      homepage.mainCarouselComponent.getImages().eq(2).should('not.have.class', 'active')
+      homepage.mainCarouselComponent.getImages().eq(2).should('not.be.visible')
+    
       // homepage.getCarouselNextButton().trigger('mouseover')`
       cy.log('Checking third image is visisble')
-      homepage.getCarouselNextButton().click()
-      homepage.getMainCarouselImages().eq(0).should('not.be.visible')
-      homepage.getMainCarouselImages().eq(0).should('not.have.class', 'active')
-      homepage.getMainCarouselImages().eq(1).should('not.be.visible')
-      homepage.getMainCarouselImages().eq(1).should('not.have.class', 'active')
-      homepage.getMainCarouselImages().eq(2).should('have.class', 'active')
-      homepage.getMainCarouselImages().eq(2).should('be.visible', {timeout: 5000})
+      
+      homepage.mainCarouselComponent.getNextButton().realHover()
+      homepage.mainCarouselComponent.getNextButton().click()
+      
+      homepage.mainCarouselComponent.getImages().eq(0).should('not.be.visible')
+      homepage.mainCarouselComponent.getImages().eq(0).should('not.have.class', 'active')
+      homepage.mainCarouselComponent.getImages().eq(1).should('not.be.visible')
+      homepage.mainCarouselComponent.getImages().eq(1).should('not.have.class', 'active')
+      homepage.mainCarouselComponent.getImages().eq(2).should('have.class', 'active')
+      homepage.mainCarouselComponent.getImages().eq(2).should('be.visible', {timeout: 5000})
     })
 
     it('Testing Right navigation component', () => {
