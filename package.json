@@ -4,22 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "test": "cypress run",
+    "test:open": "cypress open",
+    "test:headed": "cypress run --headed",
+    "test:chrome": "cypress run --browser chrome",
+    "test:firefox": "cypress run --browser firefox"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@badeball/cypress-cucumber-preprocessor": "^21.0.2",
+    "@4tw/cypress-drag-drop": "^2.2.5",
+    "@badeball/cypress-cucumber-preprocessor": "^22.0.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.3",
     "cypress": "^14.0.0",
+    "cypress-real-events": "^1.11.0",
     "esbuild": "^0.24.0"
   },
   "dependencies": {
-    "@4tw/cypress-drag-drop": "^2.2.5",
-    "cypress-real-events": "^1.11.0",
-    "dotenv": "^16.4.5",
-    "save-dev": "^0.0.1-security"
+    "dotenv": "^16.4.5"
   }
 }
