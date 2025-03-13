@@ -18,6 +18,12 @@ Then("El usuario es redirigido a la pagina de inicio", () => {
     cy.url().should('be.eq', 'https://www.saucedemo.com/v1/inventory.html')
 })
 
+// login exitoso con usuarios dinamicos
+When("El usuario ingresa el nombre de usuario {string} y contrasenia {string}", (username, password) => {
+    cy.get("input#user-name").type(username)
+    cy.get("input#password").type(password)
+    cy.get("input#login-button").click()
+})
 
 // login incorrecto
 When('El usuario ingresa su nombre de usuario y contrasenia incorrectos', () => {
