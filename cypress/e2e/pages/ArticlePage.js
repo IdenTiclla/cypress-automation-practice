@@ -1,6 +1,7 @@
 class ArticlePage {
     
     getArticleTitle = () => cy.get("div#article-article h1")
+    getAuthorLink = () => cy.get("div#article-article span.mr-3.extra-author > a")   
     
     getYourNameInputField = () => cy.get("input#input-name")
     getEmailInputField = () => cy.get("input#input-email")

@@ -82,12 +82,22 @@ describe('Test suite edited with vim', () => {
 
     })
 
-    it.only("Test for testing the article page.", () => {
+    it("Test for testing the article page.", () => {
       homepage.mainNavigationComponent.getBlogOption().click()
       articlesPage.getLatestArticles().eq(0).click()
       cy.url().should('eq', 'https://ecommerce-playground.lambdatest.io/index.php?route=extension/maza/blog/article&article_id=37')
       articlePage.getArticleTitle().should('be.visible')
       articlePage.getArticleTitle().should('have.text', 'amet volutpat consequat mauris nunc congue nisi vitae suscipit tellus')
+    })
+
+    it.only("Test for testing the article author link functionality.", () => {
+      homepage.mainNavigationComponent.getBlogOption().click()
+      articlesPage.getLatestArticles().eq(0).click()
+      articlePage.getAuthorLink().should('be.visible')
+      articlePage.getAuthorLink().should('have.text', 'Mark Jecno')
+      articlePage.getAuthorLink().should('have.attr', 'href', 'https://ecommerce-playground.lambdatest.io/index.php?route=extension/maza/blog/author&author_id=3')
+      articlePage.getAuthorLink().click()
+      cy.url().should('eq', 'https://ecommerce-playground.lambdatest.io/index.php?route=extension/maza/blog/author&author_id=3')
     })
     
     it('Test for the empty shopping cart modal', () => {
