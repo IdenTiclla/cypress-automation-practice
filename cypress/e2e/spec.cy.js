@@ -27,6 +27,8 @@ import ShoppingCartModal from "./components/ShoppingCartModal"
 import RightNavigationBar from "./components/RightNavigationBar"
 import ProductDetailPage from "./pages/ProductDetailPage"
 
+import ArticlesPage from "./pages/ArticlesPage"
+import ArticlePage from "./pages/ArticlePage"
 
 const loginPage = new Login()
 const homepage = new Home()
@@ -52,6 +54,9 @@ const myAccountPage = new MyAccountPage()
 const newsletterSubscriptionPage = new NewsletterSubscriptionPage()
 const changePasswordPage = new ChangePasswordPage()
 
+const articlePage = new ArticlePage()
+const articlesPage = new ArticlesPage()
+
 Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
 });
@@ -68,6 +73,13 @@ describe('Test suite edited with vim', () => {
     afterEach(() => {
       cy.clearLocalStorage()
       cy.clearCookies()
+    })
+
+    it.only("Test for testing the articles page checking elements default elements.", () => {
+      homepage.mainNavigationComponent.getBlogOption().click()
+      articlesPage.getMostViewedArticles().should('have.length', 10)
+      articlesPage.getLatestArticles().should('have.length', 10)
+
     })
     
     it('Test for the empty shopping cart modal', () => {
@@ -1594,7 +1606,7 @@ describe('Test suite edited with vim', () => {
 
     })
 
-    it.only("Test for testing the main carousel component in homepage on mobile version.", () => {
+    it("Test for testing the main carousel component in homepage on mobile version.", () => {
       homepage.mainCarouselComponent.getPaginationItems().should('have.length', 3)
       // homepage.getMainCarouselImages().eq(0).should('have.class', 'active')
       homepage.mainCarouselComponent.getImages().eq(0).should('have.class', 'active')
