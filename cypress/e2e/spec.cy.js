@@ -75,11 +75,19 @@ describe('Test suite edited with vim', () => {
       cy.clearCookies()
     })
 
-    it.only("Test for testing the articles page checking elements default elements.", () => {
+    it("Test for testing the articles page checking elements default elements.", () => {
       homepage.mainNavigationComponent.getBlogOption().click()
       articlesPage.getMostViewedArticles().should('have.length', 10)
       articlesPage.getLatestArticles().should('have.length', 10)
 
+    })
+
+    it.only("Test for testing the article page.", () => {
+      homepage.mainNavigationComponent.getBlogOption().click()
+      articlesPage.getLatestArticles().eq(0).click()
+      cy.url().should('eq', 'https://ecommerce-playground.lambdatest.io/index.php?route=extension/maza/blog/article&article_id=37')
+      articlePage.getArticleTitle().should('be.visible')
+      articlePage.getArticleTitle().should('have.text', 'amet volutpat consequat mauris nunc congue nisi vitae suscipit tellus')
     })
     
     it('Test for the empty shopping cart modal', () => {
