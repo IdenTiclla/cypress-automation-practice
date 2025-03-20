@@ -100,7 +100,7 @@ describe('Test suite edited with vim', () => {
       cy.url().should('eq', 'https://ecommerce-playground.lambdatest.io/index.php?route=extension/maza/blog/author&author_id=3')
     })
 
-    it.only("Test for testing the write comment functionality.", () => {
+    it("Test for testing the write comment functionality.", () => {
       homepage.mainNavigationComponent.getBlogOption().click()
       articlesPage.getLatestArticles().eq(0).click()
 
@@ -128,6 +128,16 @@ describe('Test suite edited with vim', () => {
       articlePage.commentFormComponent.getYourCommentInvalidFeedback().should('have.css', 'color', 'rgb(220, 53, 69)')
 
     
+    })
+
+    it.only("test for testing the write comment functionality with logged user.", () => {
+      homepage.mainNavigationComponent.getMyAccountOption().click()
+      loginPage.login(Cypress.env("email"), Cypress.env("password"))
+      myAccountPage.mainNavigationComponent.getBlogOption().click()
+      articlesPage.getLatestArticles().eq(0).click()
+      articlePage.commentFormComponent.getYourNameInput().should('not.exist')
+      articlePage.commentFormComponent.getEmailInput().should('not.exist')
+      articlePage.commentFormComponent.getYourCommentInput().should('be.visible')
     })
 
     it('Test for the empty shopping cart modal', () => {
