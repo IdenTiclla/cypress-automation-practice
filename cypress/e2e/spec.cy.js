@@ -69,7 +69,7 @@ describe('Test suite edited with vim', () => {
       cy.viewport(1280, 720)
       // cy.viewport(1920, 1080)
     })
-    
+
     afterEach(() => {
       cy.clearLocalStorage()
       cy.clearCookies()
@@ -90,7 +90,7 @@ describe('Test suite edited with vim', () => {
       articlePage.getArticleTitle().should('have.text', 'amet volutpat consequat mauris nunc congue nisi vitae suscipit tellus')
     })
 
-    it.only("Test for testing the article author link functionality.", () => {
+    it("Test for testing the article author link functionality.", () => {
       homepage.mainNavigationComponent.getBlogOption().click()
       articlesPage.getLatestArticles().eq(0).click()
       articlePage.getAuthorLink().should('be.visible')
@@ -99,22 +99,52 @@ describe('Test suite edited with vim', () => {
       articlePage.getAuthorLink().click()
       cy.url().should('eq', 'https://ecommerce-playground.lambdatest.io/index.php?route=extension/maza/blog/author&author_id=3')
     })
+
+    it.only("Test for testing the write comment functionality.", () => {
+      homepage.mainNavigationComponent.getBlogOption().click()
+      articlesPage.getLatestArticles().eq(0).click()
+
+      articlePage.commentFormComponent.getYourNameInput().should('be.visible')
+      articlePage.commentFormComponent.getYourNameInvalidFeedback().should('not.be.visible')
+
+      articlePage.commentFormComponent.getEmailInput().should('be.visible')
+
+      articlePage.commentFormComponent.getYourCommentInput().should('be.visible')
+      articlePage.commentFormComponent.getYourCommentInvalidFeedback().should('not.be.visible')
+
+      articlePage.commentFormComponent.getPostCommentButton().should('be.visible')
+
+      articlePage.commentFormComponent.getPostCommentButton().should('have.text', 'Post comment')
+      
+      articlePage.commentFormComponent.getPostCommentButton().click()
+
+      articlePage.commentFormComponent.getYourNameInvalidFeedback().should('be.visible')
+      articlePage.commentFormComponent.getYourNameInvalidFeedback().should('have.text', 'Warning: Comment Name must be between 3 and 25 characters!')
+
+      articlePage.commentFormComponent.getYourNameInvalidFeedback().should('have.css', 'color', 'rgb(220, 53, 69)')
+
+      articlePage.commentFormComponent.getYourCommentInvalidFeedback().should('be.visible')
+      articlePage.commentFormComponent.getYourCommentInvalidFeedback().should('have.text', 'Warning: Comment Text must be between 25 and 1000 characters!')
+      articlePage.commentFormComponent.getYourCommentInvalidFeedback().should('have.css', 'color', 'rgb(220, 53, 69)')
+
     
+    })
+
     it('Test for the empty shopping cart modal', () => {
       homepage.mainNavigationComponent.getHomeOption().click()
       homepage.mainHeaderComponent.getCartIconButton().click()
-  
+
       shoppingCartModal.closeButton()
       shoppingCartModal.validateMessageForEmptyCart('Your shopping cart is empty!')
-      
+
       homepage.mainNavigationComponent.getHomeOption().click()
-      
+
       homepage.mainNavigationComponent.getSpecialHotOption().click()
-  
+
       homepage.mainNavigationComponent.getBlogOption().click()
-  
+
     })
-  
+
     it("Test for testing login functionality", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       loginPage.rightNavigationComponent.getOptions().should('have.length', 13)
@@ -142,7 +172,7 @@ describe('Test suite edited with vim', () => {
       homepage.mainNavigationComponent.getMyAccountOption().trigger("mouseover")
       homepage.mainNavigationComponent.getMyAccountDropdownOptions().should('have.length', 2)
     })
-  
+
     it('Testing the corousel component', () => {
       cy.log('Checking first image is visisble')
       homepage.mainCarouselComponent.getImages().eq(0).should('be.visible')
@@ -161,23 +191,23 @@ describe('Test suite edited with vim', () => {
 
       homepage.mainCarouselComponent.getImages().eq(0).should('not.be.visible')
       homepage.mainCarouselComponent.getImages().eq(0).should('not.have.class', 'active')
-      homepage.mainCarouselComponent.getImages().eq(1).should('be.visible', {timeout: 5000})
+      homepage.mainCarouselComponent.getImages().eq(1).should('be.visible', { timeout: 5000 })
       homepage.mainCarouselComponent.getImages().eq(1).should('have.class', 'active')
       homepage.mainCarouselComponent.getImages().eq(2).should('not.have.class', 'active')
       homepage.mainCarouselComponent.getImages().eq(2).should('not.be.visible')
-    
+
       // homepage.getCarouselNextButton().trigger('mouseover')`
       cy.log('Checking third image is visisble')
-      
+
       homepage.mainCarouselComponent.getNextButton().realHover()
       homepage.mainCarouselComponent.getNextButton().click()
-      
+
       homepage.mainCarouselComponent.getImages().eq(0).should('not.be.visible')
       homepage.mainCarouselComponent.getImages().eq(0).should('not.have.class', 'active')
       homepage.mainCarouselComponent.getImages().eq(1).should('not.be.visible')
       homepage.mainCarouselComponent.getImages().eq(1).should('not.have.class', 'active')
       homepage.mainCarouselComponent.getImages().eq(2).should('have.class', 'active')
-      homepage.mainCarouselComponent.getImages().eq(2).should('be.visible', {timeout: 5000})
+      homepage.mainCarouselComponent.getImages().eq(2).should('be.visible', { timeout: 5000 })
     })
 
     it('Testing Right navigation component', () => {
@@ -196,7 +226,7 @@ describe('Test suite edited with vim', () => {
       rightNavigationBar.getTransactionOption().should('be.visible')
       rightNavigationBar.getNewsletterOption().should('be.visible')
     })
-  
+
     it("Default test for register page.", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       rightNavigationBar.getRegisterOption().click()
@@ -224,34 +254,34 @@ describe('Test suite edited with vim', () => {
       registerPage.alertComponent.getAlert().should('have.class', 'alert-danger')
       registerPage.alertComponent.getAlert().should('have.css', 'background-color', 'rgb(248, 215, 218)')
       registerPage.alertComponent.getAlert().should('have.css', 'color', 'rgb(114, 28, 36)')
-      
+
       registerPage.getFirstnameErrorText().should('have.text', 'First Name must be between 1 and 32 characters!')
       registerPage.getFirstnameErrorText().should('have.css', 'color', 'rgb(220, 53, 69)')
-      
+
       registerPage.getLastnameIErrorText().should('have.text', 'Last Name must be between 1 and 32 characters!')
       registerPage.getLastnameIErrorText().should('have.css', 'color', 'rgb(220, 53, 69)')
-      
+
       registerPage.getEmailErrorText().should('have.text', 'E-Mail Address does not appear to be valid!')
       registerPage.getEmailErrorText().should('have.css', 'color', 'rgb(220, 53, 69)')
-      
+
       registerPage.getTelephoneErrorText().should('have.text', 'Telephone must be between 3 and 32 characters!')
       registerPage.getTelephoneErrorText().should('have.css', 'color', 'rgb(220, 53, 69)')
-      
+
       registerPage.getPasswordErrorText().should('have.text', 'Password must be between 4 and 20 characters!')
       registerPage.getPasswordErrorText().should('have.css', 'color', 'rgb(220, 53, 69)')
     })
-  
+
     it('Test for already registered email', () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       rightNavigationBar.getRegisterOption().click()
       cy.url().should('contain', 'account/register')
       registerPage.alertComponent.getAlert().should('not.exist')
-      registerPage.registerNewUser('Jose', 'Lopez', 'jose.lopez@gmail.com', '77045789', 'P@ssw0rd','P@ssw0rd', true, true)
+      registerPage.registerNewUser('Jose', 'Lopez', 'jose.lopez@gmail.com', '77045789', 'P@ssw0rd', 'P@ssw0rd', true, true)
       registerPage.alertComponent.getAlert().should('be.visible')
       registerPage.alertComponent.getAlert().should('have.text', ' Warning: E-Mail Address is already registered!')
-      registerPage.alertComponent.getAlert().should('have.class', 'alert-danger')      
+      registerPage.alertComponent.getAlert().should('have.class', 'alert-danger')
     })
-  
+
     it("Test for the shopping cart page with no items", () => {
       homepage.mainHeaderComponent.getCartIconButton().click()
       shoppingCartModal.getEditCartButton().click()
@@ -267,12 +297,12 @@ describe('Test suite edited with vim', () => {
     it("adding test for checking all categories dropdown options.", () => {
       homepage.mainHeaderComponent.getCategoriesDropdown().click()
       homepage.mainHeaderComponent.getCategoriesDropdownOptions().then(options => {
-        const actual = [... options].map(option => option.text)
+        const actual = [...options].map(option => option.text)
         expect(actual).to.deep.eq(['All Categories', 'Desktops', 'Laptops', 'Components', 'Tablets', 'Software', 'Phones & PDAs', 'Cameras', 'MP3 Players'])
         expect(actual).to.have.length(9)
       })
     })
-  
+
     it("Test for testing the search functionality with no results", () => {
       homepage.mainHeaderComponent.getCategoriesDropdown().should('be.visible')
       homepage.mainHeaderComponent.getSearchInputField().should('have.value', '')
@@ -290,13 +320,13 @@ describe('Test suite edited with vim', () => {
       homepage.mainHeaderComponent.getSearchButton().click()
       searchResultPage.getProducts().should('have.length', 4)
     })
-    
+
     it("Test for testing the search functionality with results - imac", () => {
       homepage.mainHeaderComponent.getSearchInputField().type('imac')
       homepage.mainHeaderComponent.getSearchButton().click()
       searchResultPage.getProducts().should('have.length', 8)
     })
-    
+
     it("Test for testing the autocomplete dropdown component.", () => {
       homepage.mainHeaderComponent.getSearchInputField().type('iphone')
       homepage.mainHeaderComponent.getAutoCompleteDropdown().should('be.visible')
@@ -330,24 +360,24 @@ describe('Test suite edited with vim', () => {
 
     it("Test for checking the addons navigation options.", () => {
       homepage.mainNavigationComponent.getAddOnsDropdownOptions().find('a').then(options => {
-        const actual = [... options].map(option => option.text)
+        const actual = [...options].map(option => option.text)
         expect(actual).to.deep.eq(['\n  Modules\n \n', '\n  Designs\n \n', '\n  Widgets\n \n'])
       })
     })
 
     it("Test for checking my account options with unlogged user.", () => {
       homepage.mainNavigationComponent.getMyAccountDropdownOptions().find('a').then(options => {
-        const actual = [... options].map(option => option.text)
+        const actual = [...options].map(option => option.text)
         expect(actual).to.deep.eq(['\n  Login\n \n', '\n  Register\n \n'])
         expect(actual).to.have.length(2)
       })
     })
-    
+
     it("Test for checking my account options with a logged user.", () => {
       homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
       myAccountPage.mainNavigationComponent.getMyAccountDropdownOptions().find('a').then(options => {
-        const actual = [... options].map(option => option.text)
+        const actual = [...options].map(option => option.text)
         expect(actual).to.deep.eq(['\n  Dashboard\n \n', '\n  My order\n \n', '\n  Return\n \n', '\n  Tracking\n \n', '\n  My voucher\n \n', '\n  Logout\n \n'])
         expect(actual).to.have.length(6)
       })
@@ -398,8 +428,8 @@ describe('Test suite edited with vim', () => {
       giftCertificatePage.getAmountInputLabelError().should('have.css', 'color', 'rgb(220, 53, 69)')
     })
 
-    it("Test for testing the purchase a gift certificate functionnality - Checking automatic data in form" , () => {
-      cy.generateRandomFirstname().then (randomFirstname=> {
+    it("Test for testing the purchase a gift certificate functionnality - Checking automatic data in form", () => {
+      cy.generateRandomFirstname().then(randomFirstname => {
         cy.generateRandomLastname().then(randomLastname => {
           cy.generateRandomPhoneNumber().then(randomPhoneNumber => {
             cy.generateRandomPassword().then(randomPassword => {
@@ -443,61 +473,61 @@ describe('Test suite edited with vim', () => {
         })
       })
     })
-    
+
     it('Test for navigating through the design, modules and widgets pages', () => {
       homepage.mainNavigationComponent.getAddOnsDropdownOptions().should('not.be.visible')
       homepage.mainNavigationComponent.clickOnAddOnsDropdownOptions('Designs')
       cy.url().should('contain', 'page_id=11')
-  
+
       designsPage.mainNavigationComponent.getAddOnsDropdownOptions().should('not.be.visible')
       designsPage.mainNavigationComponent.clickOnAddOnsDropdownOptions('Modules')
       cy.url().should('contain', 'page_id=10')
-  
+
       modulesPage.mainNavigationComponent.getAddOnsDropdownOptions().should('not.be.visible')
       modulesPage.mainNavigationComponent.clickOnAddOnsDropdownOptions('Widgets')
       cy.url().should('contain', 'page_id=9')
-  
+
       widgetsPage.mainNavigationComponent.getHomeOption().click()
       cy.url().should('contain', 'common/home')
     })
-  
+
     it("Test for going to the login page from the main nav bar", () => {
       homepage.mainNavigationComponent.getMyAccountOption().scrollIntoView().should('be.visible').and('exist')
       homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
       cy.url().should('contain', 'account/login')
     })
-  
+
     it("Test for going to the register page from the main nav bar", () => {
-      homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')    
+      homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
       cy.url().should('contain', 'account/register')
     })
 
     it("Test for checking the mega menu options", () => {
       homepage.mainNavigationComponent.getMegaMenuOptionsDropdown().find('a').then(options => {
-        const actual = [... options].map(option => option.text)
-        expect(actual).to.deep.eq(['\nApple\n', '\nHTC\n', '\nLG\n', '\nNokia\n', '\nSamsung\n', '\nXiomi\n', '\nApple Macbook\n', '\nAsus\n', '\nHP\n', '\nLenovo\n', '\nHeadphones\n', '\nMemory Card\n', '\nMobile cases\n', '\nPower bank\n', '\nScreenguards\n', '\nSmart Watch\n', '\nSmart band\n', '\nApple Ipad\n', '\nDesktop\n', '\nHard disk\n', '\nMouse & Keyboard\n', '\nPen Drive\n', '\nPrinter\n', '\nBluetooth Speaker\n', '\nDTH\n', '\nHome Audio\n', '\nHome Theatre\n', '\nSoundBar\n'])        
+        const actual = [...options].map(option => option.text)
+        expect(actual).to.deep.eq(['\nApple\n', '\nHTC\n', '\nLG\n', '\nNokia\n', '\nSamsung\n', '\nXiomi\n', '\nApple Macbook\n', '\nAsus\n', '\nHP\n', '\nLenovo\n', '\nHeadphones\n', '\nMemory Card\n', '\nMobile cases\n', '\nPower bank\n', '\nScreenguards\n', '\nSmart Watch\n', '\nSmart band\n', '\nApple Ipad\n', '\nDesktop\n', '\nHard disk\n', '\nMouse & Keyboard\n', '\nPen Drive\n', '\nPrinter\n', '\nBluetooth Speaker\n', '\nDTH\n', '\nHome Audio\n', '\nHome Theatre\n', '\nSoundBar\n'])
       })
     })
-  
+
     it("Test for clicking a mega menu option", () => {
       homepage.mainNavigationComponent.clickOnMegaMenuDropdownOptions('Apple')
       cy.url().should('contain', 'manufacturer_id=8')
       homepage.mainNavigationComponent.clickOnMegaMenuDropdownOptions('HTC')
       cy.url().should('contain', 'manufacturer_id=5')
     })
-    
+
     it('Test for default search with any criteria', () => {
       homepage.mainHeaderComponent.getSearchButton().click()
       searchResultPage.getProducts().should('have.length', 15)
       searchResultPage.getKeywordsInputField().should('have.text', '')
       searchResultPage.getCategoriesDropdown().should('have.value', '0')
       searchResultPage.getSearchButton().should('have.value', 'Search')
-  
+
       searchResultPage.getSearchInSubcategoriesCheckbox().should('not.be.checked')
       searchResultPage.getSearchInProductDescriptionsCheckbox().should('not.be.checked')
       searchResultPage.getPagination().should('have.length', 7)
     })
-    
+
     it("Test for testing the pagination component.", () => {
       homepage.mainNavigationComponent.clickOnSpecificTopCategory('Components')
       searchResultPage.getPagination().contains('1').parent().should('have.class', 'active')
@@ -512,14 +542,14 @@ describe('Test suite edited with vim', () => {
       searchResultPage.getPagination().contains('3').parent().should('not.have.class', 'active')
       searchResultPage.getPagination().contains('4').parent().should('not.have.class', 'active')
       searchResultPage.getPagination().contains('5').parent().should('not.have.class', 'active')
-    
+
       searchResultPage.navigateToPage('3')
       searchResultPage.getPagination().contains('1').parent().should('not.have.class', 'active')
       searchResultPage.getPagination().contains('2').parent().should('not.have.class', 'active')
       searchResultPage.getPagination().contains('3').parent().should('have.class', 'active')
       searchResultPage.getPagination().contains('4').parent().should('not.have.class', 'active')
       searchResultPage.getPagination().contains('5').parent().should('not.have.class', 'active')
-      
+
       searchResultPage.navigateToPage('4')
       searchResultPage.getPagination().contains('1').parent().should('not.have.class', 'active')
       searchResultPage.getPagination().contains('2').parent().should('not.have.class', 'active')
@@ -534,7 +564,7 @@ describe('Test suite edited with vim', () => {
       searchResultPage.getPagination().contains('4').parent().should('not.have.class', 'active')
       searchResultPage.getPagination().contains('5').parent().should('have.class', 'active')
     })
-  
+
     it("Testing yellow color filter on search results page", () => {
       homepage.mainHeaderComponent.getSearchInputField().should('have.text', '')
       homepage.mainHeaderComponent.getSearchButton().click()
@@ -565,7 +595,7 @@ describe('Test suite edited with vim', () => {
       searchResultPage.quickViewModalComponent.getModal().should('exist')
       searchResultPage.quickViewModalComponent.getModal().should('be.visible')
     })
-    
+
     it("Test for checking the show quantity selector options", () => {
       homepage.mainHeaderComponent.getSearchInputField().type('iphone')
       homepage.mainHeaderComponent.getSearchButton().click()
@@ -581,7 +611,7 @@ describe('Test suite edited with vim', () => {
       homepage.mainHeaderComponent.getSearchButton().click()
       searchResultPage.getSortBySelector().find('option').should('have.length', 12)
       searchResultPage.getSortBySelector().find('option').then(options => {
-        const actual = [... options].map(option => option.text)
+        const actual = [...options].map(option => option.text)
         expect(actual).to.deep.eq(['Default', 'Best sellers', 'Popular', 'Newest', 'Name (A - Z)', 'Name (Z - A)', 'Price (Low > High)', 'Price (High > Low)', 'Rating (Highest)', 'Rating (Lowest)', 'Model (A - Z)', 'Model (Z - A)'])
       })
     })
@@ -608,7 +638,7 @@ describe('Test suite edited with vim', () => {
       searchResultPage.getShowSelector().find('option:selected').should('have.text', '100')
       searchResultPage.getShowSelector().should('have.value', 'https://ecommerce-playground.lambdatest.io/index.php?route=product/search&search=iphone&limit=100')
     })
-    
+
     it("testing forgotten password, email not found", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       cy.url().should('contain', 'account/login')
@@ -624,7 +654,7 @@ describe('Test suite edited with vim', () => {
       forgottenPasswordPage.alertComponent.getAlert().should('have.text', ' Warning: The E-Mail Address was not found in our records, please try again!')
       forgottenPasswordPage.alertComponent.getAlert().should('have.class', 'alert-danger')
     })
-    
+
     it("Test for testing forgotten password, success", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       homepage.rightNavigationComponent.getLoginOption().should('have.class', 'active')
@@ -666,7 +696,7 @@ describe('Test suite edited with vim', () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
       myAccountPage.rightNavigationComponent.clickOnRightNavigationOption('Password')
-      changePasswordPage.submitChangePasswordForm('asdf','zxcv')
+      changePasswordPage.submitChangePasswordForm('asdf', 'zxcv')
       cy.contains("Password confirmation does not match password!")
     })
 
@@ -706,7 +736,7 @@ describe('Test suite edited with vim', () => {
         })
       })
 
-      
+
     })
 
     it('adding item to the wishlist without a logged user', () => {
@@ -748,19 +778,19 @@ describe('Test suite edited with vim', () => {
       cy.log("Login a user")
       homepage.mainNavigationComponent.getMyAccountOption().click()
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
-    
+
       cy.log("adding product to the wishlist")
       myAccountPage.mainNavigationComponent.getHomeOption().click()
       homepage.getTopProducts().should('have.length', 10)
-      homepage.getTopProducts().should('be.visible', {timeout: 5000})
+      homepage.getTopProducts().should('be.visible', { timeout: 5000 })
       homepage.getTopProducts().eq(0).scrollIntoView({ easing: 'linear' }).should('be.visible')
       homepage.getTopProducts().eq(0).realHover()
-      
+
       // homepage.getTopProducts().eq(0).trigger('mouseover')
-      homepage.getTopProducts().eq(0).find('div.product-action').should('be.visible' , {timeout: 5000})
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('be.be.visible', {timeout: 5000})
+      homepage.getTopProducts().eq(0).find('div.product-action').should('be.visible', { timeout: 5000 })
+      homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('be.be.visible', { timeout: 5000 })
       homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('have.length', 4)
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).should('be.visible', {timeout: 5000})
+      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).should('be.visible', { timeout: 5000 })
       homepage.addProductToWishList(homepage.getTopProducts().eq(0))
       cy.log("Making assertions on notification component.")
       homepage.notificationComponent.getHeaderTitle().should('contain', 'Wish List (1)')
@@ -776,13 +806,13 @@ describe('Test suite edited with vim', () => {
       cy.log("Loging an user")
       homepage.mainNavigationComponent.getMyAccountOption().click()
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
-      
+
       cy.log("adding product to the wishlist")
       myAccountPage.mainNavigationComponent.getHomeOption().click()
       homepage.getTopProducts().eq(0).should('be.visible')
       homepage.getTopProducts().eq(0).scrollIntoView().should('be.visible')
       homepage.getTopProducts().eq(0).realHover()
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).should('be.visible', {timeout: 5000})
+      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).should('be.visible', { timeout: 5000 })
       homepage.addProductToWishList(homepage.getTopProducts().eq(0))
       cy.log("Making assertions on notification component.")
       homepage.notificationComponent.getHeaderTitle().should('contain', 'Wish List (1)')
@@ -813,7 +843,7 @@ describe('Test suite edited with vim', () => {
       homepage.getTopProducts().eq(0).should('be.visible')
       homepage.getTopProducts().eq(0).scrollIntoView().should('be.visible')
       homepage.getTopProducts().eq(0).realHover()
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).should('be.visible', {timeout: 5000})
+      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).should('be.visible', { timeout: 5000 })
       homepage.addProductToWishList(homepage.getTopProducts().eq(0))
       cy.log("Making assertions on notification component.")
       homepage.notificationComponent.getHeaderTitle().should('contain', 'Wish List (1)')
@@ -866,7 +896,7 @@ describe('Test suite edited with vim', () => {
     it("test for checking the top categories options.", () => {
       homepage.mainNavigationComponent.getShopByCategoryOption().click()
       homepage.mainNavigationComponent.topCategoriesComponent.getCategories().find('a').then(options => {
-        const actual = [... options].map(option => option.text)
+        const actual = [...options].map(option => option.text)
         expect(actual).to.deep.eq([' \n  Components\n \n', ' \n  Cameras\n \n', ' \n  Phone, Tablets & Ipod\n \n', ' \n  Software\n \n', ' \n  MP3 Players\n \n', ' \n  Laptops & Notebooks\n \n', ' \n  Desktops and Monitors\n \n', ' \n  Printers & Scanners\n \n', ' \n  Mice and Trackballs\n \n', ' \n  Fashion and Accessories\n \n', ' \n  Beauty and Saloon\n \n', ' \n  Autoparts and Accessories\n \n', ' \n  Washing machine\n \n', ' \n  Gaming consoles\n \n', ' \n  Air conditioner\n \n', ' \n  Web Cameras\n \n'])
       })
     })
@@ -902,54 +932,54 @@ describe('Test suite edited with vim', () => {
       // homepage.getTopProducts().eq(0).realHover()
       homepage.getTopProducts().eq(0).trigger('mouseover')
       homepage.showQuickViewModal(homepage.getTopProducts().eq(0))
-      homepage.quickViewModalComponent.getModal().should('be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getModal().should('be.visible', { timeout: 5000 })
       homepage.quickViewModalComponent.getCloseButton().click()
-      homepage.quickViewModalComponent.getModal().should('not.be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getModal().should('not.be.visible', { timeout: 5000 })
 
       // homepage.getTopProducts().eq(1).realHover()
       homepage.getTopProducts().eq(1).trigger('mouseover')
       homepage.showQuickViewModal(homepage.getTopProducts().eq(1))
-      homepage.quickViewModalComponent.getModal().should('be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getModal().should('be.visible', { timeout: 5000 })
       homepage.quickViewModalComponent.getCloseButton().click()
-      homepage.quickViewModalComponent.getModal().should('not.be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getModal().should('not.be.visible', { timeout: 5000 })
 
 
       homepage.getTopProducts().eq(2).trigger('mouseover')
       homepage.showQuickViewModal(homepage.getTopProducts().eq(2))
-      homepage.quickViewModalComponent.getModal().should('be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getModal().should('be.visible', { timeout: 5000 })
       homepage.quickViewModalComponent.getCloseButton().click()
-      homepage.quickViewModalComponent.getModal().should('not.be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getModal().should('not.be.visible', { timeout: 5000 })
 
       homepage.getTopProducts().eq(3).trigger('mouseover')
       homepage.showQuickViewModal(homepage.getTopProducts().eq(3))
-      homepage.quickViewModalComponent.getModal().should('be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getModal().should('be.visible', { timeout: 5000 })
       homepage.quickViewModalComponent.getCloseButton().click()
-      homepage.quickViewModalComponent.getModal().should('not.be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getModal().should('not.be.visible', { timeout: 5000 })
 
       homepage.getTopProducts().eq(4).trigger('mouseover')
       homepage.showQuickViewModal(homepage.getTopProducts().eq(4))
-      homepage.quickViewModalComponent.getModal().should('be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getModal().should('be.visible', { timeout: 5000 })
       homepage.quickViewModalComponent.getCloseButton().click()
-      homepage.quickViewModalComponent.getModal().should('not.be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getModal().should('not.be.visible', { timeout: 5000 })
     })
 
     const checkQuickViewButtons = (productIndex) => {
       homepage.getTopProducts().eq(productIndex).then($el => {
         const isVisible = Cypress.$($el).is(':visible');
         console.log(`product with index: ${productIndex} Is visible: ${isVisible}`)
-        if(!isVisible) {
+        if (!isVisible) {
           homepage.getTopProductsNextButton().scrollIntoView()
           homepage.getTopProductsNextButton().trigger('mouseover')
           homepage.getTopProductsNextButton().click()
         }
       })
-      
-      homepage.getTopProducts().eq(productIndex).trigger('mouseover', {timeout: 5000})
+
+      homepage.getTopProducts().eq(productIndex).trigger('mouseover', { timeout: 5000 })
       homepage.showQuickViewModal(homepage.getTopProducts().eq(productIndex))
-      homepage.quickViewModalComponent.getModal().should('be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getModal().should('be.visible', { timeout: 5000 })
       homepage.quickViewModalComponent.getAvailability().invoke('text').then((text) => {
         console.log(text)
-        if(text === 'Out Of Stock') {
+        if (text === 'Out Of Stock') {
           homepage.quickViewModalComponent.getButtons().eq(0).should('have.attr', 'disabled')
           homepage.quickViewModalComponent.getButtons().eq(1).should('have.attr', 'disabled')
         } else {
@@ -957,13 +987,13 @@ describe('Test suite edited with vim', () => {
           homepage.quickViewModalComponent.getButtons().eq(1).should('not.have.attr', 'disabled')
         }
       })
-      
+
       homepage.quickViewModalComponent.getCloseButton().click()
-      homepage.quickViewModalComponent.getModal().should('not.be.visible', {timeout: 5000})
+      homepage.quickViewModalComponent.getModal().should('not.be.visible', { timeout: 5000 })
 
     }
     it("Test for testing buttons on quick view functionality", () => {
-      homepage.getTopProducts().its('length').then(length => {        
+      homepage.getTopProducts().its('length').then(length => {
         for (let i = 0; i < length; i++) {
           checkQuickViewButtons(i)
         }
@@ -980,7 +1010,7 @@ describe('Test suite edited with vim', () => {
       productDetailPage.notificationComponent.getLoginButton().should('be.visible')
       productDetailPage.notificationComponent.getRegisterButton().should('be.visible')
       productDetailPage.notificationComponent.getCloseButton().click()
-      productDetailPage.notificationComponent.getCloseButton().click()  
+      productDetailPage.notificationComponent.getCloseButton().click()
       productDetailPage.notificationComponent.getNotification().should('not.be.visible')
     })
 
@@ -1019,7 +1049,7 @@ describe('Test suite edited with vim', () => {
 
       productDetailPage.increaseQuantity()
       productDetailPage.getQuantityInputField().should('have.value', '4')
-      
+
       productDetailPage.increaseQuantity()
       productDetailPage.getQuantityInputField().should('have.value', '5')
 
@@ -1069,24 +1099,24 @@ describe('Test suite edited with vim', () => {
       homepage.getTopProducts().eq(0).scrollIntoView()
       homepage.getTopProducts().eq(0).trigger('mouseover')
       homepage.addProductToCart(homepage.getTopProducts().eq(0))
-  
-      homepage.notificationComponent.getViewCartButton().click()  
+
+      homepage.notificationComponent.getViewCartButton().click()
       shoppingCartPage.alertComponent.getAlert().should('contain', 'Products marked with *** are not available in the desired quantity or not in stock!')
       shoppingCartPage.getItems().should('have.length', 1)
     })
-  
+
     it("Test or removing items on checkout cart page", () => {
       cy.log("Adding first top product to the card.")
       homepage.getTopProducts().eq(0).scrollIntoView()
       homepage.getTopProducts().eq(0).trigger('mouseover')
       homepage.addProductToCart(homepage.getTopProducts().eq(0))
-  
+
       homepage.mainHeaderComponent.getCartIconButton().click()
       homepage.shoppingCartModalComponent.getCheckoutBUtton().click()
-  
+
       cy.log("Removing item.")
       shoppingCartPage.removeNthItem(0)
-  
+
       cy.log("Performing assertions.")
       cy.url().should('contain', 'checkout/cart')
       shoppingCartPage.getWarningIcon().should('be.visible')
@@ -1113,10 +1143,10 @@ describe('Test suite edited with vim', () => {
       homepage.addProductToCart(homepage.getTopProducts().eq(0))
       homepage.notificationComponent.getCheckoutButton().click()
       cy.url().should('contain', 'checkout/cart')
-      
+
       checkPriceNthItem(0)
-      
-      
+
+
       cy.log("updating product quantity on checkout cart page.")
       shoppingCartPage.updateNthProductQuantity(0, 2)
 
@@ -1131,7 +1161,7 @@ describe('Test suite edited with vim', () => {
             counter += parseInt(quantity, 10); // Ensure the quantity is parsed as an integer
           });
         });
-    
+
         // Ensure the logging happens after the iteration is complete
         cy.wrap(null).then(() => {
           console.log(`quantity counter = ${counter}`);
@@ -1144,7 +1174,7 @@ describe('Test suite edited with vim', () => {
 
     it("Test for testing the quantity of products on cart.", () => {
       shoppingCartPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 0)
-      
+
       homepage.getTopProducts().eq(0).scrollIntoView()
       homepage.getTopProducts().eq(0).trigger('mouseover')
       homepage.addProductToCart(homepage.getTopProducts().eq(0))
@@ -1191,7 +1221,7 @@ describe('Test suite edited with vim', () => {
       shoppingCartPage.getCollapseElements().eq(0).find('div#collapse-coupon').should('have.class', 'show')
       shoppingCartPage.getCollapseElements().eq(1).find('div#collapse-shipping').should('not.have.class', 'show')
       shoppingCartPage.getCollapseElements().eq(2).find('div#collapse-voucher').should('not.have.class', 'show')
-      
+
       shoppingCartPage.expandOrMinimizeEstimateShippingTaxesCollapse()
       shoppingCartPage.getCollapseElements().eq(0).find('div#collapse-coupon').should('not.have.class', 'show')
       shoppingCartPage.getCollapseElements().eq(1).find('div#collapse-shipping').should('have.class', 'show')
@@ -1200,7 +1230,7 @@ describe('Test suite edited with vim', () => {
       shoppingCartPage.getCollapseElements().eq(0).find('div#collapse-coupon').should('not.have.class', 'show')
       shoppingCartPage.getCollapseElements().eq(1).find('div#collapse-shipping').should('not.have.class', 'show')
       shoppingCartPage.getCollapseElements().eq(2).find('div#collapse-voucher').should('have.class', 'show')
-      
+
     })
 
     it("Test for opening an account and performing an order.", () => {
@@ -1281,7 +1311,7 @@ describe('Test suite edited with vim', () => {
     it("Subscribe and unsubscribe to newsleter.", () => {
       homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
-      
+
       myAccountPage.getMyAccountOptions().eq(4).click()
       newsletterSubscriptionPage.getNoCheckbox().should('have.attr', 'checked')
       newsletterSubscriptionPage.getYesCheckbox().should('not.have.attr', 'checked')
@@ -1327,7 +1357,7 @@ describe('Test suite edited with vim', () => {
       cy.generateRandomPhoneNumber().then(telephone => {
         cy.generateRandomEmail().then(email => {
           homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
-          registerPage.registerNewUser('firstname','lastname', email,telephone, 'P@ssw0rd','P@ssw0rd', true, true)
+          registerPage.registerNewUser('firstname', 'lastname', email, telephone, 'P@ssw0rd', 'P@ssw0rd', true, true)
           homepage.visit()
           checkoutPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 0)
           homepage.getTopProducts().eq(4).scrollIntoView()
@@ -1374,7 +1404,7 @@ describe('Test suite edited with vim', () => {
           homepage.showQuickViewModal(homepage.getTopProducts().eq(4))
           homepage.quickViewModalComponent.getButtons().eq(1).click()
           cy.url().should('contain', 'checkout/checkout')
-          
+
           checkoutPage.getTelephoneInputField().should('have.value', phoneNumber)
           checkoutPage.getAccountLoginCheckbox().should('not.exist')
           checkoutPage.getAccountRegisterCheckbox().should('not.exist')
@@ -1385,7 +1415,7 @@ describe('Test suite edited with vim', () => {
           checkoutPage.getBillingIwantToUseAnExistingAddressCheckbox().should('be.checked')
           checkoutPage.getExistingAdressesSelector().find('option').should('have.length', 1)
           checkoutPage.getBillingIwantToUseAnewAddress().should('not.be.checked')
-          
+
         })
       })
     })
@@ -1399,7 +1429,7 @@ describe('Test suite edited with vim', () => {
               cy.generateRandomPassword().then(randomPassword => {
                 homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
                 registerPage.registerNewUser(randomFirstname, randomLastname, randomEmail, randomPhoneNumber, randomPassword, randomPassword, true, true)
-                
+
                 successPage.rightNavigationComponent.clickOnRightNavigationOption('Address Book')
                 cy.url().should('include', 'account/address')
                 cy.log('adding a new address')
@@ -1410,10 +1440,10 @@ describe('Test suite edited with vim', () => {
                 cy.log('Performing some assertions after adding first address')
                 addressBookPage.alertComponent.getAlert().should('have.text', ' Your address has been successfully added')
                 addressBookPage.getAddresses().should('have.length', 1)
-                
+
 
                 addressBookPage.mainNavigationComponent.getHomeOption().click()
-                
+
                 homepage.getTopProducts().eq(4).scrollIntoView()
                 homepage.getTopProducts().eq(4).trigger('mouseover')
                 homepage.showQuickViewModal(homepage.getTopProducts().eq(4))
@@ -1422,7 +1452,7 @@ describe('Test suite edited with vim', () => {
 
                 checkoutPage.checkIwantToUseAnewAddress()
                 checkoutPage.fillBillingAddressSection(randomFirstname, randomLastname, 'my company 02', 'my address 3', 'my address 4', 'some city', '75002', 'Taiwan', 'Chia-i')
-                
+
                 checkoutPage.addComments('Some comments')
                 checkoutPage.checkOrUncheckTermsAndConditions()
                 checkoutPage.getContinueButton().click()
@@ -1474,7 +1504,7 @@ describe('Test suite edited with vim', () => {
           homepage.showQuickViewModal(homepage.getTopProducts().eq(4))
           homepage.quickViewModalComponent.getButtons().eq(1).click()
           cy.url().should('contain', 'checkout/checkout')
-          
+
           checkoutPage.getTelephoneInputField().should('have.value', phoneNumber)
           checkoutPage.getAccountLoginCheckbox().should('not.exist')
           checkoutPage.getAccountRegisterCheckbox().should('not.exist')
@@ -1485,7 +1515,7 @@ describe('Test suite edited with vim', () => {
           checkoutPage.getBillingIwantToUseAnExistingAddressCheckbox().should('be.checked')
           checkoutPage.getExistingAdressesSelector().find('option').should('have.length', 2)
           checkoutPage.getBillingIwantToUseAnewAddress().should('not.be.checked')
-          
+
 
         })
       })
@@ -1495,20 +1525,20 @@ describe('Test suite edited with vim', () => {
       homepage.getTopProducts().eq(4).scrollIntoView()
       homepage.getTopProducts().eq(4).trigger('mouseover')
       homepage.showQuickViewModal(homepage.getTopProducts().eq(4))
-  
-      for(let i = 0; i < 50; i++) {
+
+      for (let i = 0; i < 50; i++) {
         homepage.quickViewModalComponent.increaseQuantity()
       }
       homepage.quickViewModalComponent.getQuantityInput().should('have.value', '51')
-      
+
     })
 
     it("Test for testing the decrease quantity functionality on quick view modal component", () => {
       homepage.getTopProducts().eq(4).scrollIntoView()
       homepage.getTopProducts().eq(4).trigger('mouseover')
       homepage.showQuickViewModal(homepage.getTopProducts().eq(4))
-  
-      for(let i = 0; i < 50; i++) {
+
+      for (let i = 0; i < 50; i++) {
         homepage.quickViewModalComponent.decreaseQuantity()
       }
       homepage.quickViewModalComponent.getQuantityInput().should('have.value', '1')
@@ -1521,13 +1551,13 @@ describe('Test suite edited with vim', () => {
       homepage.showQuickViewModal(homepage.getTopProducts().eq(4));
       homepage.quickViewModalComponent.getModal().should('be.visible');
       cy.log('Quick view modal is visible');
-    
+
       for (let i = 1; i < 10; i++) {
         cy.log(`Incrementing quantity to ${i}`);
         homepage.quickViewModalComponent.getQuantityInput().should('have.value', `${i}`);
         homepage.quickViewModalComponent.increaseQuantity();
       }
-    
+
       for (let j = 10; j > 0; j--) {
         cy.log(`Decrementing quantity to ${j}`);
         homepage.quickViewModalComponent.getQuantityInput().should('have.value', `${j}`);
@@ -1546,7 +1576,7 @@ describe('Test suite edited with vim', () => {
       cy.clearCookies()
       cy.clearLocalStorage()
     })
-    
+
     it('First test for iphone viewport => testing the search functionality', () => {
       homepage.mainHeaderComponent.getWishListIconButton().should('not.be.visible')
       homepage.mainHeaderComponent.getMobileSearchInputField().type('hello world')
@@ -1556,7 +1586,7 @@ describe('Test suite edited with vim', () => {
       searchResultPage.getMobileKeywordsInputField().should('have.value', 'hello world')
       searchResultPage.getMobileKeywordsInputField().should('have.attr', 'value', 'hello world')
     })
-    
+
     it("Test for Login functionality on iphone resolution", () => {
       homepage.mainHeaderComponent.getMobilePersonIconButton().click()
       homepage.quickLinksComponent.clickOnSpecificQuickLink('My account')
@@ -1583,38 +1613,38 @@ describe('Test suite edited with vim', () => {
       homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Air conditioner')
       homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Web Cameras')
     })
-    
+
     it("Test for testing the category selector on the main header component.", () => {
-      
+
       homepage.mainHeaderComponent.getMobileCategoriesDropdown().click()
       homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().should('not.have.class', 'active')
       homepage.mainHeaderComponent.selectCategory('All Categories')
-      
+
       homepage.mainHeaderComponent.getMobileCategoriesDropdown().click()
       homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().contains('All Categories').should('have.class', 'active')
       homepage.mainHeaderComponent.selectCategory('Desktops')
-      
+
       homepage.mainHeaderComponent.getMobileCategoriesDropdown().click()
       homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().contains('Desktops').should('have.class', 'active')
       homepage.mainHeaderComponent.selectCategory('Laptops')
-      
+
       homepage.mainHeaderComponent.getMobileCategoriesDropdown().click()
       homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().contains('Laptops').should('have.class', 'active')
       homepage.mainHeaderComponent.selectCategory('Components')
-      
+
       homepage.mainHeaderComponent.getMobileCategoriesDropdown().click()
       homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().contains('Components').should('have.class', 'active')
       homepage.mainHeaderComponent.selectCategory('Tablets')
-      
-      
+
+
       homepage.mainHeaderComponent.getMobileCategoriesDropdown().click()
       homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().contains('Tablets').should('have.class', 'active')
       homepage.mainHeaderComponent.selectCategory('Phones & PDAs')
-      
+
       homepage.mainHeaderComponent.getMobileCategoriesDropdown().click()
       homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().contains('Phones & PDAs').should('have.class', 'active')
       homepage.mainHeaderComponent.selectCategory('Cameras')
-      
+
       homepage.mainHeaderComponent.getMobileCategoriesDropdown().click()
       homepage.mainHeaderComponent.getMobileCategoriesDropdownOptions().contains('Cameras').should('have.class', 'active')
       homepage.mainHeaderComponent.selectCategory('MP3 Players')
@@ -1631,7 +1661,7 @@ describe('Test suite edited with vim', () => {
       homepage.mainCarouselComponent.getPaginationItems().eq(0).should('have.class', 'active')
       homepage.mainCarouselComponent.getPaginationItems().eq(1).should('not.have.class', 'active')
       homepage.mainCarouselComponent.getPaginationItems().eq(2).should('not.have.class', 'active')
-      
+
       homepage.mainCarouselComponent.clickOnNextButton()
       // homepage.getMainCarouselImages().eq(1).should('have.class', 'active')
       homepage.mainCarouselComponent.getImages().eq(1).should('have.class', 'active')
@@ -1639,7 +1669,7 @@ describe('Test suite edited with vim', () => {
       homepage.mainCarouselComponent.getPaginationItems().eq(1).should('have.class', 'active')
       homepage.mainCarouselComponent.getPaginationItems().eq(2).should('not.have.class', 'active')
 
-      
+
       homepage.mainCarouselComponent.clickOnNextButton()
       homepage.mainCarouselComponent.getImages().eq(2).should('have.class', 'active')
       homepage.mainCarouselComponent.getPaginationItems().eq(0).should('not.have.class', 'active')
