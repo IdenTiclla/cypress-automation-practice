@@ -1,4 +1,10 @@
+import Alert from "./Alert" 
+
 class CommentFormComponent {
+
+    constructor() {
+        this.alertComponent = new Alert()
+    }   
 
     getCommentFormHeader = () => cy.get("div.content-comment-form h4")
     getYourNameInput = () => cy.get("div.content-comment-form input[name='name']")
