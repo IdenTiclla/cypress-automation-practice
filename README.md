@@ -27,6 +27,7 @@ Este proyecto contiene pruebas automatizadas para una aplicación de comercio el
 - [Integración Continua](#integración-continua)
 - [Contribuir](#contribuir)
 - [Contacto](#contacto)
+- [Test Organization](#test-organization)
 
 ## Requisitos Previos
 
@@ -135,6 +136,41 @@ El proyecto incluye un `Jenkinsfile` para configurar pipelines de CI/CD. La inte
 - Ejecución automática de pruebas en cada commit
 - Generación de reportes
 - Notificaciones de fallos en las pruebas
+
+## Test Organization
+
+The tests in this project are organized using best practices:
+
+### Directory Structure
+
+- `cypress/e2e/Tests/` - Contains all test files organized by feature
+  - `account/` - Tests related to user account functionality
+  - `login/` - Tests for login functionality
+  - `article/` - Tests for blog article functionality
+  - `shopping-cart/` - Tests for shopping cart and checkout functionality
+  - `api/` - Tests for API functionality
+
+### Test File Naming
+
+Files are named according to the feature they test, using the `.cy.js` extension.
+Example: `login.cy.js`, `register.cy.js`, `shopping-cart.cy.js`
+
+### Page Object Model
+
+The project uses the Page Object Model pattern to organize test code:
+- `cypress/e2e/pages/` - Contains page objects for different pages
+- `cypress/e2e/components/` - Contains component objects for reusable UI components
+
+This separation helps maintain clean, readable, and maintainable tests.
+
+### Best Practices
+
+1. Each test file focuses on a specific feature or functionality
+2. Tests are independent and can run in isolation
+3. Common setup is placed in `beforeEach()` hooks
+4. Cleanup is performed in `afterEach()` hooks
+5. Page objects are used to abstract element selectors and common actions
+6. Tests are descriptive and follow a clear pattern
 
 ## Contribuir
 

@@ -16,6 +16,7 @@ class MainNavigation {
     getAddOnsDropdownOptions = () => cy.get("ul.horizontal li:nth-of-type(5) a[data-toggle='dropdown'] + ul > li")
     getMyAccountOption = () => cy.get("ul.horizontal li:nth-of-type(6)[class*='dropdown-hoverable']")
     getMyAccountDropdownOptions = () => cy.get("ul.horizontal li:nth-of-type(6) a[data-toggle='dropdown'] + ul > li")
+    getRegisterOption = () => cy.get("ul.horizontal li:nth-of-type(6) a[data-toggle='dropdown'] + ul > li a").contains("Register")
     
     
     clickOnAddOnsDropdownOptions = (option) => {

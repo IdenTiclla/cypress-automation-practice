@@ -9,6 +9,8 @@ class SuccessPage {
         this.rightNavigationComponent = new RightNavigationBar()
         this.contentComponent = new ContentComponent()
     }
+
+    getHeading = () => cy.get("div#content h1")
 }
 
 export default SuccessPage
