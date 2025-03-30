@@ -152,12 +152,23 @@ describe('Test suite edited with vim', () => {
       articlePage.commentFormComponent.alertComponent.checkAlertMessage("Thank you for your comment. It has been submitted to the webmaster for approval.")
     })
 
-    it.only("Test for testing the comments section on article page.", () => {
+    it("Test for testing the comments section on article page.", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
       myAccountPage.mainNavigationComponent.getBlogOption().click()
       articlesPage.getLatestArticles().eq(0).click()
       articlePage.commentsComponent.getComments().should('have.length', 5)
+    })
+    it.only("Test for testing the reply to comment basic functionality", () => {
+      homepage.mainNavigationComponent.getMyAccountOption().click()
+      loginPage.login(Cypress.env("email"), Cypress.env("password"))
+      myAccountPage.mainNavigationComponent.getBlogOption().click()
+      articlesPage.getLatestArticles().eq(0).click()
+      articlePage.commentsComponent.getReplyButton(0).should('be.visible')
+      articlePage.commentsComponent.getReplyButton(1).should('be.visible')
+      articlePage.commentsComponent.getReplyButton(2).should('be.visible')
+      articlePage.commentsComponent.getReplyButton(3).should('be.visible')
+      articlePage.commentsComponent.getReplyButton(4).should('be.visible')
     })
 
     it('Test for the empty shopping cart modal', () => {
