@@ -159,7 +159,7 @@ describe('Test suite edited with vim', () => {
       articlesPage.getLatestArticles().eq(0).click()
       articlePage.commentsComponent.getComments().should('have.length', 5)
     })
-    it.only("Test for testing the reply to comment basic functionality", () => {
+    it("Test for testing the reply to comment basic functionality", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
       myAccountPage.mainNavigationComponent.getBlogOption().click()
@@ -169,6 +169,21 @@ describe('Test suite edited with vim', () => {
       articlePage.commentsComponent.getReplyButton(2).should('be.visible')
       articlePage.commentsComponent.getReplyButton(3).should('be.visible')
       articlePage.commentsComponent.getReplyButton(4).should('be.visible')
+    })
+
+    it.only("Test for testing the view replies general functionality", () => {
+      homepage.mainNavigationComponent.getMyAccountOption().click()
+      loginPage.login(Cypress.env("email"), Cypress.env("password"))
+      myAccountPage.mainNavigationComponent.getBlogOption().click()
+      articlesPage.getLatestArticles().eq(0).click()
+      articlePage.commentsComponent.getViewRepliesGeneral().should('be.visible')
+      articlePage.commentsComponent.getViewRepliesGeneral().click()
+      articlePage.commentsComponent.getComments().should('have.length', 10)
+      articlePage.commentsComponent.getViewRepliesGeneral().should('be.visible')
+
+      articlePage.commentsComponent.getViewRepliesGeneral().click()
+      articlePage.commentsComponent.getComments().should('have.length', 15)
+      articlePage.commentsComponent.getViewRepliesGeneral().should('be.visible')
     })
 
     it('Test for the empty shopping cart modal', () => {
