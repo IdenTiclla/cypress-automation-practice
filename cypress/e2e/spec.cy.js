@@ -140,7 +140,7 @@ describe('Test suite edited with vim', () => {
       articlePage.commentFormComponent.getYourCommentInput().should('be.visible')
     })
 
-    it.only("Test for testing the write comment functionality with valid data with logged user.", () => {
+    it("Test for testing the write comment functionality with valid data with logged user.", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
       myAccountPage.mainNavigationComponent.getBlogOption().click()
@@ -150,6 +150,14 @@ describe('Test suite edited with vim', () => {
       articlePage.commentFormComponent.getPostCommentButton().click()
       articlePage.commentFormComponent.alertComponent.checkAlertIsVisible()
       articlePage.commentFormComponent.alertComponent.checkAlertMessage("Thank you for your comment. It has been submitted to the webmaster for approval.")
+    })
+
+    it.only("Test for testing the comments section on article page.", () => {
+      homepage.mainNavigationComponent.getMyAccountOption().click()
+      loginPage.login(Cypress.env("email"), Cypress.env("password"))
+      myAccountPage.mainNavigationComponent.getBlogOption().click()
+      articlesPage.getLatestArticles().eq(0).click()
+      articlePage.commentsComponent.getComments().should('have.length', 5)
     })
 
     it('Test for the empty shopping cart modal', () => {
