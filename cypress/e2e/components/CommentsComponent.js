@@ -4,6 +4,7 @@ class CommentsComponent {
     getReplyButton = (commentNumber) => this.getComment(commentNumber).find("a.reply")
     getViewRepliesOfComment = (commentNumber) => this.getComment(commentNumber).find("a.view-replies")
     getViewRepliesGeneral = () => cy.get("li + a.view-replies")
+    getReplyFormOfComment = (commentNumber) => this.getComment(commentNumber).find("form#form-comment")
 }
 
 export default CommentsComponent 
