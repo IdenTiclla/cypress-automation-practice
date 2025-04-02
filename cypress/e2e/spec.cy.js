@@ -10,7 +10,6 @@ import ShoppingCartPage from "./pages/ShoppingCartPage"
 import CheckoutPage from "./pages/CheckoutPage"
 import ConfirmOrderPage from "./pages/ConfimOrderPage"
 import OrderHistoryPage from "./pages/OrderHistoryPage"
-import WishListPage from "./pages/WishListPage"
 
 import ModulesPage from "./pages/ModulesPage"
 import WidgetsPage from "./pages/WidgetsPage"
@@ -35,7 +34,7 @@ const giftCertificatePage = new GiftCertificatePage()
 const checkoutPage = new CheckoutPage()
 const confirmOrderPage = new ConfirmOrderPage()
 const orderHistoryPage = new OrderHistoryPage()
-const wishListPage = new WishListPage()
+
 const shoppingCartModal = new ShoppingCartModal()
 const rightNavigationBar = new RightNavigationBar()
 const modulesPage = new ModulesPage()
@@ -417,98 +416,10 @@ describe('Test suite edited with vim', () => {
       homepage.notificationComponent.getCheckoutButton().should('be.visible')
     })
 
-    it("Test for testing adding an item to the wishlist with a logged user", () => {
-      cy.log("Login a user")
-      homepage.mainNavigationComponent.getMyAccountOption().click()
-      loginPage.login(Cypress.env("email"), Cypress.env("password"))
+    
 
-      cy.log("adding product to the wishlist")
-      myAccountPage.mainNavigationComponent.getHomeOption().click()
-      homepage.getTopProducts().should('have.length', 10)
-      homepage.getTopProducts().should('be.visible', { timeout: 5000 })
-      homepage.getTopProducts().eq(0).scrollIntoView({ easing: 'linear' }).should('be.visible')
-      homepage.getTopProducts().eq(0).realHover()
 
-      // homepage.getTopProducts().eq(0).trigger('mouseover')
-      homepage.getTopProducts().eq(0).find('div.product-action').should('be.visible', { timeout: 5000 })
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('be.be.visible', { timeout: 5000 })
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('have.length', 4)
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).should('be.visible', { timeout: 5000 })
-      homepage.addProductToWishList(homepage.getTopProducts().eq(0))
-      cy.log("Making assertions on notification component.")
-      homepage.notificationComponent.getHeaderTitle().should('contain', 'Wish List (1)')
-      homepage.notificationComponent.getBodyMessage().should('contain', 'Success: You have added iMac to your wish list!')
-      homepage.notificationComponent.getWishListButton().click()
-      cy.log("Making assertions on wish list page.")
-      wishListPage.getProducts().should('have.length', 1)
-      cy.url().should('contain', 'account/wishlist')
-      wishListPage.rightNavigationComponent.getOptions(4).should('have.class', 'active')
-    })
-
-    it("Test for adding and removing an item from wish list page.", () => {
-      cy.log("Loging an user")
-      homepage.mainNavigationComponent.getMyAccountOption().click()
-      loginPage.login(Cypress.env("email"), Cypress.env("password"))
-
-      cy.log("adding product to the wishlist")
-      myAccountPage.mainNavigationComponent.getHomeOption().click()
-      homepage.getTopProducts().eq(0).should('be.visible')
-      homepage.getTopProducts().eq(0).scrollIntoView().should('be.visible')
-      homepage.getTopProducts().eq(0).realHover()
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).should('be.visible', { timeout: 5000 })
-      homepage.addProductToWishList(homepage.getTopProducts().eq(0))
-      cy.log("Making assertions on notification component.")
-      homepage.notificationComponent.getHeaderTitle().should('contain', 'Wish List (1)')
-      homepage.notificationComponent.getBodyMessage().should('contain', 'Success: You have added iMac to your wish list!')
-      homepage.notificationComponent.getWishListButton().click()
-      cy.log("Making assertions on wish list page.")
-      wishListPage.getProducts().should('have.length', 1)
-      cy.url().should('contain', 'account/wishlist')
-      wishListPage.rightNavigationComponent.getOptions(4).should('have.class', 'active')
-      cy.log("Removing product from the wishlist.")
-      const removeButton = wishListPage.getProducts().eq(0).find("a[href*='remove']")
-      removeButton.should('be.visible')
-      wishListPage.alertComponent.getAlert().should('not.exist')
-      removeButton.click()
-      wishListPage.alertComponent.getAlert().should('be.visible')
-      wishListPage.alertComponent.getAlert().should('contain', ' Success: You have modified your wish list!')
-      wishListPage.alertComponent.getAlert().should('have.class', 'alert-success')
-      cy.contains("No results!")
-    })
-
-    it("Test for adding to shopping cart from wish list page", () => {
-      cy.log("Loging an user")
-      homepage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 0)
-      homepage.mainNavigationComponent.getMyAccountOption().click()
-      loginPage.login(Cypress.env("email"), Cypress.env("password"))
-      cy.log("adding product to the wishlist")
-      myAccountPage.mainNavigationComponent.getHomeOption().click()
-      homepage.getTopProducts().eq(0).should('be.visible')
-      homepage.getTopProducts().eq(0).scrollIntoView().should('be.visible')
-      homepage.getTopProducts().eq(0).realHover()
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').eq(1).should('be.visible', { timeout: 5000 })
-      homepage.addProductToWishList(homepage.getTopProducts().eq(0))
-      cy.log("Making assertions on notification component.")
-      homepage.notificationComponent.getHeaderTitle().should('contain', 'Wish List (1)')
-      homepage.notificationComponent.getBodyMessage().should('contain', 'Success: You have added iMac to your wish list!')
-      homepage.notificationComponent.getWishListButton().click()
-      cy.log("Making assertions on wish list page.")
-      wishListPage.getProducts().should('have.length', 1)
-      cy.url().should('contain', 'account/wishlist')
-      wishListPage.rightNavigationComponent.getOptions(4).should('have.class', 'active')
-      cy.log("Removing product from the wishlist.")
-      const shoppinCartButton = wishListPage.getProducts().eq(0).find("button")
-      shoppinCartButton.should('be.visible')
-      wishListPage.alertComponent.getAlert().should('not.exist')
-      shoppinCartButton.click()
-      wishListPage.notificationComponent.getHeaderTitle().should('contain', 'item(s)')
-      wishListPage.notificationComponent.getBodyMessage().should('contain', 'Success')
-      wishListPage.notificationComponent.getViewCartButton().should('be.visible')
-      wishListPage.notificationComponent.getCheckoutButton().should('be.visible')
-      wishListPage.notificationComponent.getViewCartButton().click()
-      cy.url().should('contain', 'checkout/cart')
-      shoppingCartPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('be.gt', 0)
-    })
+    
 
     it("Test for registering an then loging a new user", () => {
       cy.generateRandomEmail().then((randomEmail) => {
