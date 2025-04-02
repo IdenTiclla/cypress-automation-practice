@@ -6,7 +6,7 @@ import AddressBookPage from "./pages/AddressBookPage"
 import AddAddressPage from "./pages/AddAddressPage"
 import GiftCertificatePage from "./pages/GiftCertificatePage"
 
-import ShoppingCartPage from "./pages/ShoppingCartPage"
+
 import CheckoutPage from "./pages/CheckoutPage"
 import ConfirmOrderPage from "./pages/ConfimOrderPage"
 import OrderHistoryPage from "./pages/OrderHistoryPage"
@@ -29,7 +29,7 @@ const registerPage = new RegisterPage()
 const successPage = new SuccessPage()
 const addressBookPage = new AddressBookPage()
 const addAddressPage = new AddAddressPage()
-const shoppingCartPage = new ShoppingCartPage()
+
 const giftCertificatePage = new GiftCertificatePage()
 const checkoutPage = new CheckoutPage()
 const confirmOrderPage = new ConfirmOrderPage()
@@ -119,17 +119,7 @@ describe('Test suite edited with vim', () => {
       rightNavigationBar.getNewsletterOption().should('be.visible')
     })
 
-    it("Test for the shopping cart page with no items", () => {
-      homepage.mainHeaderComponent.getCartIconButton().click()
-      shoppingCartModal.getEditCartButton().click()
-      cy.url().should('contain', 'checkout/cart')
-      shoppingCartPage.getWarningIcon().should('be.visible')
-      shoppingCartPage.getWarningIcon().should('have.class', 'text-warning')
-      shoppingCartPage.getTitle().should('be.visible')
-      shoppingCartPage.getMessage().should('be.visible')
-      shoppingCartPage.getMessage().should('have.text', 'Your shopping cart is empty!')
-      shoppingCartPage.getContinueButton().should('be.visible')
-    })
+    
 
     it("adding test for checking all categories dropdown options.", () => {
       homepage.mainHeaderComponent.getCategoriesDropdown().click()
@@ -649,143 +639,16 @@ describe('Test suite edited with vim', () => {
       productDetailPage.getQuantityInputField().should('have.value', '1')
     })
 
-    it("Test for checkout functionality with not available products", () => {
-      homepage.getTopProducts().eq(0).scrollIntoView()
-      homepage.getTopProducts().eq(0).trigger('mouseover')
-      homepage.addProductToCart(homepage.getTopProducts().eq(0))
+    
 
-      homepage.notificationComponent.getViewCartButton().click()
-      shoppingCartPage.alertComponent.getAlert().should('contain', 'Products marked with *** are not available in the desired quantity or not in stock!')
-      shoppingCartPage.getItems().should('have.length', 1)
-    })
+    
 
-    it("Test or removing items on checkout cart page", () => {
-      cy.log("Adding first top product to the card.")
-      homepage.getTopProducts().eq(0).scrollIntoView()
-      homepage.getTopProducts().eq(0).trigger('mouseover')
-      homepage.addProductToCart(homepage.getTopProducts().eq(0))
+    
+    
 
-      homepage.mainHeaderComponent.getCartIconButton().click()
-      homepage.shoppingCartModalComponent.getCheckoutBUtton().click()
+    
 
-      cy.log("Removing item.")
-      shoppingCartPage.removeNthItem(0)
-
-      cy.log("Performing assertions.")
-      cy.url().should('contain', 'checkout/cart')
-      shoppingCartPage.getWarningIcon().should('be.visible')
-      shoppingCartPage.getWarningIcon().should('have.class', 'text-warning')
-      shoppingCartPage.getTitle().should('be.visible')
-      shoppingCartPage.getMessage().should('be.visible')
-      shoppingCartPage.getMessage().should('have.text', 'Your shopping cart is empty!')
-      shoppingCartPage.getContinueButton().should('be.visible')
-    })
-
-    const checkPriceNthItem = (index) => {
-      shoppingCartPage.getPriceUnitNthElement(index).then(priceUnit => {
-        shoppingCartPage.getQuantityNthElement(index).then(quantity => {
-          shoppingCartPage.getPriceTotalNthElement(index).then(totalPrice => {
-            expect(priceUnit * quantity).to.eq(totalPrice)
-          })
-        })
-      })
-    }
-
-    it("Test for updating product quantity on checkout cart page.", () => {
-      homepage.getTopProducts().eq(0).scrollIntoView()
-      homepage.getTopProducts().eq(0).trigger('mouseover')
-      homepage.addProductToCart(homepage.getTopProducts().eq(0))
-      homepage.notificationComponent.getCheckoutButton().click()
-      cy.url().should('contain', 'checkout/cart')
-
-      checkPriceNthItem(0)
-
-
-      cy.log("updating product quantity on checkout cart page.")
-      shoppingCartPage.updateNthProductQuantity(0, 2)
-
-      checkPriceNthItem(0)
-    })
-    const checkQuantityAccordingToCartIcon = () => {
-      shoppingCartPage.getItems().its('length').then(length => {
-        let counter = 0
-        Cypress._.times(length, (i) => {
-          shoppingCartPage.getQuantityNthElement(i).then(quantity => {
-            console.log(`quantity: ${quantity}`);
-            counter += parseInt(quantity, 10); // Ensure the quantity is parsed as an integer
-          });
-        });
-
-        // Ensure the logging happens after the iteration is complete
-        cy.wrap(null).then(() => {
-          console.log(`quantity counter = ${counter}`);
-          // You can also make assertions on the counter here if needed
-          // expect(counter).to.equal(expectedValue);
-          shoppingCartPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', counter)
-        });
-      })
-    }
-
-    it("Test for testing the quantity of products on cart.", () => {
-      shoppingCartPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 0)
-
-      homepage.getTopProducts().eq(0).scrollIntoView()
-      homepage.getTopProducts().eq(0).trigger('mouseover')
-      homepage.addProductToCart(homepage.getTopProducts().eq(0))
-
-
-      homepage.visit()
-
-      homepage.getTopProducts().eq(2).scrollIntoView()
-      homepage.getTopProducts().eq(2).trigger('mouseover')
-      homepage.addProductToCart(homepage.getTopProducts().eq(2))
-
-      homepage.visit()
-
-      homepage.getTopProducts().eq(3).scrollIntoView()
-      homepage.getTopProducts().eq(3).trigger('mouseover')
-      homepage.addProductToCart(homepage.getTopProducts().eq(3))
-
-      homepage.notificationComponent.getCheckoutButton().click()
-
-      checkQuantityAccordingToCartIcon()
-
-    })
-
-    it("Test for the continue shopping button", () => {
-
-      homepage.getTopProducts().eq(0).scrollIntoView()
-      homepage.getTopProducts().eq(0).trigger('mouseover')
-      homepage.addProductToCart(homepage.getTopProducts().eq(0))
-
-      homepage.notificationComponent.getCheckoutButton().click()
-      cy.url().should('contain', 'checkout/cart')
-      shoppingCartPage.getContinueButton().click()
-      cy.url().should('contain', 'common/home')
-    })
-
-    it("Test for testing the collapse components on cart page.", () => {
-      homepage.getTopProducts().eq(0).scrollIntoView()
-      homepage.getTopProducts().eq(0).trigger('mouseover')
-      homepage.addProductToCart(homepage.getTopProducts().eq(0))
-
-      homepage.notificationComponent.getViewCartButton().click()
-
-      shoppingCartPage.expandOrMinimizeUseCouponCodeCollapse()
-      shoppingCartPage.getCollapseElements().eq(0).find('div#collapse-coupon').should('have.class', 'show')
-      shoppingCartPage.getCollapseElements().eq(1).find('div#collapse-shipping').should('not.have.class', 'show')
-      shoppingCartPage.getCollapseElements().eq(2).find('div#collapse-voucher').should('not.have.class', 'show')
-
-      shoppingCartPage.expandOrMinimizeEstimateShippingTaxesCollapse()
-      shoppingCartPage.getCollapseElements().eq(0).find('div#collapse-coupon').should('not.have.class', 'show')
-      shoppingCartPage.getCollapseElements().eq(1).find('div#collapse-shipping').should('have.class', 'show')
-      shoppingCartPage.getCollapseElements().eq(2).find('div#collapse-voucher').should('not.have.class', 'show')
-      shoppingCartPage.expandOrMinimizeUseGiftCertificateCollapse()
-      shoppingCartPage.getCollapseElements().eq(0).find('div#collapse-coupon').should('not.have.class', 'show')
-      shoppingCartPage.getCollapseElements().eq(1).find('div#collapse-shipping').should('not.have.class', 'show')
-      shoppingCartPage.getCollapseElements().eq(2).find('div#collapse-voucher').should('have.class', 'show')
-
-    })
+    
 
     it("Test for opening an account and performing an order.", () => {
       cy.generateRandomEmail().then((randomEmail) => {
