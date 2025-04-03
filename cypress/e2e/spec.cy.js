@@ -16,7 +16,7 @@ import WidgetsPage from "./pages/WidgetsPage"
 import DesignsPage from "./pages/DesignsPages"
 
 import MyAccountPage from "./pages/MyAccountPage"
-import NewsletterSubscriptionPage from "./pages/NewsletterSubscriptionPage"
+
 
 import RightNavigationBar from "./components/RightNavigationBar"
 import ProductDetailPage from "./pages/ProductDetailPage"
@@ -40,7 +40,6 @@ const designsPage = new DesignsPage()
 const productDetailPage = new ProductDetailPage()
 
 const myAccountPage = new MyAccountPage()
-const newsletterSubscriptionPage = new NewsletterSubscriptionPage()
 
 
 Cypress.on('uncaught:exception', (err, runnable) => {
@@ -113,9 +112,7 @@ describe('Test suite edited with vim', () => {
       rightNavigationBar.getReturnsOption().should('be.visible')
       rightNavigationBar.getTransactionOption().should('be.visible')
       rightNavigationBar.getNewsletterOption().should('be.visible')
-    })
-
-    
+    })  
 
     it("adding test for checking all categories dropdown options.", () => {
       homepage.mainHeaderComponent.getCategoriesDropdown().click()
@@ -126,9 +123,6 @@ describe('Test suite edited with vim', () => {
       })
     })
 
-    
-
-    
 
     it("Test for testing the autocomplete dropdown component.", () => {
       homepage.mainHeaderComponent.getSearchInputField().type('iphone')
@@ -177,96 +171,7 @@ describe('Test suite edited with vim', () => {
       })
     })
 
-    it("Test for testing the purchase a gift certificate functionality - Validations.", () => {
-      homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
-      loginPage.login(Cypress.env('email'), Cypress.env('password'))
-      myAccountPage.mainNavigationComponent.clickonMyAccountDropdownOptions('My voucher')
-      giftCertificatePage.clickOnContinueButton()
-      giftCertificatePage.alertComponent.getAlert().should('include.text', 'Warning: You must agree that the gift certificates are non-refundable!')
 
-      giftCertificatePage.getRecipientsNameLabelError().should('have.text', "Recipient's Name must be between 1 and 64 characters!")
-      giftCertificatePage.getRecipientsEmailLabelError().should('have.text', "E-Mail Address does not appear to be valid!")
-      giftCertificatePage.getGiftCertificateThemeOptionsLabelError().should('have.text', "You must select a theme!")
-      giftCertificatePage.alertComponent.getAlert().should('have.css', 'color', 'rgb(114, 28, 36)')
-      giftCertificatePage.getRecipientsNameLabelError().should('have.css', 'color', 'rgb(220, 53, 69)')
-      giftCertificatePage.getRecipientsEmailLabelError().should('have.css', 'color', 'rgb(220, 53, 69)')
-      giftCertificatePage.getGiftCertificateThemeOptionsLabelError().should('have.css', 'color', 'rgb(220, 53, 69)')
-
-    })
-
-    it("Test for testing the purchase a gift certificate functionality - Email validation", () => {
-      homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
-      loginPage.login(Cypress.env("email"), Cypress.env("password"))
-      myAccountPage.mainNavigationComponent.clickonMyAccountDropdownOptions("My voucher")
-      giftCertificatePage.getRecipientsNameInput().type("Your name")
-      giftCertificatePage.getRecipientsEmailInput().type("invalidemail.com")
-      giftCertificatePage.getGiftCertificateThemeOptions().eq(0).click()
-      giftCertificatePage.getAgreeCheckbox().click()
-      giftCertificatePage.getContinueButton().click()
-      giftCertificatePage.getRecipientsEmailLabelError().should('include.text', 'E-Mail Address does not appear to be valid!')
-      giftCertificatePage.getRecipientsEmailLabelError().should('have.css', 'color', 'rgb(220, 53, 69)')
-    })
-
-    it("Test for testing the purchase a gift certificate functionality - Negative amount", () => {
-      homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
-      loginPage.login(Cypress.env("email"), Cypress.env("password"))
-      myAccountPage.mainNavigationComponent.clickonMyAccountDropdownOptions('My voucher')
-      giftCertificatePage.getRecipientsNameInput().type('my name')
-      giftCertificatePage.getRecipientsEmailInput().type('randomemail@gmail.com')
-      giftCertificatePage.getGiftCertificateThemeOptions().eq(0).click()
-      giftCertificatePage.getAmountInput().clear()
-      giftCertificatePage.getAmountInput().type('-1')
-      giftCertificatePage.getAgreeCheckbox().click()
-      giftCertificatePage.getContinueButton().click()
-      giftCertificatePage.getAmountInputLabelError().should('include.text', 'Amount must be between $1.00 and $1,000.00!')
-      giftCertificatePage.getAmountInputLabelError().should('have.css', 'color', 'rgb(220, 53, 69)')
-    })
-
-    it("Test for testing the purchase a gift certificate functionnality - Checking automatic data in form", () => {
-      cy.generateRandomFirstname().then(randomFirstname => {
-        cy.generateRandomLastname().then(randomLastname => {
-          cy.generateRandomPhoneNumber().then(randomPhoneNumber => {
-            cy.generateRandomPassword().then(randomPassword => {
-              cy.generateRandomEmail().then(randomEmail => {
-                homepage.mainNavigationComponent.clickonMyAccountDropdownOptions("Register")
-                registerPage.registerNewUser(randomFirstname, randomLastname, randomEmail, randomPhoneNumber, randomPassword, randomPassword, true, true)
-                successPage.mainNavigationComponent.clickonMyAccountDropdownOptions("My voucher")
-                giftCertificatePage.getYourNameInput().should('have.value', `${randomFirstname} ${randomLastname}`)
-                giftCertificatePage.getYourEmailInput().should('have.value', randomEmail)
-              })
-            })
-          })
-        })
-      })
-    })
-
-    it("Test for testing the purchase a gift certificate functionality - Checking behavior when input correct data.", () => {
-      cy.generateRandomFirstname().then(randomFirstname => {
-        cy.generateRandomFirstname().then(recipientsName => {
-          cy.generateRandomLastname().then(randomLastname => {
-            cy.generateRandomPhoneNumber().then(randomPhoneNumber => {
-              cy.generateRandomPassword().then(randomPassword => {
-                cy.generateRandomEmail().then(randomEmail => {
-                  cy.generateRandomEmail().then(recipientsEmail => {
-                    homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
-                    registerPage.registerNewUser(randomFirstname, randomLastname, randomEmail, randomPhoneNumber, randomPassword, randomPassword, true, true)
-                    successPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 0)
-                    successPage.mainNavigationComponent.clickonMyAccountDropdownOptions('My voucher')
-                    giftCertificatePage.getRecipientsNameInput().type(recipientsName)
-                    giftCertificatePage.getRecipientsEmailInput().type(recipientsEmail)
-                    giftCertificatePage.getGiftCertificateThemeOptions().eq(0).click()
-                    giftCertificatePage.getMessageInput().type('hello world')
-                    giftCertificatePage.getAgreeCheckbox().click()
-                    giftCertificatePage.getContinueButton().click()
-                    successPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 1)
-                  })
-                })
-              })
-            })
-          })
-        })
-      })
-    })
 
     it('Test for navigating through the design, modules and widgets pages', () => {
       homepage.mainNavigationComponent.getAddOnsDropdownOptions().should('not.be.visible')
@@ -291,11 +196,6 @@ describe('Test suite edited with vim', () => {
       cy.url().should('contain', 'account/login')
     })
 
-    it("Test for going to the register page from the main nav bar", () => {
-      homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Register')
-      cy.url().should('contain', 'account/register')
-    })
-
     it("Test for checking the mega menu options", () => {
       homepage.mainNavigationComponent.getMegaMenuOptionsDropdown().find('a').then(options => {
         const actual = [...options].map(option => option.text)
@@ -310,70 +210,12 @@ describe('Test suite edited with vim', () => {
       cy.url().should('contain', 'manufacturer_id=5')
     })
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
 
     it("Test for going to my account option without a logged user", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
       cy.url().should('contain', 'account/login')
       loginPage.rightNavigationComponent.clickOnRightNavigationOption('My Account')
       cy.url().should('contain', 'account/login')
-    })
-
-    
-
-    
-
-    
-
-    it('adding item to the wishlist without a logged user', () => {
-      homepage.getTopProducts().eq(0).realHover()
-      const first_product = homepage.getTopProducts().eq(0)
-      homepage.addProductToWishList(first_product)
-      homepage.notificationComponent.getHeaderTitle().should('contain', 'Login')
-      homepage.notificationComponent.getLoginButton().should('be.visible')
-      homepage.notificationComponent.getRegisterButton().should('be.visible')
-    })
-
-  
-
-    it("Test for registering an then loging a new user", () => {
-      cy.generateRandomEmail().then((randomEmail) => {
-        cy.generateRandomPhoneNumber().then((randomPhoneNumber) => {
-          cy.generateRandomFirstname().then(randomFirstname => {
-            cy.generateRandomLastname().then(randomLastname => {
-              cy.generateRandomPassword().then(randomPassword => {
-                homepage.mainNavigationComponent.getMyAccountOption().click()
-                loginPage.rightNavigationComponent.clickOnRightNavigationOption('Register')
-                cy.url().should('contain', 'account/register')
-                registerPage.registerNewUser(randomFirstname, randomLastname, randomEmail, randomPhoneNumber, randomPassword, randomPassword, true, true)
-                cy.contains("Your Account Has Been Created!")
-                homepage.rightNavigationComponent.clickOnRightNavigationOption('Logout')
-                cy.contains("Account Logout")
-                cy.url().should('contain', 'account/logout')
-                homepage.rightNavigationComponent.clickOnRightNavigationOption('Login')
-                cy.url().should('contain', 'account/login')
-                loginPage.login(randomEmail, randomPassword)
-                cy.url().should('contain', 'account/account')
-                myAccountPage.rightNavigationComponent.getOptions().eq(0).should('have.class', 'active')
-              })
-            })
-          })
-        })
-      })
     })
 
     it("test for checking the top categories options.", () => {
@@ -483,19 +325,7 @@ describe('Test suite edited with vim', () => {
       })
     })
 
-    it("test for adding to wishlist with not logged user from product detail page.", () => {
-      homepage.getTopProducts().eq(0).scrollIntoView()
-      homepage.getTopProducts().eq(0).click()
-      productDetailPage.notificationComponent.getNotification().should('not.be.visible')
-      productDetailPage.getDesktopHeartButton().click()
-      productDetailPage.notificationComponent.getNotification().should('be.visible')
-      productDetailPage.notificationComponent.getHeaderTitle().should('contain', 'Login')
-      productDetailPage.notificationComponent.getLoginButton().should('be.visible')
-      productDetailPage.notificationComponent.getRegisterButton().should('be.visible')
-      productDetailPage.notificationComponent.getCloseButton().click()
-      productDetailPage.notificationComponent.getCloseButton().click()
-      productDetailPage.notificationComponent.getNotification().should('not.be.visible')
-    })
+    
 
     it("Test for writting a review on product detail page default error.", () => {
       homepage.getTopProducts().eq(0).scrollIntoView()
@@ -578,17 +408,6 @@ describe('Test suite edited with vim', () => {
       productDetailPage.getQuantityInputField().should('have.value', '1')
     })
 
-    
-
-    
-
-    
-    
-
-    
-
-    
-
     it("Test for opening an account and performing an order.", () => {
       cy.generateRandomEmail().then((randomEmail) => {
         cy.generateRandomPhoneNumber().then((randomPhoneNumber) => {
@@ -656,35 +475,7 @@ describe('Test suite edited with vim', () => {
 
     
 
-    it("Subscribe and unsubscribe to newsleter.", () => {
-      homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
-      loginPage.login(Cypress.env("email"), Cypress.env("password"))
-
-      myAccountPage.getMyAccountOptions().eq(4).click()
-      newsletterSubscriptionPage.getNoCheckbox().should('have.attr', 'checked')
-      newsletterSubscriptionPage.getYesCheckbox().should('not.have.attr', 'checked')
-
-      newsletterSubscriptionPage.checkYes()
-      newsletterSubscriptionPage.getContinueButton().click()
-
-      myAccountPage.alertComponent.getAlert().should('have.text', ' Success: Your newsletter subscription has been successfully updated!')
-      myAccountPage.alertComponent.getAlert().should('have.class', 'alert-success')
-      myAccountPage.alertComponent.getAlert().should('have.css', 'color', 'rgb(21, 87, 36)')
-      myAccountPage.alertComponent.getAlert().should('have.css', 'background-color', 'rgb(212, 237, 218)')
-
-      myAccountPage.getMyAccountOptions().eq(4).click()
-      newsletterSubscriptionPage.getNoCheckbox().should('not.have.attr', 'checked')
-      newsletterSubscriptionPage.getYesCheckbox().should('have.attr', 'checked')
-
-
-      newsletterSubscriptionPage.checkNo()
-      newsletterSubscriptionPage.getContinueButton().click()
-
-      myAccountPage.alertComponent.getAlert().should('have.text', ' Success: Your newsletter subscription has been successfully updated!')
-      myAccountPage.alertComponent.getAlert().should('have.class', 'alert-success')
-      myAccountPage.alertComponent.getAlert().should('have.css', 'color', 'rgb(21, 87, 36)')
-      myAccountPage.alertComponent.getAlert().should('have.css', 'background-color', 'rgb(212, 237, 218)')
-    })
+    
 
     it("Test buy now functionality from quick view without a logged user.", () => {
       checkoutPage.mainHeaderComponent.getCartIconButton().find("span[class*='cart-item-total']").invoke('text').then(parseFloat).should('eq', 0)
@@ -1021,8 +812,6 @@ describe('Test suite edited with vim', () => {
       homepage.mainCarouselComponent.getPaginationItems().eq(2).should('not.have.class', 'active')
     })
 
-    
-
     it("test for selecting specifc top collection option.", () => {
       homepage.getTopCollectionOptions().contains('Popular').should('have.class', 'active')
       homepage.getTopCollectionContent().eq(0).should('have.class', 'active')
@@ -1038,24 +827,6 @@ describe('Test suite edited with vim', () => {
       homepage.getTopCollectionOptions().contains('Best seller').should('have.class', 'active')
       homepage.getTopCollectionContent().eq(2).should('have.class', 'active')
       homepage.getTopCollectionContent().eq(2).should('be.visible')
-    })
-
-    it("Test for registering a new user on iphone.", () => {
-      cy.generateRandomFirstname().then(firstname => {
-        cy.generateRandomLastname().then(lastname => {
-          cy.generateRandomEmail().then(email => {
-            cy.generateRandomPhoneNumber().then(phoneNumber => {
-              cy.generateRandomPassword().then(password => {
-                homepage.mainHeaderComponent.getMobilePersonIconButton().click()
-                homepage.quickLinksComponent.clickOnSpecificQuickLink('My account')
-                loginPage.rightNavigationComponent.clickOnRightNavigationOption('Register')
-                registerPage.registerNewUser(firstname, lastname, email, phoneNumber, password, password, true, true)
-                successPage.contentComponent.getTitle().should('include.text', 'Your Account Has Been Created!')
-              })
-            })
-          })
-        })
-      })
     })
   })
 })

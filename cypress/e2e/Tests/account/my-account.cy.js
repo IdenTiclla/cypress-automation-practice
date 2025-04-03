@@ -5,6 +5,7 @@ import AddressBookPage from "../../pages/AddressBookPage"
 import WishListPage from "../../pages/WishListPage"
 import OrderHistoryPage from "../../pages/OrderHistoryPage"
 import ChangePasswordPage from "../../pages/ChangePasswordPage"
+import NewsletterSubscriptionPage from "../../pages/NewsletterSubscriptionPage"
 
 const homepage = new Home()
 const loginPage = new Login()
@@ -13,6 +14,7 @@ const addressBookPage = new AddressBookPage()
 const wishListPage = new WishListPage()
 const orderHistoryPage = new OrderHistoryPage()
 const changePasswordPage = new ChangePasswordPage()
+const newsletterSubscriptionPage = new NewsletterSubscriptionPage()
 
 Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
@@ -65,5 +67,35 @@ describe('My Account Tests', () => {
   it('Verify navigation to change password page', () => {
     myAccountPage.getPasswordSidebarOption().click()
     changePasswordPage.getPageTitle().should('have.text', 'Change Password')
+  })
+
+  it.only("Subscribe and unsubscribe to newsleter.", () => {
+    // homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
+    // loginPage.login(Cypress.env("email"), Cypress.env("password"))
+
+    myAccountPage.getMyAccountOptions().eq(4).click()
+    newsletterSubscriptionPage.getNoCheckbox().should('have.attr', 'checked')
+    newsletterSubscriptionPage.getYesCheckbox().should('not.have.attr', 'checked')
+
+    newsletterSubscriptionPage.checkYes()
+    newsletterSubscriptionPage.getContinueButton().click()
+
+    myAccountPage.alertComponent.getAlert().should('have.text', ' Success: Your newsletter subscription has been successfully updated!')
+    myAccountPage.alertComponent.getAlert().should('have.class', 'alert-success')
+    myAccountPage.alertComponent.getAlert().should('have.css', 'color', 'rgb(21, 87, 36)')
+    myAccountPage.alertComponent.getAlert().should('have.css', 'background-color', 'rgb(212, 237, 218)')
+
+    myAccountPage.getMyAccountOptions().eq(4).click()
+    newsletterSubscriptionPage.getNoCheckbox().should('not.have.attr', 'checked')
+    newsletterSubscriptionPage.getYesCheckbox().should('have.attr', 'checked')
+
+
+    newsletterSubscriptionPage.checkNo()
+    newsletterSubscriptionPage.getContinueButton().click()
+
+    myAccountPage.alertComponent.getAlert().should('have.text', ' Success: Your newsletter subscription has been successfully updated!')
+    myAccountPage.alertComponent.getAlert().should('have.class', 'alert-success')
+    myAccountPage.alertComponent.getAlert().should('have.css', 'color', 'rgb(21, 87, 36)')
+    myAccountPage.alertComponent.getAlert().should('have.css', 'background-color', 'rgb(212, 237, 218)')
   })
 }) 

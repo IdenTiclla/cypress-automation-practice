@@ -30,7 +30,7 @@ describe("Wishlist functionality.", () => {
         cy.clearCookies();
     });
 
-    it.only("Test for testing adding an item to the wishlist with a logged user", () => {
+    it("Test for testing adding an item to the wishlist with a logged user", () => {
         cy.log("Login a user")
         homepage.mainNavigationComponent.getMyAccountOption().click()
         loginPage.login(Cypress.env("email"), Cypress.env("password"))
@@ -61,7 +61,7 @@ describe("Wishlist functionality.", () => {
 
 
 
-    it.only("Test for adding and removing an item from wish list page.", () => {
+    it("Test for adding and removing an item from wish list page.", () => {
       cy.log("Loging an user")
       homepage.mainNavigationComponent.getMyAccountOption().click()
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
@@ -92,13 +92,37 @@ describe("Wishlist functionality.", () => {
       cy.contains("No results!")
     })
 
-    it.only('Testing wish list with not logged user', () => {
+    it('Testing wish list with not logged user', () => {
       homepage.mainHeaderComponent.getWishListIconButton().click()
       loginPage.getEmailInputField().should('be.visible')
       loginPage.getPasswordInputField().should('be.visible')
       loginPage.getSubmitButton().should('be.visible')
       loginPage.login(Cypress.env("email"), Cypress.env("password"))
     })
+
+    it.only('adding item to the wishlist without a logged user', () => {
+      homepage.getTopProducts().eq(0).realHover()
+      const first_product = homepage.getTopProducts().eq(0)
+      homepage.addProductToWishList(first_product)
+      homepage.notificationComponent.getHeaderTitle().should('contain', 'Login')
+      homepage.notificationComponent.getLoginButton().should('be.visible')
+      homepage.notificationComponent.getRegisterButton().should('be.visible')
+    })
+
+    it.only("test for adding to wishlist with not logged user from product detail page.", () => {
+      homepage.getTopProducts().eq(0).scrollIntoView()
+      homepage.getTopProducts().eq(0).click()
+      productDetailPage.notificationComponent.getNotification().should('not.be.visible')
+      productDetailPage.getDesktopHeartButton().click()
+      productDetailPage.notificationComponent.getNotification().should('be.visible')
+      productDetailPage.notificationComponent.getHeaderTitle().should('contain', 'Login')
+      productDetailPage.notificationComponent.getLoginButton().should('be.visible')
+      productDetailPage.notificationComponent.getRegisterButton().should('be.visible')
+      productDetailPage.notificationComponent.getCloseButton().click()
+      productDetailPage.notificationComponent.getCloseButton().click()
+      productDetailPage.notificationComponent.getNotification().should('not.be.visible')
+    })
+
   });
 
   context("Iphone resolution", () => {
@@ -113,13 +137,15 @@ describe("Wishlist functionality.", () => {
       cy.clearCookies();
     });
 
-    it.only("adding product to the wishlist without a logged user", () => {
+    it("adding product to the wishlist without a logged user", () => {
       homepage.getTopProducts().eq(0).click()
       productDetailPage.addToTheWishListOnMobile()
       homepage.notificationComponent.getHeaderTitle().should('contain', 'Login')
       homepage.notificationComponent.getLoginButton().should('be.visible')
       homepage.notificationComponent.getRegisterButton().should('be.visible')
     })
+
+    
     
   });   
 });
