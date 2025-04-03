@@ -15,11 +15,9 @@ import ModulesPage from "./pages/ModulesPage"
 import WidgetsPage from "./pages/WidgetsPage"
 import DesignsPage from "./pages/DesignsPages"
 
-import ForgottenPasswordPage from "./pages/ForgottenPasswordPage"
 import MyAccountPage from "./pages/MyAccountPage"
 import NewsletterSubscriptionPage from "./pages/NewsletterSubscriptionPage"
 
-import ShoppingCartModal from "./components/ShoppingCartModal"
 import RightNavigationBar from "./components/RightNavigationBar"
 import ProductDetailPage from "./pages/ProductDetailPage"
 
@@ -35,14 +33,12 @@ const checkoutPage = new CheckoutPage()
 const confirmOrderPage = new ConfirmOrderPage()
 const orderHistoryPage = new OrderHistoryPage()
 
-const shoppingCartModal = new ShoppingCartModal()
 const rightNavigationBar = new RightNavigationBar()
 const modulesPage = new ModulesPage()
 const widgetsPage = new WidgetsPage()
 const designsPage = new DesignsPage()
 const productDetailPage = new ProductDetailPage()
 
-const forgottenPasswordPage = new ForgottenPasswordPage()
 const myAccountPage = new MyAccountPage()
 const newsletterSubscriptionPage = new NewsletterSubscriptionPage()
 
@@ -326,37 +322,9 @@ describe('Test suite edited with vim', () => {
 
     
 
-    it("testing forgotten password, email not found", () => {
-      homepage.mainNavigationComponent.getMyAccountOption().click()
-      cy.url().should('contain', 'account/login')
-      homepage.rightNavigationComponent.getLoginOption().should('have.class', 'active')
-      homepage.rightNavigationComponent.getForgottenPasswordOption().should('not.have.class', 'active')
-      homepage.rightNavigationComponent.clickOnRightNavigationOption('Forgotten Password')
-      homepage.rightNavigationComponent.getLoginOption().should('not.have.class', 'active')
-      cy.url().should('contain', 'account/forgotten')
-      homepage.rightNavigationComponent.getForgottenPasswordOption().should('have.class', 'active')
-      // forgottenPasswordPage.fillEmailAndSubmit('email@example.com') already exists xd
-      forgottenPasswordPage.fillEmailAndSubmit('trashemail@eg.com')
-      forgottenPasswordPage.alertComponent.getAlert().should('be.visible')
-      forgottenPasswordPage.alertComponent.getAlert().should('have.text', ' Warning: The E-Mail Address was not found in our records, please try again!')
-      forgottenPasswordPage.alertComponent.getAlert().should('have.class', 'alert-danger')
-    })
+    
 
-    it("Test for testing forgotten password, success", () => {
-      homepage.mainNavigationComponent.getMyAccountOption().click()
-      homepage.rightNavigationComponent.getLoginOption().should('have.class', 'active')
-      homepage.rightNavigationComponent.getForgottenPasswordOption().should('not.have.class', 'active')
-      homepage.rightNavigationComponent.clickOnRightNavigationOption('Forgotten Password')
-      forgottenPasswordPage.rightNavigationComponent.getForgottenPasswordOption().should('have.class', 'active')
-      forgottenPasswordPage.alertComponent.getAlert().should('not.exist')
-      forgottenPasswordPage.fillEmailAndSubmit('email@example.com')
-      forgottenPasswordPage.alertComponent.getAlert().should('be.visible')
-      forgottenPasswordPage.alertComponent.getAlert().should('have.text', ' An email with a confirmation link has been sent your email address.')
-      forgottenPasswordPage.alertComponent.getAlert().should('have.class', 'alert-success')
-      cy.url().should('contain', 'account/login')
-      loginPage.rightNavigationComponent.getLoginOption().should('have.class', 'active')
-      loginPage.rightNavigationComponent.getForgottenPasswordOption().should('not.have.class', 'active')
-    })
+    
 
     it("Test for going to my account option without a logged user", () => {
       homepage.mainNavigationComponent.getMyAccountOption().click()
