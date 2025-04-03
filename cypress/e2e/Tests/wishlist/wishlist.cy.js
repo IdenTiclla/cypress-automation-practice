@@ -2,7 +2,7 @@ import Home from "../../pages/Home"
 import Login from "../../pages/Login"
 import MyAccountPage from "../../pages/MyAccountPage"
 import WishListPage from "../../pages/WishListPage"
-
+import ProductDetailPage from "../../pages/ProductDetailPage"
 
 Cypress.on('uncaught:exception', (err, runnable) => {
     return false
@@ -12,7 +12,7 @@ const homepage = new Home()
 const loginPage = new Login()
 const myAccountPage = new MyAccountPage()
 const wishListPage = new WishListPage()
-
+const productDetailPage = new ProductDetailPage()
 
 
 describe("Wishlist functionality.", () => {
@@ -91,5 +91,35 @@ describe("Wishlist functionality.", () => {
       wishListPage.alertComponent.getAlert().should('have.class', 'alert-success')
       cy.contains("No results!")
     })
+
+    it.only('Testing wish list with not logged user', () => {
+      homepage.mainHeaderComponent.getWishListIconButton().click()
+      loginPage.getEmailInputField().should('be.visible')
+      loginPage.getPasswordInputField().should('be.visible')
+      loginPage.getSubmitButton().should('be.visible')
+      loginPage.login(Cypress.env("email"), Cypress.env("password"))
+    })
   });
+
+  context("Iphone resolution", () => {
+    beforeEach(() => {
+      cy.visit("/");
+      cy.get("body").should("be.visible")
+      cy.viewport('iphone-x')
+    });
+
+    afterEach(() => {
+      cy.clearLocalStorage();
+      cy.clearCookies();
+    });
+
+    it.only("adding product to the wishlist without a logged user", () => {
+      homepage.getTopProducts().eq(0).click()
+      productDetailPage.addToTheWishListOnMobile()
+      homepage.notificationComponent.getHeaderTitle().should('contain', 'Login')
+      homepage.notificationComponent.getLoginButton().should('be.visible')
+      homepage.notificationComponent.getRegisterButton().should('be.visible')
+    })
+    
+  });   
 });

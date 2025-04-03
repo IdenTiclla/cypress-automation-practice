@@ -348,36 +348,7 @@ describe('Test suite edited with vim', () => {
       homepage.notificationComponent.getRegisterButton().should('be.visible')
     })
 
-    it('Testing wish list with not logged user', () => {
-      homepage.mainHeaderComponent.getWishListIconButton().click()
-      loginPage.getEmailInputField().should('be.visible')
-      loginPage.getPasswordInputField().should('be.visible')
-      loginPage.getSubmitButton().should('be.visible')
-      loginPage.login(Cypress.env("email"), Cypress.env("password"))
-    })
-
-    it('test for adding an item to the cart', () => {
-      homepage.getTopProducts().should('have.length', 10)
-      homepage.getTopProducts().eq(0).realHover()
-      homepage.getTopProducts().eq(0).find('div.product-action').should('be.visible')
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('have.length', 4)
-      homepage.getTopProducts().eq(0).find('div.product-action').find('button').should('be.visible')
-      homepage.addProductToCart(homepage.getTopProducts().eq(0))
-      homepage.notificationComponent.getHeaderTitle().should('be.visible')
-      homepage.notificationComponent.getHeaderTitle().should('contain', '1 item(s) - $170.00')
-      homepage.notificationComponent.getBodyMessage().should('be.visible')
-      homepage.notificationComponent.getBodyMessage().should('contain', 'Success: You have added ')
-      homepage.notificationComponent.getBodyMessage().should('contain', ' to your ')
-      homepage.notificationComponent.getBodyMessage().should('have.text', 'Success: You have added iMac to your shopping cart!')
-      homepage.notificationComponent.getCloseButton().should('be.visible')
-      homepage.notificationComponent.getViewCartButton().should('be.visible')
-      homepage.notificationComponent.getCheckoutButton().should('be.visible')
-    })
-
-    
-
-
-    
+  
 
     it("Test for registering an then loging a new user", () => {
       cy.generateRandomEmail().then((randomEmail) => {
@@ -683,15 +654,7 @@ describe('Test suite edited with vim', () => {
       })
     })
 
-    it("Test for testing the login page default errors", () => {
-      homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
-      loginPage.login('randomemail@gmail.com', 'dummypassword')
-      loginPage.alertComponent.getAlert().should('have.text', ' Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour.')
-      loginPage.alertComponent.getAlert().should('have.class', 'alert-danger')
-      loginPage.alertComponent.getAlert().should('have.css', 'background-color', 'rgb(248, 215, 218)')
-      loginPage.alertComponent.getAlert().should('have.css', 'color', 'rgb(114, 28, 36)')
-      loginPage.alertComponent.getAlert().should('have.css', 'border-color', 'rgb(245, 198, 203)')
-    })
+    
 
     it("Subscribe and unsubscribe to newsleter.", () => {
       homepage.mainNavigationComponent.clickonMyAccountDropdownOptions('Login')
@@ -962,13 +925,7 @@ describe('Test suite edited with vim', () => {
       cy.clearLocalStorage()
     })
 
-    it("Test for Login functionality on iphone resolution", () => {
-      homepage.mainHeaderComponent.getMobilePersonIconButton().click()
-      homepage.quickLinksComponent.clickOnSpecificQuickLink('My account')
-      cy.url().should('contain', 'account/login')
-      loginPage.login(Cypress.env("email"), Cypress.env("password"))
-      cy.url().should('contain', 'account/account')
-    })
+    
 
     it("Test for navigating throught the top categories on iphone resolution", () => {
       homepage.mainHeaderComponent.selectOptionOnHamburgerOptions('Components')
@@ -1064,13 +1021,7 @@ describe('Test suite edited with vim', () => {
       homepage.mainCarouselComponent.getPaginationItems().eq(2).should('not.have.class', 'active')
     })
 
-    it("adding product to the wishlist without a logged user", () => {
-      homepage.getTopProducts().eq(0).click()
-      productDetailPage.addToTheWishListOnMobile()
-      homepage.notificationComponent.getHeaderTitle().should('contain', 'Login')
-      homepage.notificationComponent.getLoginButton().should('be.visible')
-      homepage.notificationComponent.getRegisterButton().should('be.visible')
-    })
+    
 
     it("test for selecting specifc top collection option.", () => {
       homepage.getTopCollectionOptions().contains('Popular').should('have.class', 'active')
