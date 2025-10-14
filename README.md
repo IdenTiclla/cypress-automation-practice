@@ -65,7 +65,7 @@ A comprehensive end-to-end test web automation framework built with Cypress for 
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/IdenTiclla/cypress-automation-practice.git
+    git clone https://github.com/IdenTiclla/cypress-ecommerce-web-testing-framework
     ```
 
 2. Navigate to the project directory:
