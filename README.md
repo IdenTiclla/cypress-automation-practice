@@ -70,7 +70,7 @@ A comprehensive end-to-end test web automation framework built with Cypress for 
 
 2. Navigate to the project directory:
     ```sh
-    cd cypress-automation-practice
+    cd cypress-ecommerce-web-testing-framework
     ```
 
 3. Install dependencies:
